@@ -205,7 +205,7 @@
         <section class="banner_nav_block viewFramework-sidebar-full">
             <div class="banner_nav">
                 <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema" @click="">
+                    <li class="banner_active_ff tema" @click="$router.push({ path: '/' })">
                         <a href="javascript:(0)">球队基本信息</a>
                     </li>
                      <li class="banner_active_ed notice row" id="clickPlayerOpen">
@@ -219,15 +219,15 @@
                         <li>黑名单</li>
                     </ul>
                     <li class="banner_active_ed notice" >
-                        <a href="javascript:(0)">公告</a>
+                        <a href="javascript:(0)" @click="$router.push({ path: '/page1' })">公告</a>
                     </li>
 
                     <li class="banner_active_ed agenda" >
-                        <a href="javascript:(0)">赛程</a>
+                        <a href="javascript:(0)" @click="$router.push({ path: '/page2' })">赛程</a>
                     </li>
 
                     <li class="banner_active_ed statute">
-                        <a href="javascript:(0)">章程</a>
+                        <a href="javascript:(0)" @click="$router.push({ path: '/page3' })">章程</a>
                     </li>
 
                     <li class="banner_active_ed player">
@@ -254,10 +254,10 @@
             <div class="locker position_right"></div>
             <div class="width100 left180">
                 <div style="" class="width_nav_width">
-                    <iframe src="" id="uploading" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
+                    <slot name="main"></slot>
                 </div>
                 <div style="" class="width_nav_width nav_div" id="nav_div">
-                    <iframe src="http://devwx.golfgreenshow.com/#/team/2B32D3B3-ED48-4006-B2D1-8022D20A3929" id="show" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
+                    <slot name="preview"></slot>
                 </div>
             </div>
 
@@ -268,15 +268,16 @@
 import '../script/jquery.min.js'
 import '../script/index.js'
 export default {
-  name: 'Index',
+  name: 'Layout',
   data () {
     return {
-      name: 'Index'
+      name: 'Layout'
     }
   },
   computed: {
   },
   created () {
+    console.debug(`${this.name}.created`)
   },
   methods: {
     /* eslint-disable  */
@@ -289,6 +290,7 @@ export default {
     /* eslint-disable  */
   },
   mounted () {
+    console.debug(`${this.name}.mounted`)
   }
 }
 </script>

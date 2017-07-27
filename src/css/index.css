@@ -917,8 +917,10 @@ section>.banner_nav>ul>li.banner_active{
 }
 
 .width_nav_width{
-    height: 100%;width: 50%;float: left;
-    overflow-y: auto;
+    height: 100%;width: 70%;float: left;
+}
+.width_nav_width1{
+    height: 100%;width: 30%;float: left;
 }
 .padding_Top10{
     padding-top: 10%;
@@ -943,6 +945,9 @@ section>.banner_nav>ul>li.banner_active{
         width: 100%;
         float: left;
     }
+    .width_nav_width1{
+    height: 100%;width: 100%;float: left;
+}
   /*  section{
         left: 60px;
     }*/

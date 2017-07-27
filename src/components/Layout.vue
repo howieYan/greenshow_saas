@@ -205,29 +205,22 @@
         <section class="banner_nav_block viewFramework-sidebar-full">
             <div class="banner_nav">
                 <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema" @click="$router.push({ path: '/' })">
+                    <li class="banner_active_ff tema background_fff_player" @click="$router.push({ path: '/' })">
                         <a href="javascript:(0)">球队基本信息</a>
                     </li>
-                     <li class="banner_active_ed notice row" id="clickPlayerOpen">
-                        <i class="fa_icon_right"></i>
-                        <a href="javascript:(0)" class="col" style="padding-left:0px;">队员管理</a>
+                    <li class="banner_active_ed row" @click="$router.push({ path: '/page1' })">
+                        <a href="javascript:(0)">队员管理</a>
                     </li>
-                    <ul class="tema_nav display_none">
-                        <li>领导</li>
-                        <li>队员</li>
-                        <li>嘉宾</li>
-                        <li>黑名单</li>
-                    </ul>
                     <li class="banner_active_ed notice" >
-                        <a href="javascript:(0)" @click="$router.push({ path: '/page1' })">公告</a>
+                        <a href="javascript:(0)" @click="$router.push({ path: '/page2' })">公告</a>
                     </li>
 
                     <li class="banner_active_ed agenda" >
-                        <a href="javascript:(0)" @click="$router.push({ path: '/page2' })">赛程</a>
+                        <a href="javascript:(0)" @click="$router.push({ path: '/page3' })">赛程</a>
                     </li>
 
                     <li class="banner_active_ed statute">
-                        <a href="javascript:(0)" @click="$router.push({ path: '/page3' })">章程</a>
+                        <a href="javascript:(0)">章程</a>
                     </li>
 
                     <li class="banner_active_ed player">
@@ -237,7 +230,7 @@
                     <li class="banner_active_ed seniority">
                         <a href="javascript:(0)">排行</a>
                     </li>
-                    <li class="banner_active_ed history" @click="historyFrom">
+                    <li class="banner_active_ed history">
                         <a href="javascript:(0)">历史</a>
                     </li>
 
@@ -256,7 +249,7 @@
                 <div style="" class="width_nav_width">
                     <slot name="main"></slot>
                 </div>
-                <div style="" class="width_nav_width nav_div" id="nav_div">
+                <div style="" class="width_nav_width1 nav_div" id="nav_div">
                     <slot name="preview"></slot>
                 </div>
             </div>
@@ -280,14 +273,6 @@ export default {
     console.debug(`${this.name}.created`)
   },
   methods: {
-    /* eslint-disable  */
-    historyFrom () {
-        $('.nav_player>li').removeClass('active_nav_player');
-        $('.nav_player>li').eq(6).addClass('active_nav_player');
-        $('#uploading').attr('src','HistoryForm.vue');
-        $('#show').attr("src", "http://devwx.golfgreenshow.com/#/History/")
-    }
-    /* eslint-disable  */
   },
   mounted () {
     console.debug(`${this.name}.mounted`)
@@ -315,6 +300,9 @@ export default {
 /*.home_index_player , .home_index_home{
     display:none;
 }*/
+.background_fff_player{
+    background:#fff;
+}
 .nav_player{
     background: #FFFFFF;
     line-height: 40px;

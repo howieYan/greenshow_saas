@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="seek float_right hover">
-                    <span class="row"><b class="bg_image col"></b><b class="col">搜索</b></span>
+                    <div class="row"><b class="bg_image col"></b><b class="col">搜索</b></div>
                     <div class="input">
                         <input type="text" placeholder="搜索">
                         <b class="huiche"></b>
@@ -147,15 +147,13 @@ export default {
       navName: [
         { name: '球队基本信息' },
         { name: '队员管理' },
-        { name: '公告' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' },
-        { name: '赛程' }
+        { name: '领导班子' },
+        { name: '赛事活动' },
+        { name: '球队新闻' },
+        { name: '球队历史' },
+        { name: '榜单' },
+        { name: '荣誉' },
+        { name: '相册' }
       ]
     }
   },
@@ -178,6 +176,12 @@ export default {
       }
       if (index === 2) {
         this.$router.push({ path: '/page2' })
+      }
+      if (index === 3) {
+        this.$router.push({ path: '/page3' })
+      }
+      if (index === 4) {
+        this.$router.push({ path: '/page4' })
       }
     },
     collapse () {

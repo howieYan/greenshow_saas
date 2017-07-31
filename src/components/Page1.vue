@@ -46,22 +46,17 @@
                                       <label :for="item.id"></label>
                                   </td>
                                   <td class="">
-                                    <img :src="'/static/apply_1.png'" alt="" @click="uploadImage">
+                                    <img :src="'/static/apply_1.png'" alt="">
                                   </td>
-                                  <td class="">Tony_z</td>
-                                  <td class="">
-
-                                  </td>
-                                  <td class="">张凌峰</td>
+                                  <td class="" prop="nickname">Tony_z</td>
+                                  <td class=""  prop="name">张凌峰</td>
                                   <td class="">男</td>
                                   <td class="">18000000000</td>
                                   <td class="" >
-                                      <Select style="width:70px" >
-                                          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                      </Select>
-                                      {{ item.label }}
+                                     队员
                                   </td>
                                   <td class="" >
+                                      <Button type="ghost" @click="uploadImage">编辑</Button>
                                       <Poptip placement ="top-end"
                                           confirm
                                           trigger="hover"
@@ -72,13 +67,14 @@
                                           <Button type="error">删除</Button>
 
                                       </Poptip>
-                                      <Poptip
+                                      <Poptip placement ="top-end"
                                           confirm
                                           title="您确认要加入黑名单吗？"
                                           @on-ok="yesBlacklist"
                                           @on-cancel="cancelNo">
-                                          <Button>加入黑名单</Button>
+                                          <Button type="warning">加入黑名单</Button>
                                       </Poptip>
+
                                   </td>
                               </tr>
                           </tbody>
@@ -129,26 +125,48 @@
               </div>
           </div>
         </div>
-        <!-- 头像上传-->
+        <!-- 编辑-->
         <div class="el-dialog__wrapper" v-show="!uploadImages">
           <div class="center_top">
               <div class="alert_header" id="widthAlert">
                 <div class="layui-layer-title">
-                    手动添加页
+                    编辑页
                 </div>
                 <div class="layui-layer-setwin" @click="closeuploadImages">
                     <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                 </div>
-                <Upload style="margin:10px;"
-                    multiple
-                    type="drag"
-                    action="//jsonplaceholder.typicode.com/posts/">
-                    <div style="padding: 20px 0;">
-                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-                        <p>点击或将图片拖拽到这里上传</p>
-                    </div>
-                </Upload>
-                 <p style="text-align:center;">图片最小：200px*200px ，最大：600px*600px 图片格式是png,jpg,,jpeg,gif等等。</p>
+                <Form :model="formItem" :label-width="80">
+                    <Form-item label="头像：">
+                        <Upload action="//jsonplaceholder.typicode.com/posts/">
+                            <Button type="ghost" icon="ios-cloud-upload-outline">上传文件</Button>
+                        </Upload>
+                    </Form-item>
+                    <Form-item label="昵称：">
+                        <Input v-model="formItem.nickname" placeholder="请输入昵称"></Input>
+                    </Form-item>
+                    <Form-item label="姓名：">
+                        <Input v-model="formItem.input" placeholder="请输入姓名"></Input>
+                    </Form-item>
+                    <Form-item label="性别：">
+                        <Radio-group v-model="formItem.radio">
+                            <Radio label="male">男</Radio>
+                            <Radio label="female">女</Radio>
+                        </Radio-group>
+                    </Form-item>
+                    <Form-item label="职称：">
+                        <Radio-group v-model="formItem.position">
+                            <Radio label="队长"></Radio>
+                            <Radio label="队员"></Radio>
+                            <Radio label="嘉宾"></Radio>
+                            <Radio label="粉丝"></Radio>
+                        </Radio-group>
+                    </Form-item>
+                    <Form-item>
+                        <Button type="primary">提交</Button>
+                        <Button type="ghost" style="margin-left: 8px">取消</Button>
+                    </Form-item>
+                </Form>
+               
               </div>
           </div>
         </div>
@@ -162,6 +180,11 @@ export default {
   name: 'Page',
   data () {
     return {
+      formItem: {
+        input: '',
+        radio: 'male',
+        position: '队员'
+      },
       formValidate: {
         name: '',
         nickname: '',
@@ -192,8 +215,6 @@ export default {
       loading: false,
       loading2: false,
       model1: '0',
-      selected: '0',
-      animal: '队员',
       allData: [
         { parCheck: false },
         { text: '全选' }
@@ -341,6 +362,9 @@ export default {
 
 <style scoped>
 @import '../css/reset.css';
+.ivu-input-wrapper{
+  width:80%;
+}
 .el-dialog__wrapper{
   top: 0;
   right: 0;

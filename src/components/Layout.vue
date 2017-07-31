@@ -46,211 +46,76 @@
             </div>
         </header>
         <!--nav-->
-        <div class="nav">
-            <div class="nav_on_off">
+        <div class="nav" v-if="!collapsed"> 
+            <div class="nav_on_off" @click="collapse">
                 <p>
                     <b class=""></b>
                 </p>
             </div>
-            <div class="nav_home">
+            <div class="nav_home" v-for="(item,index) in title" v-bind:class="{checked:index==nowIndex}" v-on:click="relationClick(index)">
                 <ul class="">
-                    <li class="nav_line_height row homeIndexPlayerOpen" @click="">
-                        <i class="fa_icon active_player"></i>
-                        <a href="" class="">我的球队</a>
+                    <li class="nav_line_height row">
+                        <i class="fa_icon "></i>
+                        <a>{{ item.name }}</a>
                     </li>
-                    <li class="bg_hover_nav0 bg_hover_nav">
-                        <b></b>
-                        我的球队
-                    </li>
-                    <ul class="home_index home_index_player">
-                        <li class="row active_nav_player_bar">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon0"></li>
-                                    <li class="nav_banner_text">高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home_palyer0 bg_hover_nav_home">
-                            <b></b>
-                            高尔夫
-                        </div>
+                    <ul class="home_index home_index_player" v-for="(items,index) in list">
                         <li class="row">
                             <a href="javascript:(0)" class="col">
                                 <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon1"></li>
-                                    <li class="nav_banner_text">和平鸽</li>
+                                    <li class="bg_banner_icon" v-bind:class="items.addClass" style="width:30%;"></li>
+                                    <li class="nav_banner_text" style="display:block">{{ items.name }}</li>
                                 </ul>
                             </a>
                         </li>
-                        <div class="bg_hover_nav_home_player1 bg_hover_nav_home">
-                            <b></b>
-                            和平鸽
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon2"></li>
-                                    <li class="nav_banner_text">长青高球队V</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home_player2 bg_hover_nav_home">
-                            <b></b>
-                            长青高球队V
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon3"></li>
-                                    <li class="nav_banner_text">上海高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home_player3 bg_hover_nav_home">
-                            <b></b>
-                            上海高尔夫
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon4"></li>
-                                    <li class="nav_banner_text">浦东高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home_player4 bg_hover_nav_home">
-                            <b></b>
-                            浦东高尔夫
-                        </div>
                     </ul>
                 </ul>
             </div>
-            <div class="nav_home">
+        </div>
+        <div class="nav1" v-else> 
+            <div class="nav_on_off" @click="collapse">
+                <p>
+                    <b class=""></b>
+                </p>
+            </div>
+            <div class="nav_home" v-for="(item,index) in title" v-bind:class="{checked:index==nowIndex}" v-on:click="relationClick(index)">
                 <ul class="">
-                    <li class="nav_line_height row homeIndexPlayerClose">
-                        <i class="fa_icon"></i>
-                        <a href="" class="">我的门户</a>
+                    <li class="nav_line_height row">
+                        <i class="fa_icon "></i>
+                        <a>{{ item.name }}</a>
                     </li>
-                    <li class="bg_hover_nav1 bg_hover_nav">
-                        <b></b>
-                        我的门户
-                    </li>
-                    <ul class="home_index home_index_home" style="display: none;">
-                        <li class="row active_nav_player_bar">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon0"></li>
-                                    <li class="nav_banner_text">高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home0 bg_hover_nav_home">
-                            <b></b>
-                            高尔夫
-                        </div>
+                    <ul class="home_index home_index_player" v-for="(items,index) in list">
                         <li class="row">
                             <a href="javascript:(0)" class="col">
                                 <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon1"></li>
-                                    <li class="nav_banner_text">和平鸽</li>
+                                    <li class="bg_banner_icon" v-bind:class="items.addClass" style="width:100%;"></li>
+                                    <li class="nav_banner_text" style="display:none">{{ items.name }}</li>
                                 </ul>
                             </a>
                         </li>
-                        <div class="bg_hover_nav_home1 bg_hover_nav_home">
-                            <b></b>
-                            和平鸽
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon2"></li>
-                                    <li class="nav_banner_text">长青高球队V</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home2 bg_hover_nav_home">
-                            <b></b>
-                            长青高球队V
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon3"></li>
-                                    <li class="nav_banner_text">上海高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home3 bg_hover_nav_home">
-                            <b></b>
-                            上海高尔夫
-                        </div>
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon bg_banner_icon4"></li>
-                                    <li class="nav_banner_text">浦东高尔夫</li>
-                                </ul>
-                            </a>
-                        </li>
-                        <div class="bg_hover_nav_home4 bg_hover_nav_home">
-                            <b></b>
-                            浦东高尔夫
-                        </div>
                     </ul>
                 </ul>
             </div>
         </div>
         <!--banner nav-->
-        <section class="banner_nav_block viewFramework-sidebar-full">
-            <div class="banner_nav">
+        <section class="banner_nav_block">
+            <div class="banner_nav banner_nav2" v-if="!nav_open" style="left:-190px;">
                 <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema background_fff_player" @click="$router.push({ path: '/' })">
-                        <a href="javascript:(0)">球队基本信息</a>
+                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{backfff:index===navIndex}" v-on:click="openFrame(index)">
+                        <a href="javascript:(0)">{{ itmeNav.name }}</a>
                     </li>
-                    <li class="banner_active_ed row" @click="$router.push({ path: '/page1' })">
-                        <a href="javascript:(0)">队员管理</a>
-                    </li>
-                    <li class="banner_active_ed notice" >
-                        <a href="javascript:(0)" @click="$router.push({ path: '/page2' })">公告</a>
-                    </li>
-
-                    <li class="banner_active_ed agenda" >
-                        <a href="javascript:(0)" @click="$router.push({ path: '/page3' })">赛程</a>
-                    </li>
-
-                    <li class="banner_active_ed statute">
-                        <a href="javascript:(0)">章程</a>
-                    </li>
-
-                    <li class="banner_active_ed player">
-                        <a href="javascript:(0)">球员</a>
-                    </li>
-
-                    <li class="banner_active_ed seniority">
-                        <a href="javascript:(0)">排行</a>
-                    </li>
-                    <li class="banner_active_ed history">
-                        <a href="javascript:(0)">历史</a>
-                    </li>
-
-                    <li class="banner_active_ed honor">
-                        <a href="javascript:(0)">荣誉</a>
-                    </li>
-
-                    <li class="banner_active_ed photo">
-                        <a href="javascript:(0)">相册</a>
-                    </li>
-
                 </ul>
             </div>
-            <div class="locker position_right"></div>
+            <div class="banner_nav" v-else style="left:0px;">
+                <ul class="hover_li_fff">
+                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{backfff:index==navIndex}" v-on:click="openFrame(index)">
+                        <a href="javascript:(0)">{{ itmeNav.name }}</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="locker position_right" @click="navOpen"></div>
             <div class="width100 left180">
-                <div style="" class="width_nav_width">
+                <div style="height:100%;" class="">
                     <slot name="main"></slot>
-                </div>
-                <div style="" class="width_nav_width1 nav_div" id="nav_div">
-                    <slot name="preview"></slot>
                 </div>
             </div>
 
@@ -258,13 +123,40 @@
     </div>
 </template>
 <script>
-import '../script/jquery.min.js'
-import '../script/index.js'
 export default {
   name: 'Layout',
   data () {
     return {
-      name: 'Layout'
+      name: 'Layout',
+      collapsed: true,
+      nav_open: true,
+      nowIndex: -1,
+      navIndex: -1,
+      pageIndex: -1,
+      title: [
+        { name: '我的球队' },
+        { name: '我的门户' }
+      ],
+      list: [
+        { name: '高尔夫', addClass: 'bg_banner_icon0' },
+        { name: '和平鸽', addClass: 'bg_banner_icon1' },
+        { name: '长青高球队V', addClass: 'bg_banner_icon2' },
+        { name: '上海高尔夫', addClass: 'bg_banner_icon3' },
+        { name: '浦东高尔夫', addClass: 'bg_banner_icon4' }
+      ],
+      navName: [
+        { name: '球队基本信息' },
+        { name: '队员管理' },
+        { name: '公告' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' },
+        { name: '赛程' }
+      ]
     }
   },
   computed: {
@@ -273,6 +165,37 @@ export default {
     console.debug(`${this.name}.created`)
   },
   methods: {
+    relationClick: function (index) {
+      this.nowIndex = index
+    },
+    openFrame: function (index) {
+      this.pageIndex = index
+      if (index === 0) {
+        this.$router.push({ path: '/' })
+      }
+      if (index === 1) {
+        this.$router.push({ path: '/page1' })
+      }
+      if (index === 2) {
+        this.$router.push({ path: '/page2' })
+      }
+    },
+    collapse () {
+      if (this.collapsed === true) {
+        this.collapsed = false
+      }
+      else {
+        this.collapsed = true
+      }
+    },
+    navOpen () {
+      if (this.nav_open === true) {
+        this.nav_open = false
+      }
+      else {
+        this.nav_open = true
+      }
+    }
   },
   mounted () {
     console.debug(`${this.name}.mounted`)
@@ -285,6 +208,15 @@ export default {
 @import '../css/index.css';
 .hover_li_fff>li:hover{
     background: #f5f5f5;
+}
+.checked>ul>.home_index_player{
+    display:block;
+}
+.backfff{
+    background:#fff!important;
+}
+ul.home_index_player{
+    display:none;
 }
 .tema_nav{
     display: none;

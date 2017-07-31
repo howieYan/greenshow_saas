@@ -1,7 +1,7 @@
 <template>
     <layout>
-        <div slot="main">
-          <div style="margin:10px;background:#f5f5f5;">
+        <div style="position:relative;height:100%;overflow: hidden;" slot="main">
+          <div style="">
             <div class="title_team">
               <h1>队员管理</h1>
               <div class="border_bott">
@@ -10,16 +10,14 @@
                   </div>
                   <div class="row height_line">
                       <div class="col height_line_input">
-                          <div class="row">
-                              <input type="text" class="col" placeholder="用户昵称/或手机号">
-                              <i class="fa_icon_share"></i>
-                          </div>
-
+                          <Input  icon="ios-search" placeholder="请输入手机号码或姓名..." style="width: 300px"></Input>
                       </div>
                       <div class="col height_line_btn">
-                          <button id="page1Add">手动添加</button>
-                          <button>删除</button>
-                          <button class="back_color">刷新</button>
+                          <Button type="info" @click="handleEdit">手动添加</Button>
+                          <Button type="primary" :loading="loading2" icon="checkmark-round" @click="toLoading2">
+                              <span v-if="!loading2">刷新</span>
+                              <span v-else>Loading...</span>
+                          </Button>
                       </div>
                   </div>
                   <div class="table_sheet">
@@ -44,64 +42,152 @@
                           </div>
                       </div>
                       <div class="opt row">
-                          <input class="magic-checkbox " type="checkbox" name="" id="allId"
-                          v-model="allData.parCheck" @change="allSelect()">
                           <p class="col">
-                              <b style="padding-right: 20px">{{ allData[1].text }}</b>
-                              <button class="padd_bor">加入黑名单</button>
+                                  <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
+                                  全选
                           </p>
                       </div>
                       <table class="table">
                           <thead>
-                              <tr class="row">
-                                  <th class="width_50px"></th>
-                                  <th class="col">头像</th>
-                                  <th class="col">昵称</th>
-                                  <th class="col">姓名</th>
-                                  <th class="col">性别</th>
-                                  <th class="col">手机</th>
-                                  <th class="col">职称</th>
-                                  <th class="col">操作</th>
+                              <tr class="">
+                                  <th class="width_50px">
+                                     
+                                  </th>
+                                  <th class="">头像</th>
+                                  <th class="">昵称</th>
+                                  <th class="">姓名</th>
+                                  <th class="">性别</th>
+                                  <th class="">手机</th>
+                                  <th class="">职称</th>
+                                  <th class="">操作</th>
                               </tr>
                           </thead>
                           <tbody id="list">
-                              <tr class="row" v-for="item in checkData">
-                                  <td class="width_50px" style="text-align: left;"> 
-                                    <input type="checkbox" name="" @change="singleSelect()" v-model="item.isCheck" :id="item.id">
+                              <tr class="" v-for="item in checkData">
+                                  <td class="width_50px" style="text-align: left;">
+                                      <input type="checkbox" name="" @change="singleSelect()" v-model="item.isCheck" :id="item.id">
+                                      <label :for="item.id"></label>
                                   </td>
-                                  <td class="col"><img :src="'/static/apply_1.png'" alt=""></td>
-                                  <td class="col">Tony_z</td>
-                                  <td class="col">张凌峰</td>
-                                  <td class="col">男</td>
-                                  <td class="col">18000000000</td>
-                                  <td class="col">队员</td>
-                                  <td class="col"><button>修改身份</button></td>
-                              </tr>
+                                  <td class=""><img :src="'/static/apply_1.png'" alt=""></td>
+                                  <td class="">Tony_z</td>
+                                  <td class="">张凌峰</td>
+                                  <td class="">男</td>
+                                  <td class="">18000000000</td>
+                                  <td class="" >
+                                      <Select style="width:70px">
+                                          <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                      </Select>
+                                      {{ item.label }}
+                                  </td>
+                                  <td class="" >
+                                      <Poptip placement ="top-end"
+                                          confirm
+                                          trigger="hover"
+                                          title="您确认删除这条内容吗？"
+                                          @on-ok="ok"
+                                          @on-cancel="cancel">
 
+                                          <Button type="error">删除</Button>
+
+                                      </Poptip>
+                                      <Poptip
+                                          confirm
+                                          title="您确认要加入黑名单吗？"
+                                          @on-ok="yesBlacklist"
+                                          @on-cancel="cancelNo">
+                                          <Button>加入黑名单</Button>
+                                      </Poptip>
+                                  </td>
+                              </tr>
                           </tbody>
                       </table>
                   </div>
               </div>
-
+            </div>
+          </div>
+          <!--弹出框-->
+          <div v-show="!alerts" style="text-align:center;height:100%;">
+            <div class="layui-layer-shade"  times="1" id="widthWin"></div>
+            <div class="alert_header" id="widthAlert">
+                <div class="layui-layer-title">
+                    手动添加页
+                </div>
+                <div class="layui-layer-setwin" @click="closeAlert">
+                    <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                </div>
+                <Form :model="formItem" :label-width="60" style="padding-left:10px;padding-right:10px;">
+                  <Form-item label="昵称：">
+                      <Input v-model="formItem.input" placeholder="请输入昵称"></Input>
+                  </Form-item>
+                  <Form-item label="姓名：">
+                      <Input v-model="formItem.input" placeholder="请输入姓名"></Input>
+                  </Form-item>
+                  <Form-item label="性别：">
+                    <Radio-group v-model="formItem.radio">
+                        <Radio label="male">男</Radio>
+                        <Radio label="female">女</Radio>
+                    </Radio-group>
+                  </Form-item>
+                  <Form-item label="手机号：" v-model="formItem.input">
+                      <Input placeholder="请输入手机号"></Input>
+                  </Form-item>
+                  <Form-item label="职称：" v-model="formItem.input">
+                    <Select >
+                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                    </Select>
+                  </Form-item>
+                  <Form-item>
+                      <Button type="primary">提交</Button>
+                      <Button type="ghost" style="margin-left: 8px">取消</Button>
+                  </Form-item>
+              </Form>
             </div>
           </div>
         </div>
-         <iframe slot="preview" src="http://devwx.golfgreenshow.com/#/teamPlayer?id=CEDE230F-3FFB-4F30-9966-B4E6F236EEDA" id="show" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
-        
+        <iframe slot="preview" src="http://devwx.golfgreenshow.com/#/teamPlayer?id=CEDE230F-3FFB-4F30-9966-B4E6F236EEDA" id="show" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
     </layout>
 </template>
 <script>
-import '../script/jquery.min.js'
-import '../script/zdialog.js'
-import '../script/layer.js'
 
 export default {
   name: 'Page',
   data () {
     return {
+      options: [
+        { text: '队员', value: '1' },
+        { text: '领导', value: '2' },
+        { text: '嘉宾', value: '3' },
+        { text: '粉丝', value: '4' }
+      ],
+      formItem: {
+        input: '',
+        select: '',
+        radio: 'male'
+      },
+      alerts: true,
+      loading: false,
+      loading2: false,
       allData: [
         { parCheck: false },
         { text: '全选' }
+      ],
+      cityList: [
+        {
+          value: '0',
+          label: '领导'
+        },
+        {
+          value: '1',
+          label: '队员'
+        },
+        {
+          value: '2',
+          label: '嘉宾'
+        },
+        {
+          value: '3',
+          label: '粉丝'
+        }
       ],
       checkData: [
         {
@@ -119,7 +205,10 @@ export default {
         {
           isCheck: false
         }
-      ]
+      ],
+      modal: {
+        show: false
+      }
     }
   },
   computed: {
@@ -133,23 +222,56 @@ export default {
         item.isCheck = vm.allData.parCheck
       })
     },
+    yesBlacklist () {
+      this.$Message.info('已经加入黑名单了')
+    },
+    cancelNo () {
+      this.$Message.info('已经取消加入黑名单了')
+    },
+    ok () {
+      this.$Message.info('点击了确定')
+    },
+    cancel () {
+      this.$Message.info('点击了取消')
+    },
     singleSelect () {
       var vm = this
       var selectData = vm.checkData.filter(item => {
         return item.isCheck === true
       })
       selectData.length === vm.checkData.length ? vm.allData.parCheck = true : vm.allData.parCheck = false
+    },
+    toLoading () {
+      this.loading = true
+    },
+    toLoading2 () {
+      this.loading2 = true
+    },
+    handleEdit () {
+      this.alerts = false
+    },
+    closeAlert () {
+      this.alerts = true
+    },
+    handleStart () {
+      this.$Modal.confirm({
+        title: '确认提示',
+        content: '你确定要删除吗？',
+        okText: '确定',
+        cancelText: '取消'
+      })
     }
   },
   mounted () {
   }
 }
-import '../script/index.js'
-import '../script/pege1.js'
 </script>
 
 <style scoped>
 @import '../css/reset.css';
+.ivu-poptip-body>i.ivu-poptip-confirm .ivu-poptip-body .ivu-icon,.ivu-icon-help-circled:before{
+   display:none;
+}
 body,html{
     height: 100%;
     background:#ddd;
@@ -179,18 +301,20 @@ body,html{
     border-bottom: 2px solid #44b549;
 }
 .height_line {
-    height: 80px;
-    line-height: 80px;
+    margin-top:20px;
+    height: 31px;
+    line-height: 30px;
+    margin-bottom:20px;
+}
+.height_line_input{
+  height:32px;
 }
 .height_line_input>div{
     position: relative;
     width: 230px;
+    padding-left:20px;
 }
-.height_line_input>div>input{
-    margin-top: 20px;
-    padding: 10px 40px  10px 10px;
-    border: 1px solid #eee;
-}
+
 .fa_icon_share{
     margin-top: 20px;
     display: block;
@@ -203,17 +327,19 @@ body,html{
     top:0;
     right: 0;
 }
-.height_line_btn>button{
+/*.height_line_btn>button{
     padding:10px;
     border-radius:5px;
     border: 1px solid #eee;
     background: #ffffff;
-}
+}*/
 .height_line_btn>button.back_color{
     background-color: #44b549;
     color: #fff;
 }
 .table_sheet{
+    width:100%;
+    overflow-x:auto;
     border: 1px solid #EEEEEE;
 }
 .team_player_nav{
@@ -256,9 +382,6 @@ body,html{
     background: #ffffff;
     margin-right: 10px;
 }
-/*.magic-checkbox:checked + label:before {*/
-    /*border: #3e97eb;*/
-    /*background: #3e97eb; }*/
 .opt>b{
     margin-top: -5px;
     height: 50px;
@@ -286,18 +409,203 @@ body,html{
     height: 30px;
     width: 30px;
 }
-.table td >button{
-    padding: 5px 10px;
-    background: #ffffff;
-    border: 1px solid #eee;
-}
 .width_50px{
     width: 50px;
 }
 .width_50px>input{
-    margin-left: 15px;
-    margin-top: 10px;
-    width: 20px;
-    height: 20px;
+    margin-left: 12px;
+}
+/*下拉框*/
+.selectpicker {
+    text-align: left;
+    position: relative;
+}
+.selectpicker .dropdown-toggle.filled {
+    padding-left: 5px;
+}
+.selectpicker .dropdown-toggle {
+    position: relative;
+    text-align: left;
+    border-radius: 0;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+}
+.btn-group-lg>.btn, .btn-lg {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+.btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+.open>.dropdown-toggle.btn-default {
+    background-image: none;
+}
+.open>.dropdown-toggle.btn-default {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+}
+.open>.dropdown-menu {
+    display: block;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid #eee;
+    white-space: nowrap;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+.selectpicker .dropdown-toggle span.text {
+    float: left;
+}
+.selectpicker .dropdown-toggle span.caret {
+    float: right;
+    margin-top: 7px;
+}
+.btn-lg .caret {
+    border-width: 5px 5px 0;
+    border-bottom-width: 0;
+}
+.btn .caret {
+    margin-left: 0;
+}
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 2px;
+    vertical-align: middle;
+    border-top: 4px dashed;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 160px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    list-style: none;
+    font-size: 14px;
+    text-align: left;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    background-clip: padding-box;
+}
+.selectpicker .dropdown-menu ul {
+    margin-top: 4px;
+}
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
+}
+.selectpicker .dropdown-menu ul>li {
+    display: block;
+    padding: 4px 0 4px 20px;
+    cursor: pointer;
+}
+
+.layui-layer-shade{
+    position:absolute;
+    z-index: 19891014;
+    background-color: #000;
+    opacity: 0.3;
+    height: 100%;
+    top:0px;
+    left:0;
+    width:100%;
+}
+.alert_header{
+    width: 430px;
+    height: 500px;
+    position: absolute;
+    background: #ffffff;
+    z-index: 1000000000000;
+    border-radius: 5px;
+    top:100px;
+    left:5%;
+}
+.layui-layer-title{
+    padding: 0 80px 0 20px;
+    height: 42px;
+    line-height: 42px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+    overflow: hidden;
+    background-color: #F8F8F8;
+    border-radius: 2px 2px 0 0;
+    text-align: -webkit-left;
+}
+.layui-layer-setwin {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    font-size: 0;
+    line-height: initial;
+}
+.layui-layer-ico{
+    background: url('/static/icon.png')no-repeat center;
+}
+.layui-layer-setwin .layui-layer-close1 {
+    background-position: 1px -40px;
+    cursor: pointer;
+}
+.layui-layer-setwin a {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    font-size: 12px;
+    _overflow: hidden;
+}
+.layui-layer-setwin a {
+    display: inline-block;
+    vertical-align: top;
+}
+form{
+    margin-top: 30px;
+}
+.input_pa{
+   padding: 5px 10px;
+}
+form>div{
+    text-align: left;
+}
+.addinputform{
+    padding: 10px;
+    margin-left: 42px;
+    border-color:#EEEEEE;
+    background: #30adef;
+    border: none;
+    color:#fff;
+    border-radius: 3px;
 }
 </style>

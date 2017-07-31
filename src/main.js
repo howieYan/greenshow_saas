@@ -5,6 +5,9 @@ import App from './App'
 import router from './router'
 import './components'
 import VueHtml5Editor from 'vue-html5-editor'
+import iView from 'iview'
+import VueRouter from 'vue-router'
+import 'iview/dist/styles/iview.css'
 
 var options = {
   // 全局组件名称，使用new VueHtml5Editor(options)时该选项无效
@@ -142,6 +145,10 @@ var options = {
 }
 Vue.use(VueHtml5Editor, options)
 
+Vue.use(VueRouter)
+
+Vue.use(iView)
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
@@ -151,3 +158,4 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+

@@ -1,25 +1,10 @@
-$(function(){
-	$("#all").click(function(){
-	    if(this.checked){
-	        $("#list>input:checkbox").prop("checked", true);
-	    }else{
-	        $("#list>input:checkbox").prop("checked", false);
-	    }
-	});
-})
-$(function(){
-	$('#page1Add').click(function(){
-		!function(){
-            //页面一打开就执行，放入ready是为了layer所需配件（css、扩展模块）加载完毕
-            layer.ready(function(){
-                layer.open({
-                    type: 2,
-                    title: '添加页',
-                    maxmin: true,
-                    area: ['80%', '70%'],
-                    content: '../html/addText.html'
-                });
-            });
-    	}();
-	})
+$(function () {
+    var winWidth= $('.layui-layer-shade').width();
+    var winHeight = $('.layui-layer-shade').height();
+    var alertWidth = $('.alert_header').width();
+    var alertHeight = $('.alert_header').height();
+    $('.alert_header').css({
+        'left':winWidth/2-alertWidth/2+'px',
+        'top':winHeight/2-alertHeight/2+'px'
+    })
 })

@@ -162,7 +162,7 @@ const respones = {
   'get /api5/Team/2B32D3B3-ED48-4006-B2D1-8022D20A3929': Team1,
   'get /api5/Team/BFA164FE-A17F-44AD-B7ED-68CDEDD6A6F8': Team1,
   'get /api5/Player': ListPlayer,
-  '': null  // DEBUG PURPOSE!
+  '': null // DEBUG PURPOSE!
 }
 /* eslint-enable */
 

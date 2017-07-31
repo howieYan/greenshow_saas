@@ -8,8 +8,8 @@
     <button v-on:click="modalSwitch" class="ui inverted blue button">nihao </button>
 </div>
 </template>
-<script>
 
+<script>
 export default {
   name: 'alertadd',
   data () {

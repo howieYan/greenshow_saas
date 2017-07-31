@@ -8,7 +8,7 @@ import mock from './mock' // TODO: Remove this when build production release.
 /**
  * axios configurations.
  */
-axios.defaults.timeout = 10000  // timeout in 10 seconds.
+axios.defaults.timeout = 10000 // timeout in 10 seconds.
 axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? 'http://wx.golfgreenshow.com' : 'http://devwx.golfgreenshow.com'
 // axios.defaults.baseURL = 'http://wx.gs.co'
 
@@ -60,19 +60,19 @@ export default {
             }
             // withCredentials: true
           })
-          .then(response => {
-            lib.debugApi && console.debug(response ? JSON.stringify(response, null, '\t') : `${method} ${uri}, ` + (data ? JSON.stringify(data, null, '\t') : ''))
-            if (response && response.data) {
-              resolve(response.data)
-            }
-            else {
-              reject(new Error('通讯失败，请检查网络或稍后重试。'))
-            }
-          })
-          .catch((error) => {
-            console.error(error)
-            reject(new Error('通讯异常，请检查网络或稍后重试。'))
-          })
+            .then(response => {
+              lib.debugApi && console.debug(response ? JSON.stringify(response, null, '\t') : `${method} ${uri}, ` + (data ? JSON.stringify(data, null, '\t') : ''))
+              if (response && response.data) {
+                resolve(response.data)
+              }
+              else {
+                reject(new Error('通讯失败，请检查网络或稍后重试。'))
+              }
+            })
+            .catch((error) => {
+              console.error(error)
+              reject(new Error('通讯异常，请检查网络或稍后重试。'))
+            })
         }
       }
       catch (e) {

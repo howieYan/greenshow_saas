@@ -34,7 +34,7 @@
                           <thead>
                               <tr class="">
                                   <th class="width_50px">
-                                     
+
                                   </th>
                                   <th class="" v-for="item in tableText">{{ item }}</th>
                               </tr>
@@ -156,8 +156,8 @@
 
     </layout>
 </template>
-<script>
 
+<script>
 export default {
   name: 'Page',
   data () {

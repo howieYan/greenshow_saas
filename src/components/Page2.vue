@@ -11,8 +11,8 @@
         <iframe slot="preview" src="http://devwx.golfgreenshow.com/#/agenda?id=CEDE230F-3FFB-4F30-9966-B4E6F236EEDA" id="show" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
     </layout>
 </template>
-<script>
 
+<script>
 export default {
   name: 'Page',
   data () {

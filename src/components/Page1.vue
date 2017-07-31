@@ -18,33 +18,16 @@
                               <span v-if="!loading2">刷新</span>
                               <span v-else>Loading...</span>
                           </Button>
+                          <Select style="width:120px" v-model="model1">
+                              <Option v-for="item in optionsSle" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                          </Select>
                       </div>
                   </div>
                   <div class="table_sheet">
-                      <div class="team_player_nav row">
-                          <div class="col team_player_nav_activer">
-                              <b>全部队员</b>
-                          </div>
-                          <div class="col">
-                              <b>领导</b>
-                          </div>
-                          <div class="col">
-                              <b>队员</b>
-                          </div>
-                          <div class="col">
-                              <b>嘉宾</b>
-                          </div>
-                          <div class="col">
-                              <b>粉丝</b>
-                          </div>
-                          <div class="col">
-                              <b>黑名单</b>
-                          </div>
-                      </div>
                       <div class="opt row">
                           <p class="col">
-                                  <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
-                                  全选
+                              <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
+                              全选
                           </p>
                       </div>
                       <table class="table">
@@ -53,13 +36,7 @@
                                   <th class="width_50px">
                                      
                                   </th>
-                                  <th class="">头像</th>
-                                  <th class="">昵称</th>
-                                  <th class="">姓名</th>
-                                  <th class="">性别</th>
-                                  <th class="">手机</th>
-                                  <th class="">职称</th>
-                                  <th class="">操作</th>
+                                  <th class="" v-for="item in tableText">{{ item }}</th>
                               </tr>
                           </thead>
                           <tbody id="list">
@@ -68,13 +45,18 @@
                                       <input type="checkbox" name="" @change="singleSelect()" v-model="item.isCheck" :id="item.id">
                                       <label :for="item.id"></label>
                                   </td>
-                                  <td class=""><img :src="'/static/apply_1.png'" alt=""></td>
+                                  <td class="">
+                                    <img :src="'/static/apply_1.png'" alt="" @click="uploadImage">
+                                  </td>
                                   <td class="">Tony_z</td>
+                                  <td class="">
+
+                                  </td>
                                   <td class="">张凌峰</td>
                                   <td class="">男</td>
                                   <td class="">18000000000</td>
                                   <td class="" >
-                                      <Select style="width:70px">
+                                      <Select style="width:70px" >
                                           <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
                                       </Select>
                                       {{ item.label }}
@@ -106,45 +88,72 @@
             </div>
           </div>
           <!--弹出框-->
-          <div v-show="!alerts" style="text-align:center;height:100%;">
-            <div class="layui-layer-shade"  times="1" id="widthWin"></div>
-            <div class="alert_header" id="widthAlert">
+        <div class="el-dialog__wrapper" v-show="!alerts">
+          <div class="center_top">
+              <div class="alert_header" id="widthAlert">
                 <div class="layui-layer-title">
                     手动添加页
                 </div>
                 <div class="layui-layer-setwin" @click="closeAlert">
                     <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                 </div>
-                <Form :model="formItem" :label-width="60" style="padding-left:10px;padding-right:10px;">
-                  <Form-item label="昵称：">
-                      <Input v-model="formItem.input" placeholder="请输入昵称"></Input>
-                  </Form-item>
-                  <Form-item label="姓名：">
-                      <Input v-model="formItem.input" placeholder="请输入姓名"></Input>
-                  </Form-item>
-                  <Form-item label="性别：">
-                    <Radio-group v-model="formItem.radio">
-                        <Radio label="male">男</Radio>
-                        <Radio label="female">女</Radio>
-                    </Radio-group>
-                  </Form-item>
-                  <Form-item label="手机号：" v-model="formItem.input">
-                      <Input placeholder="请输入手机号"></Input>
-                  </Form-item>
-                  <Form-item label="职称：" v-model="formItem.input">
-                    <Select >
-                        <Option v-for="item in cityList" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                    </Select>
-                  </Form-item>
-                  <Form-item>
-                      <Button type="primary">提交</Button>
-                      <Button type="ghost" style="margin-left: 8px">取消</Button>
-                  </Form-item>
-              </Form>
-            </div>
+                 <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
+                    <Form-item label="昵称：" prop="nickname">
+                        <Input v-model="formValidate.nickname" placeholder="请输入昵称"></Input>
+                    </Form-item>
+                    <Form-item label="姓名:" prop="name">
+                        <Input v-model="formValidate.name" placeholder="请输入姓名"></Input>
+                    </Form-item>
+                    <Form-item label="性别:" prop="gender">
+                        <Radio-group v-model="formValidate.gender">
+                            <Radio label="男">男</Radio>
+                            <Radio label="女">女</Radio>
+                        </Radio-group>
+                    </Form-item>
+                    <Form-item label="手机号：" prop="phone">
+                        <Input v-model="formValidate.phone" placeholder="请输入手机号"></Input>
+                    </Form-item>
+                    <Form-item label="职称："prop="position">
+                        <Radio-group v-model="formValidate.position">
+                            <Radio label="队长"></Radio>
+                            <Radio label="队员"></Radio>
+                            <Radio label="嘉宾"></Radio>
+                            <Radio label="粉丝"></Radio>
+                        </Radio-group>
+                    </Form-item>
+                    <Form-item>
+                        <Button type="primary" @click="handleSubmit('formValidate')">提交</Button>
+                        <Button type="ghost" @click="handleReset('formValidate')" style="margin-left: 8px">重置</Button>
+                    </Form-item>
+                </Form>
+              </div>
           </div>
         </div>
-        <iframe slot="preview" src="http://devwx.golfgreenshow.com/#/teamPlayer?id=CEDE230F-3FFB-4F30-9966-B4E6F236EEDA" id="show" width="100%" height="99%" marginheight="0" marginwidth="0" frameborder="0" scrolling="auto"></iframe>
+        <!-- 头像上传-->
+        <div class="el-dialog__wrapper" v-show="!uploadImages">
+          <div class="center_top">
+              <div class="alert_header" id="widthAlert">
+                <div class="layui-layer-title">
+                    手动添加页
+                </div>
+                <div class="layui-layer-setwin" @click="closeuploadImages">
+                    <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                </div>
+                <Upload style="margin:10px;"
+                    multiple
+                    type="drag"
+                    action="//jsonplaceholder.typicode.com/posts/">
+                    <div style="padding: 20px 0;">
+                        <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+                        <p>点击或将图片拖拽到这里上传</p>
+                    </div>
+                </Upload>
+                 <p style="text-align:center;">图片最小：200px*200px ，最大：600px*600px 图片格式是png,jpg,,jpeg,gif等等。</p>
+              </div>
+          </div>
+        </div>
+        </div>
+
     </layout>
 </template>
 <script>
@@ -153,23 +162,67 @@ export default {
   name: 'Page',
   data () {
     return {
-      options: [
-        { text: '队员', value: '1' },
-        { text: '领导', value: '2' },
-        { text: '嘉宾', value: '3' },
-        { text: '粉丝', value: '4' }
-      ],
-      formItem: {
-        input: '',
-        select: '',
-        radio: 'male'
+      formValidate: {
+        name: '',
+        nickname: '',
+        gender: '',
+        phone: '',
+        position: ''
       },
+      ruleValidate: {
+        name: [
+          { required: true, message: '姓名不能为空', trigger: 'blur' }
+        ],
+        nickname: [
+          { required: true, message: '昵称不能为空', trigger: 'blur' }
+        ],
+        gender: [
+          { required: true, message: '请选择性别', trigger: 'change' }
+        ],
+        phone: [
+          { required: true, message: '手机号不能为空', trigger: 'blur' }
+        ],
+        position: [
+          { required: true, message: '请选择职称', trigger: 'change' }
+        ]
+      },
+      tableText: ['头像', '昵称', '姓名', '性别', '手机', '职称', '操作'],
       alerts: true,
+      uploadImages: true,
       loading: false,
       loading2: false,
+      model1: '0',
+      selected: '0',
+      animal: '队员',
       allData: [
         { parCheck: false },
         { text: '全选' }
+      ],
+      optionsSle: [
+        {
+          value: '0',
+          label: '全部队员'
+        },
+        {
+          value: '1',
+          label: '领导'
+        },
+        {
+          value: '2',
+          label: '队员'
+        },
+        {
+          value: '3',
+          label: '嘉宾'
+        },
+        {
+          value: '4',
+          label: '粉丝'
+        },
+        {
+          value: '5',
+          label: '黑名单'
+        }
       ],
       cityList: [
         {
@@ -250,6 +303,12 @@ export default {
     handleEdit () {
       this.alerts = false
     },
+    uploadImage () {
+      this.uploadImages = false
+    },
+    closeuploadImages () {
+      this.uploadImages = true
+    },
     closeAlert () {
       this.alerts = true
     },
@@ -260,6 +319,19 @@ export default {
         okText: '确定',
         cancelText: '取消'
       })
+    },
+    handleSubmit (name) {
+      this.$refs[name].validate((valid) => {
+        if (valid) {
+          this.$Message.success('提交成功!')
+        }
+        else {
+          this.$Message.error('表单验证失败!')
+        }
+      })
+    },
+    handleReset (name) {
+      this.$refs[name].resetFields()
     }
   },
   mounted () {
@@ -269,6 +341,17 @@ export default {
 
 <style scoped>
 @import '../css/reset.css';
+.el-dialog__wrapper{
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  overflow: auto;
+  margin: 0;
+  background:rgba(0,0,0,0.5);
+}
+
 .ivu-poptip-body>i.ivu-poptip-confirm .ivu-poptip-body .ivu-icon,.ivu-icon-help-circled:before{
    display:none;
 }
@@ -534,7 +617,7 @@ body,html{
 
 .layui-layer-shade{
     position:absolute;
-    z-index: 19891014;
+    z-index: 222222222222;
     background-color: #000;
     opacity: 0.3;
     height: 100%;
@@ -543,14 +626,17 @@ body,html{
     width:100%;
 }
 .alert_header{
-    width: 430px;
-    height: 500px;
+    top:25%;
     position: absolute;
-    background: #ffffff;
-    z-index: 1000000000000;
-    border-radius: 5px;
-    top:100px;
-    left:5%;
+    left: 50%;
+    width:30%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-sizing: border-box;
+    margin-bottom: 50px;
 }
 .layui-layer-title{
     padding: 0 80px 0 20px;

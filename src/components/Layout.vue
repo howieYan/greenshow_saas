@@ -36,7 +36,7 @@
                     </div>
                 </div>
                 <div class="seek float_right hover">
-                    <div class="row"><b class="bg_image col"></b><b class="col">搜索</b></div>
+                    <div class="row"><b class="bg_image col"></b><b class="col"style="line-height:50px;width:40px;">搜索</b></div>
                     <div class="input">
                         <input type="text" placeholder="搜索">
                         <b class="huiche"></b>

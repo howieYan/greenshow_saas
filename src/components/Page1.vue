@@ -28,6 +28,7 @@
                           <p class="col">
                               <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
                               全选
+                              <Button type="ghost" shape="circle">删除</Button>
                           </p>
                       </div>
                       <table class="table">

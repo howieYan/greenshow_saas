@@ -42,17 +42,10 @@
 .seek{
     display: block;
     z-index: 2;
+    color:#fff;
     background: #373d41;
     border-right: 1px solid #2a2f32;
     position: relative;
-}
-.seek>span{
-    width: 65px;
-    padding: 0 20px;
-    height: 50px;
-    line-height: 50px;
-    color: #ffffff;
-    text-align: center;
 }
 .seek>.input>input{
     position: absolute;

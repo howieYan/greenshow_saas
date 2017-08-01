@@ -4,29 +4,32 @@
           <div class="title_team">
               <h1>赛事活动</h1>
               <div style="float:right;height:40px;line-height:40px;margin-right:20px;">
-                   <Button type="info">排序</Button>
                    <Button type="ghost" @click="addCopyreader">添加</Button>
               </div>
               <table class="table">
                   <thead>
                       <tr class="">
                           <th class="">
-                              时间
+                              赛制
                           </th>
-                          <th class="" >标题</th>
-                          <th class="" >职位</th>
-                          <th class="" >人员</th>
+                          <th class="" >赛事类型</th>
+                          <th class="" >赛事名称</th>
+                          <th class="" >赛事时间</th>
+                          <th class="" >球场</th>
+                          <th class="" >报名人数</th>
                           <th class="" >操作</th>
                       </tr>
                   </thead>
                   <tbody id="list">
                       <tr class="">
-                          <td class="" >2017-07-13 - 2017-08-17</td>
-                          <td class="">第三届XXXX队委名单</td>
-                          <td class="">队长</td>
-                          <td class="">张凌峰</td>
-                         
+                          <td class="" >比杆赛</td>
+                          <td class="">球队赛</td>
+                          <td class="">8月例赛</td>
+                          <td class="">2017-7-12-2017-8-12</td>
+                          <td class="">上海美兰湖高尔夫球场</td>
+                          <td class="">20</td>
                           <td class="" >
+                              <Button type="primary">发布</Button>
                               <Button type="ghost" @click="copyreader">编辑</Button>
                               <Poptip placement ="top-end"
                                   confirm
@@ -36,6 +39,7 @@
                                   @on-cancel="cancel">
                                   <Button type="error">删除</Button>
                               </Poptip>
+                              <Button type="success" @click="openParticulars">详情</Button>
                           </td>
                       </tr>
                   </tbody>
@@ -52,32 +56,58 @@
                       <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                   </div>
                   <Form  :label-width="80" style="margin-top:24px;">
-                    <Form-item label="时间：">
+                    <Form-item label="赛事时间：">
                         <Row>
                           <Col>
-                              <Date-picker type="daterange" confirm placement="right" placeholder="选择日期" style="width:90%;"></Date-picker>
+                              <Date-picker type="daterange" confirm placement="right" placeholder="请选择日期" style="width:90%;"></Date-picker>
                           </Col>
                         </Row>
                     </Form-item>
-                    <Form-item label="标题：" >
-                        <Input  placeholder="请输入标题" style="width:90%;"></Input>
+                    <Form-item label="球场：" >
+                        <Input  placeholder="请输入球场..." style="width:90%;"></Input>
                     </Form-item>
-                    <Form-item label="职称：">
-                        <Radio-group v-model="formItem.position">
-                            <Radio label="队长"></Radio>
-                            <Radio label="队员"></Radio>
-                            <Radio label="嘉宾"></Radio>
-                            <Radio label="粉丝"></Radio>
-                        </Radio-group>
+                    <Form-item label="赛制：" >
+                        <Input  placeholder="请输入赛制..." style="width:90%;"></Input>
                     </Form-item>
-                    <Form-item label="人员：" >
-                        <Input  placeholder="请输入人员" style="width:90%;"></Input>
+                    <Form-item label="赛事名称：" >
+                        <Input  placeholder="请输入赛事名称..." style="width:90%;"></Input>
+                    </Form-item>
+                     <Form-item label="参赛名额：" >
+                        <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
+                    </Form-item>
+                    <Form-item label="简述：">
+                       <Input v-model="value5" type="textarea" placeholder="请输入..." style="width:90%;"></Input>
+                    </Form-item>
+                    <Form-item>
+                      <div class="row">
+                        <div class="col">
+                          <div class="title_card">
+                              <b></b>
+                          报名范围
+                          </div>
+                          <Checkbox-group v-model="fruit">
+                              <Checkbox label="球队队员"></Checkbox><br>
+                              <Checkbox label="嘉宾"></Checkbox><br>
+                          </Checkbox-group>
+                        </div>
+                        <div class="col">
+                          <div class="title_card">
+                              <b></b>
+                          分享范围
+                          </div>
+                          <Checkbox-group v-model="fruit">
+                              <Checkbox label="球队队员"></Checkbox><br>
+                              <Checkbox label="嘉宾"></Checkbox><br>
+                              <Checkbox label="粉丝"></Checkbox>
+                          </Checkbox-group>
+                        </div>
+                      </div>
                     </Form-item>
                     <Form-item>
                         <Button type="primary">提交</Button>
-                        <Button type="ghost" style="margin-left: 8px">取消</Button>
+                        <Button type="ghost" style="margin-left: 8px" @click="closecopyreader">取消</Button>
                     </Form-item>
-                </Form>
+                  </Form>
                 </div>
             </div>
           </div>
@@ -92,32 +122,105 @@
                       <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                   </div>
                   <Form  :label-width="80" style="margin-top:24px;">
-                    <Form-item label="时间：">
+                    <Form-item label="赛事时间：">
                         <Row>
                           <Col>
-                              <Date-picker type="daterange" confirm placement="right" placeholder="选择日期" style="width:90%;"></Date-picker>
+                              <Date-picker type="daterange" confirm placement="right" placeholder="请选择日期" style="width:90%;"></Date-picker>
                           </Col>
                         </Row>
                     </Form-item>
-                    <Form-item label="标题：" >
-                        <Input  placeholder="请输入标题" style="width:90%;"></Input>
+                    <Form-item label="球场：" >
+                        <Input  placeholder="请输入球场..." style="width:90%;"></Input>
                     </Form-item>
-                    <Form-item label="职称：">
-                        <Radio-group v-model="formItem.position">
-                            <Radio label="队长"></Radio>
-                            <Radio label="队员"></Radio>
-                            <Radio label="嘉宾"></Radio>
-                            <Radio label="粉丝"></Radio>
-                        </Radio-group>
+                    <Form-item label="赛制：" >
+                        <Input  placeholder="请输入赛制..." style="width:90%;"></Input>
                     </Form-item>
-                    <Form-item label="人员：" >
-                        <Input  placeholder="请输入人员" style="width:90%;"></Input>
+                    <Form-item label="赛事名称：" >
+                        <Input  placeholder="请输入赛事名称..." style="width:90%;"></Input>
+                    </Form-item>
+                     <Form-item label="参赛名额：" >
+                        <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
+                    </Form-item>
+                    <Form-item label="简述：">
+                       <Input v-model="value5" type="textarea" placeholder="请输入..." style="width:90%;"></Input>
+                    </Form-item>
+                    <Form-item>
+                      <div class="row">
+                        <div class="col">
+                          <div class="title_card">
+                              <b></b>
+                          报名范围
+                          </div>
+                          <Checkbox-group v-model="fruit">
+                              <Checkbox label="球队队员"></Checkbox><br>
+                              <Checkbox label="嘉宾"></Checkbox><br>
+                          </Checkbox-group>
+                        </div>
+                        <div class="col">
+                          <div class="title_card">
+                              <b></b>
+                          分享范围
+                          </div>
+                          <Checkbox-group v-model="fruit">
+                              <Checkbox label="球队队员"></Checkbox><br>
+                              <Checkbox label="嘉宾"></Checkbox><br>
+                              <Checkbox label="粉丝"></Checkbox>
+                          </Checkbox-group>
+                        </div>
+                      </div>
                     </Form-item>
                     <Form-item>
                         <Button type="primary">提交</Button>
-                        <Button type="ghost" style="margin-left: 8px">取消</Button>
+                        <Button type="ghost" style="margin-left: 8px" @click="closecopyreader">取消</Button>
                     </Form-item>
-                </Form>
+                  </Form>
+                </div>
+            </div>
+          </div>
+          <!--详情-->
+           <div class="el-dialog__wrappers" v-show="!particulars">
+            <div class="center_top">
+                <div class="alert_headers" id="widthAlert">
+                  <div class="layui-layer-title">
+                      详情页
+                  </div>
+                  <div class="layui-layer-setwin" @click="closeParticulars">
+                      <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                  </div>
+                  <Form  :label-width="80" style="margin-top:24px;">
+                    <div class="event_name row">
+                        <div class="col border_event">
+                                <b>8月例赛</b>
+                        </div>
+                        <div class="col">
+                            <b>2017-3-25</b>
+                        </div>
+                        <div class="col">
+                            <b>上海美兰湖高尔夫球场</b>
+                        </div>
+                    </div>
+                    <Form-item label="简述：">
+                       <Input v-model="value5" type="textarea" disabled  placeholder="这场例赛" style="width:90%;"></Input>
+                    </Form-item>
+                    <Row>
+                        <Col span="24" class="demo-tabs-style2">
+                            <Tabs type="card">
+                                <Tab-pane label="报名管理">
+                                  <div style="width:100%;height:100%;">
+                                    <div class="col height_line_input">
+                                        <Input  icon="ios-search" placeholder="请输入手机号码或姓名..." style="width: 300px"></Input>
+                                    </div>
+                                  </div>
+                                </Tab-pane>
+                                <Tab-pane label="分组管理">标签二的内容</Tab-pane>
+                                <Tab-pane label="领先版">标签三的内容</Tab-pane>
+                                <Tab-pane label="奖项设置">标签三的内容</Tab-pane>
+                                <Tab-pane label="活动新闻">标签三的内容</Tab-pane>
+                                <Tab-pane label="活动新闻">标签三的内容</Tab-pane>
+                            </Tabs>
+                        </Col>
+                    </Row>
+                  </Form>
                 </div>
             </div>
           </div>
@@ -128,10 +231,12 @@
 <script>
 export default {
   name: 'Page2',
+  value3: 2,
   data () {
     return {
       copyreaders: true,
       addCopyreaders: true,
+      particulars: true,
       formItem: {
         position: '队员'
       }
@@ -159,6 +264,12 @@ export default {
     },
     closeaddCopyreader () {
       this.addCopyreaders = true
+    },
+    openParticulars () {
+      this.particulars = false
+    },
+    closeParticulars () {
+      this.particulars = true
     }
   },
   mounted () {
@@ -181,6 +292,29 @@ export default {
     line-height: 80px;
     border: 1px solid #eee;
 }
+.title_card{
+    background-color: #2d8cf0;
+    height:30px;
+    line-height: 30px;
+    color:#ffffff;
+    width:80px;
+    text-align: right;
+    padding-right: 10px;
+    position: relative;
+}
+.ivu-tabs{
+  border-left:1px solid  #dddee1;
+  border-bottom:1px solid  #dddee1;
+}
+.title_card >b{
+    position: absolute;
+    left:-1px;
+    width: 0;
+    height: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #ffffff;
+}
 .table{
   border-top:1px solid #ddd;
   width:100%;
@@ -196,7 +330,7 @@ export default {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.el-dialog__wrapper{
+.el-dialog__wrapper,.el-dialog__wrappers{
   top: 0;
   right: 0;
   bottom: 0;
@@ -207,10 +341,26 @@ export default {
   background:rgba(0,0,0,0.5);
 }
 .alert_header {
-    top: 25%;
+    top: 20%;
     position: absolute;
     left: 50%;
     width: 30%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+}
+.alert_headers{
+    top: 12%;
+    position: absolute;
+    left: 50%;
+    width: 50%;
+    height:80%;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     background: #fff;
@@ -258,5 +408,39 @@ export default {
 }
 .layui-layer-ico {
     background: url(/static/icon.png)no-repeat center;
+}
+.event_name{
+    height:30px;
+    line-height:30px;
+    margin-top:10px;
+    margin-bottom:10px;
+    text-align:center;
+}
+.border_event>div{
+    text-align:center;
+}
+.border_event>b{
+    border-left:2px solid #fc6621;
+    padding-left: 10px;
+}
+.demo-tabs-style2{
+  padding:0 10px;
+}
+.demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab{
+    border-radius: 0;
+    background: #fff;
+}
+.demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active{
+    border-top: 1px solid #3399ff;
+}
+.demo-tabs-style2 > .ivu-tabs.ivu-tabs-card > .ivu-tabs-bar .ivu-tabs-tab-active:before{
+    content: '';
+    display: block;
+    width: 100%;
+    height: 1px;
+    background: #3399ff;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 </style>

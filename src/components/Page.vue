@@ -2,6 +2,7 @@
     <layout>
         <div slot="main">
             <div style="margin:20px;">
+                <h1>球队基本信息</h1>
                 <editor content="" :height="500" :z-index="1000" :auto-height="true" :show-module-name="false"></editor>
             </div>
         </div>
@@ -28,5 +29,12 @@ export default {
 </script>
 
 <style scoped>
+h1 {
+    height: 80px;
+    font-size: 20px;
+    padding-left: 20px;
+    line-height: 80px;
+    border: 1px solid #eee;
+}
 @import '../../font-awesome-4.7.0/css/font-awesome.min.css'
 </style>

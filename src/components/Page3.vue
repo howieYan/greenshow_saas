@@ -20,7 +20,7 @@
                           <th class="" >操作</th>
                       </tr>
                   </thead>
-                  <tbody id="list">
+                  <tbody id="list" v-for="n in 10">
                       <tr class="">
                           <td class="" >比杆赛</td>
                           <td class="">球队赛</td>
@@ -39,7 +39,7 @@
                                   @on-cancel="cancel">
                                   <Button type="error">删除</Button>
                               </Poptip>
-                              <Button type="success" @click="openParticulars">详情</Button>
+                              <Button type="success" @click="$router.push({ path: '/details' })">详情</Button>
                           </td>
                       </tr>
                   </tbody>
@@ -178,52 +178,6 @@
             </div>
           </div>
           <!--详情-->
-           <div class="el-dialog__wrappers" v-show="!particulars">
-            <div class="center_top">
-                <div class="alert_headers" id="widthAlert">
-                  <div class="layui-layer-title">
-                      详情页
-                  </div>
-                  <div class="layui-layer-setwin" @click="closeParticulars">
-                      <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
-                  </div>
-                  <Form  :label-width="80" style="margin-top:24px;">
-                    <div class="event_name row">
-                        <div class="col border_event">
-                                <b>8月例赛</b>
-                        </div>
-                        <div class="col">
-                            <b>2017-3-25</b>
-                        </div>
-                        <div class="col">
-                            <b>上海美兰湖高尔夫球场</b>
-                        </div>
-                    </div>
-                    <Form-item label="简述：">
-                       <Input v-model="value5" type="textarea" disabled  placeholder="这场例赛" style="width:90%;"></Input>
-                    </Form-item>
-                    <Row>
-                        <Col span="24" class="demo-tabs-style2">
-                            <Tabs type="card">
-                                <Tab-pane label="报名管理">
-                                  <div style="width:100%;height:100%;">
-                                    <div class="col height_line_input">
-                                        <Input  icon="ios-search" placeholder="请输入手机号码或姓名..." style="width: 300px"></Input>
-                                    </div>
-                                  </div>
-                                </Tab-pane>
-                                <Tab-pane label="分组管理">标签二的内容</Tab-pane>
-                                <Tab-pane label="领先版">标签三的内容</Tab-pane>
-                                <Tab-pane label="奖项设置">标签三的内容</Tab-pane>
-                                <Tab-pane label="活动新闻">标签三的内容</Tab-pane>
-                                <Tab-pane label="活动新闻">标签三的内容</Tab-pane>
-                            </Tabs>
-                        </Col>
-                    </Row>
-                  </Form>
-                </div>
-            </div>
-          </div>
         </div>
     </layout>
 </template>
@@ -236,7 +190,6 @@ export default {
     return {
       copyreaders: true,
       addCopyreaders: true,
-      particulars: true,
       formItem: {
         position: '队员'
       }
@@ -264,12 +217,6 @@ export default {
     },
     closeaddCopyreader () {
       this.addCopyreaders = true
-    },
-    openParticulars () {
-      this.particulars = false
-    },
-    closeParticulars () {
-      this.particulars = true
     }
   },
   mounted () {

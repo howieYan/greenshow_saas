@@ -213,6 +213,13 @@ export default {
 .hover_li_fff>li:hover{
     background: #f5f5f5;
 }
+h1 {
+    height: 80px;
+    font-size: 20px;
+    padding-left: 20px;
+    line-height: 80px;
+    border: 1px solid #eee;
+}
 .checked>ul>.home_index_player{
     display:block;
 }

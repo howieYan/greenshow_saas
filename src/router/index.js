@@ -6,8 +6,8 @@ import Page2 from '@/components/Page2'
 import Page3 from '@/components/Page3'
 import Page4 from '@/components/Page4'
 import Page5 from '@/components/Page5'
-import AlertAdd from '@/components/AlertAdd'
 import Login from '@/components/Login'
+import Details from '@/components/Details'
 
 // import HistoryForm from '@/components/HistoryForm'
 
@@ -49,14 +49,14 @@ let router = new Router({
       component: Page5
     },
     {
-      path: '/alertadd',
-      name: 'AlertAdd',
-      component: AlertAdd
-    },
-    {
       path: '/login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/details',
+      name: 'Details',
+      component: Details
     }
     // {
     //   path: '/HistoryForm',

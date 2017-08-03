@@ -8,6 +8,8 @@ import Page4 from '@/components/Page4'
 import Page5 from '@/components/Page5'
 import Login from '@/components/Login'
 import Details from '@/components/Details'
+import Page7 from '@/components/Page7'
+import Page8 from '@/components/Page8'
 
 // import HistoryForm from '@/components/HistoryForm'
 
@@ -57,6 +59,16 @@ let router = new Router({
       path: '/details',
       name: 'Details',
       component: Details
+    },
+    {
+      path: '/page7',
+      name: 'Page7',
+      component: Page7
+    },
+    {
+      path: '/page8',
+      name: 'Page8',
+      component: Page8
     }
     // {
     //   path: '/HistoryForm',

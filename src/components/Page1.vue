@@ -8,43 +8,58 @@
                   <div class="team">
                       <b class="center_padd">队员</b>
                   </div>
-                  <div class="row height_line">
-                      <div class="col height_line_input">
-                          <Input  icon="ios-search" placeholder="请输入手机号码或姓名..." style="width: 300px"></Input>
+                  <div class="row height_line" inline>
+                      <div class="col height_line_input" style="text-align:center;">
+                          <Input  icon="ios-search" placeholder="请输入手机号码或姓名..."></Input>
                       </div>
-                      <div class="col height_line_btn">
+                      <div class="col height_line_btn" style="text-align:center;">
                           <Button type="info" @click="handleEdit">手动添加</Button>
+                          
+                      </div>
+                      <div class="col" style="text-align:center;">
                           <Button type="primary" :loading="loading2" icon="checkmark-round" @click="toLoading2">
                               <span v-if="!loading2">刷新</span>
                               <span v-else>Loading...</span>
                           </Button>
-                          <Select style="width:120px" v-model="model1">
+                      </div>
+                      <div class="col" style="text-align:center;">
+                          <Select v-model="model1" style="width:120px;">
                               <Option v-for="item in optionsSle" :value="item.value" :key="item.value">{{ item.label }}</Option>
                           </Select>
                       </div>
                   </div>
                   <div class="table_sheet">
-                      <div class="opt row">
-                          <p class="col">
-                              <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
-                              全选
-                              <Button type="ghost" shape="circle">删除</Button>
-                          </p>
-                      </div>
+                      <div class="ivu-table-fixed" style="width: 74px;top:none;" >
+                        <table class="table">
+                          <thead>
+                            <tr class="">
+                                  <th class="width_50px ">
+                                     <input type="checkbox" name="" id="allId" v-model="allData.parCheck" @change="allSelect()">
+                                  全选
+                                  </th>
+                              </tr>
+                               <tr class="" v-for="item in checkData">
+                                  <th class="width_50px line_padd5" style="text-align:left">
+                                    <input type="checkbox" name="" @change="singleSelect()" v-model="item.isCheck" :id="item.id">
+                                    <label :for="item.id"></label>
+                                  </th>
+                              </tr>
+                              
+                          </thead>
+                        </table>  
+                    </div>
+                    <div style="overflow-x:auto;">
                       <table class="table">
                           <thead>
                               <tr class="">
-                                  <th class="width_50px">
-
-                                  </th>
+                                    <th class=""style="padding-left:74px;"></th>
                                   <th class="" v-for="item in tableText">{{ item }}</th>
                               </tr>
                           </thead>
                           <tbody id="list">
-                              <tr class="" v-for="item in checkData">
-                                  <td class="width_50px" style="text-align: left;">
-                                      <input type="checkbox" name="" @change="singleSelect()" v-model="item.isCheck" :id="item.id">
-                                      <label :for="item.id"></label>
+                              <tr class="activer" v-for="item in checkData" >
+                                <td class=" width_50px" style="padding-left:74px;">
+                                    
                                   </td>
                                   <td class="">
                                     <img :src="'/static/apply_1.png'" alt="">
@@ -80,6 +95,7 @@
                               </tr>
                           </tbody>
                       </table>
+                    </div>
                   </div>
               </div>
             </div>
@@ -366,6 +382,7 @@ export default {
 .ivu-input-wrapper{
   width:80%;
 }
+
 .el-dialog__wrapper{
   top: 0;
   right: 0;
@@ -389,12 +406,23 @@ body,html{
     height: 100%;
     background: #ffffff;
 }
+.table>tr{
+    position:relative;
+}
+.position_abs_che{
+    position: absolute;
+    left:0;
+    z-index:110000000;
+}
 .title_team>h1{
     height: 80px;
     font-size: 20px;
     padding-left: 20px;
     line-height: 80px;
     border: 1px solid #eee;
+}
+tr.activer:hover{
+    background:#ebf7ff;
 }
 .team{
     height: 40px;
@@ -435,20 +463,14 @@ body,html{
     top:0;
     right: 0;
 }
-/*.height_line_btn>button{
-    padding:10px;
-    border-radius:5px;
-    border: 1px solid #eee;
-    background: #ffffff;
-}*/
 .height_line_btn>button.back_color{
     background-color: #44b549;
     color: #fff;
 }
 .table_sheet{
     width:100%;
-    overflow-x:auto;
     border: 1px solid #EEEEEE;
+    position: relative;
 }
 .team_player_nav{
     height: 50px;
@@ -505,7 +527,6 @@ body,html{
     padding: 10px 8px;
     line-height: 30px;
     border-bottom: 1px solid #ddd;
-    border-right:1px solid #ddd ;
     border-left: 0;
     text-align: center;
     overflow: hidden;
@@ -518,7 +539,7 @@ body,html{
     width: 30px;
 }
 .width_50px{
-    width: 50px;
+    width: 74px;
 }
 .width_50px>input{
     margin-left: 12px;
@@ -718,5 +739,13 @@ form>div{
     border: none;
     color:#fff;
     border-radius: 3px;
+}
+.line_padd5{
+    padding:15px 8px!important;
+}
+.ivu-table-fixed{
+    background:#fff;
+    z-index:1000000;
+    top:none!important;
 }
 </style>

@@ -6,44 +6,47 @@
               <div style="float:right;height:40px;line-height:40px;margin-right:20px;">
                    <Button type="ghost" @click="addCopyreader">添加</Button>
               </div>
-              <table class="table">
-                  <thead>
-                      <tr class="">
-                          <th class="">
-                              赛制
-                          </th>
-                          <th class="" >赛事类型</th>
-                          <th class="" >赛事名称</th>
-                          <th class="" >赛事时间</th>
-                          <th class="" >球场</th>
-                          <th class="" >报名人数</th>
-                          <th class="" >操作</th>
-                      </tr>
-                  </thead>
-                  <tbody id="list" v-for="n in 10">
-                      <tr class="">
-                          <td class="" >比杆赛</td>
-                          <td class="">球队赛</td>
-                          <td class="">8月例赛</td>
-                          <td class="">2017-7-12-2017-8-12</td>
-                          <td class="">上海美兰湖高尔夫球场</td>
-                          <td class="">20</td>
-                          <td class="" >
-                              <Button type="primary">发布</Button>
-                              <Button type="ghost" @click="copyreader">编辑</Button>
-                              <Poptip placement ="top-end"
-                                  confirm
-                                  trigger="hover"
-                                  title="您确认删除这条内容吗？"
-                                  @on-ok="ok"
-                                  @on-cancel="cancel">
-                                  <Button type="error">删除</Button>
-                              </Poptip>
-                              <Button type="success" @click="$router.push({ path: '/details' })">详情</Button>
-                          </td>
-                      </tr>
-                  </tbody>
-              </table>
+              <div style="width:100%;overflow-x:auto;">
+                <table class="table">
+                    <thead>
+                        <tr class="">
+                            <th class="">
+                                赛制
+                            </th>
+                            <th class="" >赛事类型</th>
+                            <th class="" >赛事名称</th>
+                            <th class="" >赛事时间</th>
+                            <th class="" >球场</th>
+                            <th class="" >报名人数</th>
+                            <th class="" >操作</th>
+                        </tr>
+                    </thead>
+                    <tbody id="list" v-for="n in 10">
+                        <tr class="">
+                            <td class="" >比杆赛</td>
+                            <td class="">球队赛</td>
+                            <td class="">8月例赛</td>
+                            <td class="">2017-7-12-2017-8-12</td>
+                            <td class="">上海美兰湖高尔夫球场</td>
+                            <td class="">20</td>
+                            <td class="" >
+                                <Button type="primary">发布</Button>
+                                <Button type="ghost" @click="copyreader">编辑</Button>
+                                <Poptip placement ="top-end"
+                                    confirm
+                                    trigger="hover"
+                                    title="您确认删除这条内容吗？"
+                                    @on-ok="ok"
+                                    @on-cancel="cancel">
+                                    <Button type="error">删除</Button>
+                                </Poptip>
+                                <Button type="success" @click="$router.push({ path: '/details' })">详情</Button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+              </div>
+              
           </div>
           <!--编辑页-->          
           <div class="el-dialog__wrapper" v-show="!copyreaders">

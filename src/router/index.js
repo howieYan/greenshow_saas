@@ -79,14 +79,13 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  lib.debug && console.debug(`OPEN: ${from.name}(${from.path}) -> ${to.name}(${to.path}) %o`, to)
-  console.time('route')
-
-  if (to.query && to.query.token) {
-    api.setToken(to.query.token)
+  lib.debug && console.debug(`OPEN (${api.getToken()}): ${from.name}(${from.path}) -> ${to.name}(${to.path}) %o`, to)
+  if (to.path === '/login' || api.getToken()) {
+    next()
   }
-
-  next()
+  else {
+    next({ path: '/login', query: { redirect: to.path } })
+  }
 })
 
 export default router

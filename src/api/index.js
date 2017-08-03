@@ -20,6 +20,7 @@ export default {
       this.token = localStorage.getItem('token')
       console.debug(`Loaded token: ${this.token}`)
     }
+    return this.token
   },
 
   setToken (token) {
@@ -114,8 +115,8 @@ export default {
    * Login
    * curl -X POST "http://devwx.golfgreenshow.com/api5/User/Login" -d "phone=13585562369&code=111111"
    */
-  login (phone, code) {
-    return this.send('post', `/api5/User/Login`, { phone: phone, code: code })
+  login (name, password, code = '') {
+    return this.send('post', `/api5/Manager/Login`, { name: name, password: password, code: code })
   },
 
   /**

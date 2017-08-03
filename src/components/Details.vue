@@ -62,10 +62,21 @@
                               </Menu-item>
                         </Menu>
                         
-                        <div class="" style="overflow-x: auto;">
+                        <div class="">
                           <!--报名-->
-                          <div v-show="!navApplys" style="display: -webkit-inline-box;overflow-x: auto;">
-                              <div class="clounm2" style="overflow-x: auto;">
+                          <div v-show="!navApplys" style="">
+                              <Transfer
+                                  :data="data3"
+                                  :target-keys="targetKeys3"
+                                  :list-style="listStyle"
+                                  :render-format="render3"
+                                  :titles="['未报名的人','正在报名的人']"
+                                  filterable
+                                  @on-change="handleChange3">
+                                  <div :style="{float: 'right', margin: '5px'}">
+                                      <i-button type="ghost" size="small" @click="reloadMockData">提交</i-button>
+                                  </div>
+                              </Transfer>                             <!--<div class="clounm2" style="overflow-x: auto;">
                                   <div>
                                       <Input  icon="ios-search" placeholder="请输入昵称或姓名..." style="width: 300px"></Input>
                                   </div>
@@ -174,7 +185,7 @@
                                     </table>
                                   </div>
                                   <Button type="info" style="float:right;margin:20px 20px 10px 0;">删除</Button>
-                              </div>
+                              </div>-->
                           </div>
                         </div>
                     </div>
@@ -201,6 +212,12 @@ export default {
       navAwardss: true,
       navEvents: true,
       navImages: true,
+      data3: this.getMockData(),
+      targetKeys3: this.getTargetKeys(),
+      listStyle: {
+        width: '480px',
+        height: '400px'
+      },
       model1: '0',
       model2: '0',
       formRight: {
@@ -338,6 +355,32 @@ export default {
       this.navApplys = true
       this.navGroupings = true
       this.navLeads = false
+    },
+    getMockData () {
+      let mockData = []
+      for (let i = 1; i <= 20; i++) {
+        mockData.push({
+          key: i.toString(),
+          label: '姓名：张林峰' + i,
+          name: '昵称：张三' + i,
+          nubmer: '差点：9' + i,
+          sex: '性别：男' + i,
+          city: '城市：上海' + i
+        })
+      }
+      return mockData
+    },
+    getTargetKeys () {
+      return this.getMockData()
+    },
+    handleChange3 (newTargetKeys) {
+      this.targetKeys3 = newTargetKeys
+    },
+    render3 (item) {
+      return item.label + ' - ' + item.name + ' - ' + item.nubmer + ' - ' + item.sex + ' -' + item.city
+    },
+    reloadMockData () {
+      this.targetKeys3 = this.getTargetKeys()
     }
   },
   mounted () {
@@ -352,6 +395,12 @@ export default {
 }
 .ivu-input-wrapper{
   margin-bottom: 21px;
+}
+.ivu-btn-small:nth-of-type(1){
+  /*display:none;*/
+}
+.ivu-btn-small{
+  padding:2px 10px;
 }
 .table{
   border-left:1px solid #eee;

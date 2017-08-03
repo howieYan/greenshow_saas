@@ -745,7 +745,6 @@ form>div{
 }
 .ivu-table-fixed{
     background:#fff;
-    z-index:1000000;
     top:none!important;
 }
 </style>

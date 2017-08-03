@@ -145,7 +145,7 @@ export default {
         { name: '浦东高尔夫', addClass: 'bg_banner_icon4' }
       ],
       navName: [
-        { name: '球队基本信息' },
+        { name: '球队首页' },
         { name: '队员管理' },
         { name: '领导班子' },
         { name: '赛事活动' },

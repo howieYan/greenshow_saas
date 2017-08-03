@@ -1,21 +1,22 @@
 <template>
   <div>
       <div class="el-dialog__wrapper">
-            <div class="alert_header" id="widthAlert">
+            <div class="alert_header" id="widthAlert" style="padding: 20px 0px;">
+                <center><img src="/static/favicon.ico" alt=""></center>
                 <h3><b>高领秀后台登录</b></h3>
                 <div style="width:100%;text-align:center">
-                    <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
+                    <Form ref="formInline" :model="data" :rules="ruleInline" inline>
                         <Form-item prop="user">
-                            <Input type="text" v-model="formInline.user" placeholder="Username">
+                            <Input type="text" v-model="data.user" placeholder="请输入账户名称">
                                 <Icon type="ios-person-outline" slot="prepend"></Icon>
                             </Input>
                         </Form-item>
                         <Form-item prop="password">
-                            <Input type="password" v-model="formInline.password" placeholder="Password">
+                            <Input type="password" v-model="data.password" placeholder="请输入登录密码">
                                 <Icon type="ios-locked-outline" slot="prepend"></Icon>
                             </Input>
                         </Form-item>
-                        <Checkbox-group style="text-align:left;">
+                        <Checkbox-group v-show="false" style="text-align:left;">
                             <Checkbox label="记住密码"></Checkbox>
                         </Checkbox-group>
                         <Form-item>
@@ -23,20 +24,24 @@
                         </Form-item>
                     </Form>
                 </div>
-              
+
             </div>
       </div>
-  </div>   
+  </div>
 </template>
 
 <script>
+import api from '../api'
+import * as lib from '../lib'
+
 export default {
   name: 'Login',
   data () {
     return {
-      formInline: {
-        user: '',
-        password: ''
+      data: {
+        user: lib.debug ? '13585562369' : '',
+        password: lib.debug ? '11111111' : '',
+        code: '1111'
       },
       ruleInline: {
         user: [
@@ -49,15 +54,32 @@ export default {
       }
     }
   },
+
   computed: {
   },
+
   created () {
   },
+
   methods: {
     handleSubmit (name) {
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$Message.success('提交成功!')
+          api.login(this.data.user, lib.md5(this.data.password), this.data.code)
+            .then((result) => {
+              if (api.isValid(result) && result.data && result.data.token) {
+                api.setToken(result.data.token)
+                if (this.$route.query.redirect) {
+                  this.$router.replace(this.$route.query.redirect)
+                }
+                else {
+                  this.$router.replace('/')
+                }
+              }
+            })
+            .catch((error) => {
+              console.error(error)
+            })
         }
         else {
           this.$Message.error('表单验证失败!')
@@ -100,7 +122,7 @@ form{
     position: absolute;
     left: 50%;
     width: 400px;
-    height:300px;
+    height: 400px;
     -webkit-transform: translateX(-50%);
     transform: translateX(-50%);
     -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);

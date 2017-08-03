@@ -46,8 +46,8 @@
             </div>
         </header>
         <!--nav-->
-        <div class="nav" v-if="!collapsed"> 
-            <div class="nav_on_off" @click="collapse">
+        <div class="nav" v-if="!collapsed">
+            <div class="nav_on_off" @click="collapsed = !collapsed">
                 <p>
                     <b class=""></b>
                 </p>
@@ -58,12 +58,13 @@
                         <i class="fa_icon "></i>
                         <a>{{ item.name }}</a>
                     </li>
-                    <ul class="home_index home_index_player" v-for="(items,index) in list">
+                    <ul class="home_index home_index_player" v-for="record in list">
                         <li class="row">
                             <a href="javascript:(0)" class="col">
                                 <ul class="nav_banner">
-                                    <li class="bg_banner_icon" v-bind:class="items.addClass" style="width:30%;"></li>
-                                    <li class="nav_banner_text" style="display:block">{{ items.name }}</li>
+                                    <!-- <img :src="record.logo"> -->
+                                    <li class="bg_banner_icon" style="width:30%;"></li>
+                                    <li v-if="!collapsed" class="nav_banner_text" style="display:block">{{ record.name }}</li>
                                 </ul>
                             </a>
                         </li>
@@ -71,7 +72,7 @@
                 </ul>
             </div>
         </div>
-        <div class="nav1" v-else> 
+        <div class="nav1" v-else>
             <div class="nav_on_off" @click="collapse">
                 <p>
                     <b class=""></b>
@@ -122,7 +123,11 @@
         </section>
     </div>
 </template>
+
 <script>
+import api from '../api'
+import * as lib from '../lib'
+
 export default {
   name: 'Layout',
   data () {
@@ -137,13 +142,7 @@ export default {
         { name: '我的球队' },
         { name: '我的门户' }
       ],
-      list: [
-        { name: '高尔夫', addClass: 'bg_banner_icon0' },
-        { name: '和平鸽', addClass: 'bg_banner_icon1' },
-        { name: '长青高球队V', addClass: 'bg_banner_icon2' },
-        { name: '上海高尔夫', addClass: 'bg_banner_icon3' },
-        { name: '浦东高尔夫', addClass: 'bg_banner_icon4' }
-      ],
+      list: null,
       navName: [
         { name: '球队基本信息' },
         { name: '队员管理' },
@@ -161,8 +160,22 @@ export default {
   },
   created () {
     console.debug(`${this.name}.created`)
+    this.loadData()
   },
+
   methods: {
+    async loadData () {
+      try {
+        this.list = []
+        let result = await api.listTeam('manager')
+        lib.debugView && console.debug(`Loaded: %o`, result)
+        this.list = api.isValid(result) ? result.data : {}
+      }
+      catch (e) {
+        console.error(e)
+      }
+    },
+
     relationClick: function (index) {
       this.nowIndex = index
     },

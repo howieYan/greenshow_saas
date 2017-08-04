@@ -27,7 +27,7 @@ let router = new Router({
       component: Home
     },
     {
-      path: '/teamPage',
+      path: '/team/:id',
       name: 'TeamPage',
       component: TeamPage
     },

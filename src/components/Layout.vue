@@ -58,7 +58,7 @@
                         <i class="fa_icon "></i>
                         <a>{{ item.name }}</a>
                     </li>
-                    <ul class="home_index home_index_player" v-for="record in list">
+                    <ul class="home_index home_index_player" v-for="record in team.list">
                         <li class="row">
                             <a href="javascript:(0)" class="col">
                                 <ul class="nav_banner">
@@ -84,7 +84,7 @@
                         <i class="fa_icon "></i>
                         <a>{{ item.name }}</a>
                     </li>
-                    <ul class="home_index home_index_player" v-for="(items,index) in list">
+                    <ul class="home_index home_index_player" v-for="(items,index) in team.list">
                         <li class="row">
                             <a href="javascript:(0)" class="col">
                                 <ul class="nav_banner">
@@ -116,7 +116,8 @@
             <div class="locker position_right" @click="navOpen"></div>
             <div class="width100 left180">
                 <div style="height:100%;" class="">
-                    <slot name="main"></slot>
+                    <slot name="main">
+                    </slot>
                 </div>
             </div>
 
@@ -126,13 +127,15 @@
 
 <script>
 import api from '../api'
+import { team } from '../store'
 import * as lib from '../lib'
 
 export default {
   name: 'Layout',
   data () {
     return {
-      name: 'Layout',
+      name: 'LayoutV',
+      team: team,
       collapsed: true,
       nav_open: true,
       nowIndex: -1,
@@ -142,7 +145,6 @@ export default {
         { name: '我的球队' },
         { name: '我的门户' }
       ],
-      list: null,
       navName: [
         { name: '球队首页' },
         { name: '队员管理' },
@@ -158,18 +160,23 @@ export default {
   },
   computed: {
   },
+
   created () {
-    console.debug(`${this.name}.created`)
+    lib.debugView && console.debug(`${this.name}.created`)
     this.loadData()
   },
 
   methods: {
     async loadData () {
       try {
-        this.list = []
-        let result = await api.listTeam('manager')
-        lib.debugView && console.debug(`Loaded: %o`, result)
-        this.list = api.isValid(result) ? result.data : {}
+        if (typeof team.list === 'undefined' || team.list.length <= 0) {
+          let result = await api.listTeam('manager')
+          lib.debugView && console.debug(`${this.name}.loaded: %o`, result)
+          team.list = api.isValid(result) ? result.data : {}
+        }
+        else {
+          lib.debugView && console.debug(`${this.name}.load.skip`)
+        }
       }
       catch (e) {
         console.error(e)
@@ -182,7 +189,7 @@ export default {
     openFrame: function (index) {
       this.pageIndex = index
       if (index === 0) {
-        this.$router.push({ path: '/teamPage' })
+        this.$router.push({ path: '/team' })
       }
       if (index === 1) {
         this.$router.push({ path: '/management' })
@@ -215,7 +222,7 @@ export default {
     }
   },
   mounted () {
-    console.debug(`${this.name}.mounted`)
+    lib.debugView && console.debug(`${this.name}.mounted`)
   }
 }
 </script>

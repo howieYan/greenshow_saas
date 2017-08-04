@@ -549,14 +549,14 @@ section>.banner_nav>ul>li.banner_active{
 }
 
 /*最小屏幕的控制*/
-@media all and (min-width: 700px)and (max-width:1250px){    
+/*@media all and (min-width: 700px)and (max-width:1250px){    
     .nav_on_off{
         width: 60px;
-    }
+    }*/
   /*  .viewFramework-sidebar-full, .viewFramework-sidebar-full.width100{
         left:60px;
     }*/
-    .nav_banner_text{
+ /*   .nav_banner_text{
         display: none;
     }
     .width_nav_width{
@@ -566,8 +566,8 @@ section>.banner_nav>ul>li.banner_active{
     }
     .width_nav_width1{
     height: 100%;width: 100%;float: left;
-}
+}*/
   /*  section{
         left: 60px;
     }*/
-}
+/*}*/

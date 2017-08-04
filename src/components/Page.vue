@@ -8,8 +8,19 @@
                       <li class="back" onclick="closeFrame()"></li>
                       <li class="textCenter textCenter0 col">
                           <img src="static/logo_header.png" alt="">
-                          <p style="color:#fff;font-size:16px;">口号：×××</p>
-                          <div class="row string padding_Top10" style="padding-top:5%;">
+                          <p style="color:#fff;font-size:16px;cursor: pointer;" >
+                          口号：×××
+                          <Button type="primary" @click="openInput">修改口号</Button>
+                          </p>
+                          <Form ref="formInline" inline  v-show="!open">
+                              <Form-item>
+                                  <Input  placeholder="请输入口号"></Input>
+                              </Form-item>
+                              <Form-item>
+                                  <Button type="primary" @click="closeInput">确定</Button>
+                              </Form-item>
+                          </Form>
+                          <div class="row string padding_Top10" style="padding-top:0;">
                               <div class="col">
                                   <div>20</div>
                                   <b>平均成绩</b>
@@ -31,16 +42,6 @@
                           </Upload>
                         </li>
                         <li class="col">
-                          <Button type="ghost" @click="openInput">设置口号</Button>
-                          <Form ref="formInline" :rules="ruleInline" inline  v-show="!open">
-                            <Form-item>
-                                <Input  placeholder="请输入口号" style="width: 200px"></Input>
-                            </Form-item>
-                            <Form-item>
-                                <Button type="primary" @click="closeInput">确定</Button>
-                            </Form-item>
-                        </Form>
-                          
                         </li>
                         <li class="col">
                           <Upload action="//jsonplaceholder.typicode.com/posts/">

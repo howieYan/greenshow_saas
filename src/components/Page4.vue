@@ -76,7 +76,7 @@
                         <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
                     </Form-item>
                     <Form-item label="简述：">
-                       <Input v-model="value5" type="textarea" placeholder="请输入..." style="width:90%;"></Input>
+                       <Input  type="textarea" placeholder="请输入..." style="width:90%;"></Input>
                     </Form-item>
                     <Form-item>
                       <div class="row">
@@ -142,7 +142,7 @@
                         <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
                     </Form-item>
                     <Form-item label="简述：">
-                       <Input v-model="value5" type="textarea" placeholder="请输入..." style="width:90%;"></Input>
+                       <Input  type="textarea" placeholder="请输入..." style="width:90%;"></Input>
                     </Form-item>
                     <Form-item>
                       <div class="row">
@@ -200,7 +200,7 @@
                         </div>
                     </div>
                     <Form-item label="简述：">
-                       <Input v-model="value5" type="textarea" disabled  placeholder="这场例赛" style="width:90%;"></Input>
+                       <Input  type="textarea" disabled  placeholder="这场例赛" style="width:90%;"></Input>
                     </Form-item>
                     <Row>
                         <Col span="24" class="demo-tabs-style2">

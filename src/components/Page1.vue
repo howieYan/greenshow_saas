@@ -24,7 +24,7 @@
                       </div>
                       <div class="col" style="text-align:center;">
                           <Select v-model="model1" style="width:120px;">
-                              <Option v-for="item in optionsSle" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                              <Option v-for="item in optionsSle">{{ item.label }}</Option>
                           </Select>
                       </div>
                   </div>

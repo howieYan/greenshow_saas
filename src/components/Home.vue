@@ -1,28 +1,42 @@
 <template>
     <layout>
-        <div slot="main">
-            <div style="margin:20px;">
-              <a href="http://wx.golfgreenshow.com/#/">
-                  我的球队
-              </a>
-            </div>   
+      <div slot="main">
+        <div v-if="team && team.list" v-for="record in team.list" @click="clickOpen(record)">
+            <h1>{{ record.name }}</h1>
+            <img :src="record.logo" width="200px;">
         </div>
+      </div>
     </layout>
 </template>
 
 <script>
+// import api from '../api'
+import * as lib from '../lib'
+import { team } from '../store'
+
 export default {
-  name: 'Page',
+  name: 'Home',
   data () {
     return {
+      name: 'HomeV',
+      team: team,
       open: true
     }
   },
+
   computed: {
   },
+
   created () {
+    lib.debugView && console.debug(`${this.name}.created`)
   },
+
   methods: {
+    clickOpen (record) {
+      lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
+      this.$router.push(`/team/${record.id}`)
+    },
+
     openInput () {
       this.open = false
     },
@@ -30,7 +44,9 @@ export default {
       this.open = true
     }
   },
+
   mounted () {
+    lib.debugView && console.debug(`${this.name}.mounted`)
   }
 }
 </script>

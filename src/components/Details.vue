@@ -3,7 +3,7 @@
         <div slot="main" style="position:relative;">
           <div class="title_team">
               <h1 style>
-                <Breadcrumb-item href="/page3">赛事活动</Breadcrumb-item>/
+                <Breadcrumb-item href="/competitionevent">赛事活动</Breadcrumb-item>/
                 <Dropdown trigger="click" placement="bottom-start" style="width:130px;text-align:center;">
                     <a href="javascript:void(0)">
                         8月例赛 

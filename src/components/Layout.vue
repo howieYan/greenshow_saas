@@ -182,16 +182,16 @@ export default {
     openFrame: function (index) {
       this.pageIndex = index
       if (index === 0) {
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: '/teamPage' })
       }
       if (index === 1) {
-        this.$router.push({ path: '/page1' })
+        this.$router.push({ path: '/management' })
       }
       if (index === 2) {
-        this.$router.push({ path: '/page2' })
+        this.$router.push({ path: '/leadinggroup' })
       }
       if (index === 3) {
-        this.$router.push({ path: '/page3' })
+        this.$router.push({ path: '/CompetitionEvent' })
       }
       if (index === 4) {
         this.$router.push({ path: '/page4' })

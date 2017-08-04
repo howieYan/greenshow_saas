@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Page from '@/components/Page'
-import Page1 from '@/components/Page1'
-import Page2 from '@/components/Page2'
-import Page3 from '@/components/Page3'
+import Home from '@/components/Home'
+import TeamPage from '@/components/TeamPage'
+import Management from '@/components/Management'
+import LeadingGroup from '@/components/LeadingGroup'
+import CompetitionEvent from '@/components/CompetitionEvent'
 import Page4 from '@/components/Page4'
 import Page5 from '@/components/Page5'
 import Login from '@/components/Login'
@@ -22,23 +23,28 @@ let router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Page',
-      component: Page
+      name: 'Home',
+      component: Home
     },
     {
-      path: '/page1',
-      name: 'Page1',
-      component: Page1
+      path: '/teamPage',
+      name: 'TeamPage',
+      component: TeamPage
     },
     {
-      path: '/page2',
-      name: 'Page2',
-      component: Page2
+      path: '/management',
+      name: 'Management',
+      component: Management
     },
     {
-      path: '/page3',
-      name: 'Page3',
-      component: Page3
+      path: '/leadinggroup',
+      name: 'LeadingGroup',
+      component: LeadingGroup
+    },
+    {
+      path: '/competitionevent',
+      name: 'CompetitionEvent',
+      component: CompetitionEvent
     },
     {
       path: '/page4',

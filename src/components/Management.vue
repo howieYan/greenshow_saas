@@ -194,7 +194,7 @@
 
 <script>
 export default {
-  name: 'Page',
+  name: 'Management',
   data () {
     return {
       formItem: {

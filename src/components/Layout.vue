@@ -12,88 +12,28 @@
                 <div class="float_right user_id hover">
                     <span>小明</span>
                     <div class="position_abs">
-                        <ul class="row">
-                            <li class="col width80 height50 padding10 bg_hover">
-                                <p class="">
-                                    <img :src="'/static/ziliao.png'" alt="" class="width30">
-                                </p>
-                                <p>基本资料</p>
-                            </li>
-                            <li class="col width80 height50 padding10 bg_hover">
-                                <p class="">
-                                    <img :src="'/static/user.png'" alt="" class="width30">
-                                </p>
-                                <p>实名认证</p>
-                            </li>
-                            <li class="col width80 height50 padding10 bg_hover">
-                                <p class="">
-                                    <img :src="'/static/pass.png'" alt="" class="width30">
-                                </p>
-                                <p>安全设置</p>
-                            </li>
-                        </ul>
-                        <ul><li class="line_height bg_hover">退出管理控制台</li></ul>
+                        <ul><li class="line_height bg_hover" style="padding:0 21px">退出登录</li></ul>
                     </div>
-                </div>
-                <div class="seek float_right hover">
-                    <div class="row"><b class="bg_image col"></b><b class="col"style="line-height:50px;width:40px;">搜索</b></div>
-                    <div class="input">
-                        <input type="text" placeholder="搜索">
-                        <b class="huiche"></b>
-                    </div>
-
                 </div>
             </div>
         </header>
         <!--nav-->
-        <div class="nav" v-if="!collapsed">
-            <div class="nav_on_off" @click="collapsed = !collapsed">
-                <p>
-                    <b class=""></b>
-                </p>
-            </div>
-            <div class="nav_home" v-for="(item,index) in title" v-bind:class="{checked:index==nowIndex}" v-on:click="relationClick(index)">
-                <ul class="">
-                    <li class="nav_line_height row">
-                        <i class="fa_icon "></i>
-                        <a>{{ item.name }}</a>
-                    </li>
-                    <ul class="home_index home_index_player" v-for="record in team.list">
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <!-- <img :src="record.logo"> -->
-                                    <li class="bg_banner_icon" style="width:30%;"></li>
-                                    <li v-if="!collapsed" class="nav_banner_text" style="display:block">{{ record.name }}</li>
-                                </ul>
-                            </a>
-                        </li>
-                    </ul>
-                </ul>
-            </div>
-        </div>
-        <div class="nav1" v-else>
+        <div class="nav" >
             <div class="nav_on_off" @click="collapse">
                 <p>
                     <b class=""></b>
                 </p>
             </div>
-            <div class="nav_home" v-for="(item,index) in title" v-bind:class="{checked:index==nowIndex}" v-on:click="relationClick(index)">
-                <ul class="">
-                    <li class="nav_line_height row">
-                        <i class="fa_icon "></i>
-                        <a>{{ item.name }}</a>
+            <div class="nav_home">
+                <ul class="home_index" v-for="record in team.list">
+                    <li class="row">
+                        <a href="javascript:(0)" class="col">
+                            <ul class="nav_banner row">
+                                <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
+                                <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
+                            </ul>
+                        </a>
                     </li>
-                    <ul class="home_index home_index_player" v-for="(items,index) in team.list">
-                        <li class="row">
-                            <a href="javascript:(0)" class="col">
-                                <ul class="nav_banner">
-                                    <li class="bg_banner_icon" v-bind:class="items.addClass" style="width:100%;"></li>
-                                    <li class="nav_banner_text" style="display:none">{{ items.name }}</li>
-                                </ul>
-                            </a>
-                        </li>
-                    </ul>
                 </ul>
             </div>
         </div>

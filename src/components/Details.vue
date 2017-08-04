@@ -268,7 +268,7 @@
                                                     <li class="col">积分卡张数</li>
                                                   </ul>
                                                   <div>
-                                                      <ul class="row activer" style="width:100%;float:right;text-align:center;padding:10px 0;" @click="open=true">
+                                                      <ul class="row activer" style="width:100%;float:right;text-align:center;padding:10px 0;" @click="openDelist">
                                                         <li class="col">
                                                             <Select v-model="model3" style="widli:120px">
                                                                 <Option v-for="item in optionsSles" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -287,7 +287,7 @@
                                                         <li class="col">35</li>
                                                         <li class="col">1</li>
                                                       </ul>
-                                                      <div v-show="open">
+                                                      <div v-show="!open">
                                                         <div style="">
                                                           <Form ref="formInline" inline :label-width="50">
                                                               <Form-item label="前九：">
@@ -309,7 +309,43 @@
                                                                   </Input>
                                                               </Form-item>
                                                           </Form>
-                                                          
+                                                          <div> 
+                                                            <ul class="row" style="text-align:center;">
+                                                                <li style="width:80px;">HOTE</li>
+                                                                <li class="col">1</li>
+                                                                <li class="col">2</li>
+                                                                <li class="col">3</li>
+                                                                <li class="col">4</li>
+                                                                <li class="col">5</li>
+                                                                <li class="col">6</li>
+                                                                <li class="col">7</li>
+                                                                <li class="col">8</li>
+                                                                <li class="col">9</li>
+                                                                <li class="col">OUT</li>
+                                                                <li class="col">11</li>
+                                                                <li class="col">12</li>
+                                                                <li class="col">13</li>
+                                                                <li class="col">14</li>
+                                                                <li class="col">15</li>
+                                                                <li class="col">16</li>
+                                                                <li class="col">17</li>
+                                                                <li class="col">18</li>
+                                                                <li class="col">IN</li>
+                                                                <li class="col">TOT</li>
+                                                            </ul>
+                                                            <ul class="row" style="text-align:center;">
+                                                                <li style="width:80px;">蓝Tee</li>
+                                                                <li class="col" v-for="n in 20">372</li>
+                                                            </ul>
+                                                            <ul class="row" style="text-align:center;">
+                                                                <li style="width:80px;">PAR</li>
+                                                                <li class="col" v-for="n in 20">372</li>
+                                                            </ul>
+                                                             <ul class="row" style="text-align:center;">
+                                                                <li style="width:80px;">小秀</li>
+                                                                <li class="col" v-for="n in 20">2</li>
+                                                            </ul>
+                                                          </div>
                                                         </div>
                                                       </div>  
                                                   </div>       
@@ -341,7 +377,7 @@ export default {
       theme1: 'light',
       disabledGroup: false,
       loading: false,
-      open: false,
+      open: true,
       disabledGroupss: true,
       navApplys: false,
       navGroupings: true,
@@ -537,7 +573,12 @@ export default {
       this.loading = true
     },
     openDelist () {
-      this.open = true
+      if (this.open === true) {
+        this.open = false
+      }
+      else {
+        this.open = true
+      }
     }
   },
   mounted () {

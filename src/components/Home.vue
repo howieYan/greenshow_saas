@@ -1,9 +1,12 @@
 <template>
     <layout>
       <div slot="main">
-        <div v-if="team && team.list" v-for="record in team.list" @click="clickOpen(record)">
-            <h1>{{ record.name }}</h1>
+        <h1>我管理的球队</h1>
+        <div class="flex-container shorthand">
+          <div class="flex-item" v-for="record in team.list" @click="clickOpen(record)">
+            <div>{{ record.name }}</div>
             <img :src="record.logo" width="200px;">
+          </div>
         </div>
       </div>
     </layout>
@@ -59,5 +62,39 @@ h1 {
     line-height: 80px;
     border: 1px solid #eee;
 }
-@import '../../font-awesome-4.7.0/css/font-awesome.min.css'
+
+.flex-container {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.shorthand {
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
+.longhand {
+  -webkit-flex-flow: wrap row;
+  flex-flow: wrap row;
+}
+
+.flex-item {
+  width: 300px;
+  height: 300px;
+  line-height: 100px;
+  font-weight: bold;
+  font-size: 2em;
+  text-align: center;
+}
 </style>

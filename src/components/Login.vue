@@ -33,6 +33,7 @@
 <script>
 import api from '../api'
 import * as lib from '../lib'
+import { account } from '../store'
 
 export default {
   name: 'Login',
@@ -68,7 +69,8 @@ export default {
           api.login(this.data.user, lib.md5(this.data.password), this.data.code)
             .then((result) => {
               if (api.isValid(result) && result.data && result.data.token) {
-                api.setToken(result.data.token)
+                account.setToken(result.data.token)
+                account.player = result.data.player
                 if (this.$route.query.redirect) {
                   this.$router.replace(this.$route.query.redirect)
                 }

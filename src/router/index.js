@@ -15,7 +15,7 @@ import Page8 from '@/components/Page8'
 // import HistoryForm from '@/components/HistoryForm'
 
 import * as lib from '../lib'
-import api from '../api'
+import { account } from '../store'
 
 Vue.use(Router)
 
@@ -85,8 +85,8 @@ let router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  lib.debug && console.debug(`OPEN (${api.getToken()}): ${from.name}(${from.path}) -> ${to.name}(${to.path}) %o`, to)
-  if (to.path === '/login' || api.getToken()) {
+  lib.debug && console.debug(`OPEN (${account.getToken()}): ${from.name}(${from.path}) -> ${to.name}(${to.path}) %o`, to)
+  if (to.path === '/login' || account.getToken()) {
     next()
   }
   else {

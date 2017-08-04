@@ -65,10 +65,16 @@ export default {
       open: true
     }
   },
+
   computed: {
+    id () {
+      return this.$route.params.id
+    }
   },
+
   created () {
   },
+
   methods: {
     openInput () {
       this.open = false

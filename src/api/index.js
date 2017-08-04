@@ -3,32 +3,17 @@
  */
 import axios from 'axios'
 import * as lib from '../lib'
+import { account } from '../store'
 import mock from './mock' // TODO: Remove this when build production release.
 
 /**
  * axios configurations.
  */
 axios.defaults.timeout = 10000 // timeout in 10 seconds.
-axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? 'http://wx.golfgreenshow.com' : 'http://devwx.golfgreenshow.com'
-// axios.defaults.baseURL = 'http://wx.gs.co'
+// axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? 'http://wx.golfgreenshow.com' : 'http://devwx.golfgreenshow.com'
+axios.defaults.baseURL = 'http://wx.gs.co'
 
 export default {
-  token: null,
-
-  getToken () {
-    if (this.token === null) {
-      this.token = localStorage.getItem('token')
-      console.debug(`Loaded token: ${this.token}`)
-    }
-    return this.token
-  },
-
-  setToken (token) {
-    lib.debugApi && console.debug(`Set new token=${token}`)
-    this.token = token
-    localStorage.setItem('token', this.token)
-  },
-
   /**
    * Check whether specified response is valid and contains data.
    */
@@ -38,7 +23,7 @@ export default {
 
   send (method, uri, data = null, token = null) {
     if (token === null) {
-      token = this.getToken()
+      token = account.getToken()
     }
     return new Promise((resolve, reject) => {
       try {
@@ -142,5 +127,9 @@ export default {
    */
   getEvent (id, option = '') {
     return this.send('get', `/api5/Event/${id}?option=${option}`)
+  },
+
+  getPlayer (id, option = '') {
+    return this.send('get', `/api5/Player/${id}?option=${option}`)
   }
 }

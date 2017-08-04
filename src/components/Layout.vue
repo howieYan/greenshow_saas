@@ -2,7 +2,7 @@
     <div>
         <!--header-->
         <header class="header">
-            <div class="logo_image float_left">
+            <div class="logo_image float_left" @click="$router.push('/')">
                 <div class="logo_icon float_left">
                     <img :src="'/static/favicon.ico'" alt="">
                 </div>
@@ -10,9 +10,9 @@
             </div>
             <div class="width70 float_left">
                 <div class="float_right user_id hover">
-                    <span>小明</span>
-                    <div class="position_abs">
-                        <ul><li class="line_height bg_hover" style="padding:0 21px">退出登录</li></ul>
+                    <div style="color:white;line-height:50px;">
+                      <span>{{ account && account.player ? account.player.name : '欢迎' }}，</span>
+                      <span @click="clickLogout">退出登录</span>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
             <div class="nav_home">
                 <ul class="home_index" v-for="record in team.list">
                     <li class="row">
-                        <a href="javascript:(0)" class="col">
+                        <a class="col" @click="clickOpen(record)">
                             <ul class="nav_banner row">
                                 <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
                                 <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
@@ -67,7 +67,7 @@
 
 <script>
 import api from '../api'
-import { team } from '../store'
+import { account, team } from '../store'
 import * as lib from '../lib'
 
 export default {
@@ -75,6 +75,7 @@ export default {
   data () {
     return {
       name: 'LayoutV',
+      account: account,
       team: team,
       collapsed: true,
       nav_open: true,
@@ -107,15 +108,34 @@ export default {
   },
 
   methods: {
+    clickOpen (record) {
+      lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
+      this.$router.push(`/team/${record.id}`)
+    },
+
+    clickLogout () {
+      account.setToken('')
+      this.$router.push(`/login`)
+    },
+
     async loadData () {
       try {
         if (typeof team.list === 'undefined' || team.list.length <= 0) {
           let result = await api.listTeam('manager')
-          lib.debugView && console.debug(`${this.name}.loaded: %o`, result)
+          lib.debugView && console.debug(`${this.name}.loadedTeams: %o`, result)
           team.list = api.isValid(result) ? result.data : {}
         }
         else {
-          lib.debugView && console.debug(`${this.name}.load.skip`)
+          lib.debugView && console.debug(`${this.name}.loadedTeams.skip`)
+        }
+
+        if (typeof account.player === 'undefined' || account.player === null) {
+          let result = await api.getPlayer(0)
+          lib.debugView && console.debug(`${this.name}.loadedPlayer: %o`, result)
+          account.player = api.isValid(result) ? result.data : {}
+        }
+        else {
+          lib.debugView && console.debug(`${this.name}.loadedPlayer.skip`)
         }
       }
       catch (e) {

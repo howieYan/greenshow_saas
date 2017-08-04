@@ -251,48 +251,69 @@
                                                         </Button>
                                                     </div>
                                                 </div>
-                                               
-                                                <table class="table1">
-                                                    <thead>
-                                                        <tr class="">
-                                                            <th class="">状态</th>
-                                                            <th class="">名次</th>
-                                                            <th class="">姓名</th>
-                                                            <th class="">性别</th>
-                                                            <th class="">昵称</th>
-                                                            <th class="">完成洞数</th>
-                                                            <th class="">杆差</th>
-                                                            <th class="">总杆</th>
-                                                            <th class="">差点</th>
-                                                            <th class="">净杆</th>
-                                                            <th class="">前九</th>
-                                                            <th class="">后九</th>
-                                                            <th class="">积分卡张数</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody id="list">
-                                                        <tr class="activer">
-                                                            <td class="">
-                                                                <Select v-model="model3" style="width:120px">
-                                                                    <Option v-for="item in optionsSles" :value="item.value" :key="item.value">{{ item.label }}</Option>
-                                                                </Select>
-                                                            </td>
-                                                            <td class="">{{ index+1 }}</td>
-                                                            <td class="">张三</td>
-                                                            <td class="">男</td>
-                                                            <td class="">天佑</td>
-                                                            <td class="">F</td>
-                                                            <td class="">-2</td>
-                                                            <td class="">70</td>
-                                                            <td class="">9</td>
-                                                            <td class="">5</td>
-                                                            <td class="">35</td>
-                                                            <td class="">35</td>
-                                                            <td class="">1</td>
-                                                        </tr>
-                                                    </tbody>
-                                                    
-                                                </table>
+                                                <div>
+                                                  <ul class="row" style="text-align:center;padding:15px 0;">
+                                                    <li class="col">状态</li>
+                                                    <li class="col">名次</li>
+                                                    <li class="col">姓名</li>
+                                                    <li class="col">性别</li>
+                                                    <li class="col">昵称</li>
+                                                    <li class="col">完成洞数</li>
+                                                    <li class="col">杆差</li>
+                                                    <li class="col">总杆</li>
+                                                    <li class="col">差点</li>
+                                                    <li class="col">净杆</li>
+                                                    <li class="col">前九</li>
+                                                    <li class="col">后九</li>
+                                                    <li class="col">积分卡张数</li>
+                                                  </ul>
+                                                  <div>
+                                                      <ul class="row activer" style="width:100%;float:right;text-align:center;padding:10px 0;" @click="open=true">
+                                                        <li class="col">
+                                                            <Select v-model="model3" style="widli:120px">
+                                                                <Option v-for="item in optionsSles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                            </Select>
+                                                        </li>
+                                                        <li class="col">1</li>
+                                                        <li class="col">张三</li>
+                                                        <li class="col">男</li>
+                                                        <li class="col">天佑</li>
+                                                        <li class="col">F</li>
+                                                        <li class="col">-2</li>
+                                                        <li class="col">70</li>
+                                                        <li class="col">9</li>
+                                                        <li class="col">5</li>
+                                                        <li class="col">35</li>
+                                                        <li class="col">35</li>
+                                                        <li class="col">1</li>
+                                                      </ul>
+                                                      <div v-show="open">
+                                                        <div style="">
+                                                          <Form ref="formInline" inline :label-width="50">
+                                                              <Form-item label="前九：">
+                                                                  <Input type="text" placeholder="请输入前九"></Input>
+                                                              </Form-item>
+                                                              <Form-item label="后九：">
+                                                                  <Input type="password" placeholder="请输入后九">
+                                                                     
+                                                                  </Input>
+                                                              </Form-item>
+                                                              <Form-item label="总杆：">
+                                                                  <Input type="password" placeholder="请输入总杆">
+                                                                     
+                                                                  </Input>
+                                                              </Form-item>
+                                                              <Form-item label="差点：">
+                                                                  <Input type="password" placeholder="请输入差点">
+                                                                     
+                                                                  </Input>
+                                                              </Form-item>
+                                                          </Form>
+                                                          
+                                                        </div>
+                                                      </div>  
+                                                  </div>       
+                                                </div>      
                                               </div>
                                             </Card>
                                         </Col>
@@ -320,6 +341,7 @@ export default {
       theme1: 'light',
       disabledGroup: false,
       loading: false,
+      open: false,
       disabledGroupss: true,
       navApplys: false,
       navGroupings: true,
@@ -513,6 +535,9 @@ export default {
     },
     toLoading () {
       this.loading = true
+    },
+    openDelist () {
+      this.open = true
     }
   },
   mounted () {
@@ -525,7 +550,13 @@ export default {
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
   padding: 20px 10px;
 }
-
+ul.activer>li{
+  height:32px;
+  line-height:32px;
+}
+ul.activer:hover{
+  background:#ebf7ff;
+}
 .ivu-input-wrapper{
   margin-bottom: 21px;
 }

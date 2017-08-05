@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import TeamPage from '@/components/TeamPage'
+import Team from '@/components/Team'
 import Management from '@/components/Management'
 import LeadingGroup from '@/components/LeadingGroup'
 import CompetitionEvent from '@/components/CompetitionEvent'
@@ -28,8 +28,8 @@ let router = new Router({
     },
     {
       path: '/team/:id',
-      name: 'TeamPage',
-      component: TeamPage
+      name: 'Team',
+      component: Team
     },
     {
       path: '/management',

@@ -265,10 +265,10 @@
                                                     <li class="col">净杆</li>
                                                     <li class="col">前九</li>
                                                     <li class="col">后九</li>
-                                                    <li class="col">积分卡张数</li>
+                                                    <li class="col">积分卡</li>
                                                   </ul>
                                                   <div>
-                                                      <ul class="row activer" style="width:100%;float:right;text-align:center;padding:10px 0;" @click="openDelist">
+                                                      <ul class="row activer" style="width:100%;text-align:center;padding:10px 0;" @click="openDelist(index)">
                                                         <li class="col">
                                                             <Select v-model="model3" style="widli:120px">
                                                                 <Option v-for="item in optionsSles" :value="item.value" :key="item.value">{{ item.label }}</Option>
@@ -285,32 +285,50 @@
                                                         <li class="col">5</li>
                                                         <li class="col">35</li>
                                                         <li class="col">35</li>
-                                                        <li class="col">1</li>
+                                                        <li class="col">2</li>
                                                       </ul>
                                                       <div v-show="!open">
                                                         <div style="">
-                                                          <Form ref="formInline" inline :label-width="50">
-                                                              <Form-item label="前九：">
-                                                                  <Input type="text" placeholder="请输入前九"></Input>
-                                                              </Form-item>
-                                                              <Form-item label="后九：">
-                                                                  <Input type="password" placeholder="请输入后九">
-                                                                     
-                                                                  </Input>
-                                                              </Form-item>
-                                                              <Form-item label="总杆：">
-                                                                  <Input type="password" placeholder="请输入总杆">
-                                                                     
-                                                                  </Input>
-                                                              </Form-item>
-                                                              <Form-item label="差点：">
-                                                                  <Input type="password" placeholder="请输入差点">
-                                                                     
-                                                                  </Input>
-                                                              </Form-item>
-                                                          </Form>
-                                                          <div> 
-                                                            <ul class="row" style="text-align:center;">
+                                                          <div class="row" style="border:1px solid #eee;height:50px;line-height:50px;">
+                                                            <div class="col">
+                                                                  <Form  :label-width="50">
+                                                                    <Form-item label="前九：">
+                                                                        <Input  placeholder="请输入前九"></Input>
+                                                                    </Form-item>
+                                                                  </Form>
+                                                            </div>
+                                                            <div class="col">
+                                                                  <Form  :label-width="50">
+                                                                    <Form-item label="后九：">
+                                                                        <Input  placeholder="请输入后九"></Input>
+                                                                    </Form-item>
+                                                                  </Form>
+                                                            </div>
+                                                            <div class="col">
+                                                                  <Form  :label-width="50">
+                                                                    <Form-item label="总杆：">
+                                                                        <Input  placeholder="请输入总杆"></Input>
+                                                                    </Form-item>
+                                                                  </Form>
+                                                            </div>
+                                                            <div class="col">
+                                                                  <Form  :label-width="50">
+                                                                    <Form-item label="差点：">
+                                                                        <Input  placeholder="请输入差点"></Input>
+                                                                    </Form-item>
+                                                                  </Form>
+                                                            </div>
+                                                            <div class="col">
+                                                                  <Form :model="formItem" :label-width="80">
+                                                                    <Form-item>
+                                                                        <Button type="primary">提交</Button>
+                                                                    </Form-item>
+                                                                  </Form>
+                                                            </div>
+                                                             
+                                                          </div>
+                                                          <div style="float:left;margin-top:30px;width: 100%;">
+                                                            <ul class="row" style="text-align:center;width:95%;float:right;">
                                                                 <li style="width:80px;">HOTE</li>
                                                                 <li class="col">1</li>
                                                                 <li class="col">2</li>
@@ -333,19 +351,25 @@
                                                                 <li class="col">IN</li>
                                                                 <li class="col">TOT</li>
                                                             </ul>
-                                                            <ul class="row" style="text-align:center;">
-                                                                <li style="width:80px;">蓝Tee</li>
-                                                                <li class="col" v-for="n in 20">372</li>
-                                                            </ul>
-                                                            <ul class="row" style="text-align:center;">
-                                                                <li style="width:80px;">PAR</li>
-                                                                <li class="col" v-for="n in 20">372</li>
-                                                            </ul>
-                                                             <ul class="row" style="text-align:center;">
+                                                            <Checkbox v-model="disabledSingle" style="float:left;padding-top:21px;"></Checkbox>
+                                                             <ul class="row" style="text-align:center;width:95%;float:right;" v-bind:class ="{ 'opaacity' : disabledSingle === false }">
                                                                 <li style="width:80px;">小秀</li>
                                                                 <li class="col" v-for="n in 20">2</li>
                                                             </ul>
                                                           </div>
+                                                          <div style="float:left;width: 100%;" v-bind:class ="{ 'opaacity' : disabledSingles === false }">
+                                                            <Checkbox v-model="disabledSingles" style="float:left;"></Checkbox>
+                                                             <ul class="row" style="text-align:center;width:95%;float:right;">
+                                                                <li style="width:80px;">小秀</li>
+                                                                <li class="col" v-for="n in 20">2</li>
+                                                            </ul>
+                                                          </div>
+                                                          <!--没成绩时这是输入框-->
+                                                          <div v-show="disabledGroup">
+                                                             录入成绩：<Input  type="textarea" placeholder="请输入成绩"></Input>
+                                                             <p style="opacity:0.4;">成绩后面要有空格间隔或"-"间隔</p>
+                                                          </div>
+                                                          
                                                         </div>
                                                       </div>  
                                                   </div>       
@@ -354,6 +378,10 @@
                                             </Card>
                                         </Col>
                                     </Row>
+                                  </div>
+                                  <!--奖项-->
+                                  <div v-show="!navAwardss">
+                                        jiangxaing
                                   </div>
                                 </div>
                             </Row>
@@ -378,13 +406,16 @@ export default {
       disabledGroup: false,
       loading: false,
       open: true,
+      disabledSingle: true,
       disabledGroupss: true,
       navApplys: false,
       navGroupings: true,
+      disabledSingles: false,
       navLeads: true,
       navAwardss: true,
       navEvents: true,
       navImages: true,
+      pageIndex: -1,
       model3: '0',
       data3: this.getMockData(),
       targetKeys3: this.getTargetKeys(),
@@ -532,6 +563,9 @@ export default {
       this.navLeads = false
     },
     navAwards () {
+      this.navApplys = true
+      this.navGroupings = true
+      this.navLeads = true
     },
     navEvent () {
     },
@@ -572,7 +606,7 @@ export default {
     toLoading () {
       this.loading = true
     },
-    openDelist () {
+    openDelist (index) {
       if (this.open === true) {
         this.open = false
       }
@@ -610,6 +644,9 @@ ul.activer:hover{
 }*/
 tr.activer:hover{
   background:#ebf7ff;
+}
+.opaacity{
+  opacity:0.5;
 }
 .title_team{
     width: 100%;
@@ -753,5 +790,11 @@ tr.activer:hover{
 }
 .ivu-card-body{
   padding: 0px!important;  
+}
+.ivu-form-item{
+  margin:0;
+}
+form{
+  padding-top:8px;
 }
 </style>

@@ -18,16 +18,16 @@
             </div>
         </header>
         <!--nav-->
-        <div class="nav" >
+        <div class="nav" v-if="collapsed">
             <div class="nav_on_off" @click="collapse">
                 <p>
                     <b class=""></b>
                 </p>
             </div>
             <div class="nav_home">
-                <ul class="home_index" v-for="record in team.list">
+                <ul class="home_index" v-for="(record,index) in team.list">
                     <li class="row">
-                        <a class="col" @click="clickOpen(record)">
+                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : index === temaindex }">
                             <ul class="nav_banner row">
                                 <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
                                 <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
@@ -37,24 +37,39 @@
                 </ul>
             </div>
         </div>
-        <!--banner nav-->
-        <section class="banner_nav_block">
-            <div class="banner_nav banner_nav2" v-if="!nav_open" style="left:-190px;">
+
+        <!--折叠后的导航-->
+        <div class="nav nav1" v-else>
+            <div class="nav_on_off" @click="collapse">
+                <p>
+                    <b class=""></b>
+                </p>
+            </div>
+            <div class="nav_home1" >
+                <ul class="home_index" v-for="(record,index) in team.list">
+                    <li class="row">
+                        <a class="col" @click="clickOpen(record)" v-bind:class="{ 'back00C1DE' : index === temaindex }">
+                          <div class="center-right">
+                              <Tooltip v-bind:content="record.name" placement="right">
+                                  <li class="bg_banner_icon" style="margin-left:11px;"><img :src="'/static/favicon.ico'"></li>
+                              </Tooltip><br><br>
+                          </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--球队的 nav-->
+        <section class="banner_nav_block" v-bind:style="{ 'left': collapsed ? '190px' : '60px' }">
+            <div class="banner_nav" v-bind:style="{ 'left': nav_open ? '0px' : '-190px' }">
                 <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{backfff:index===navIndex}" v-on:click="openFrame(index)">
+                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{ 'backfff' : index === navIndex}" v-on:click="openFrame(index)">
                         <a href="javascript:(0)">{{ itmeNav.name }}</a>
                     </li>
                 </ul>
             </div>
-            <div class="banner_nav" v-else style="left:0px;">
-                <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{backfff:index==navIndex}" v-on:click="openFrame(index)">
-                        <a href="javascript:(0)">{{ itmeNav.name }}</a>
-                    </li>
-                </ul>
-            </div>
-            <div class="locker position_right" @click="navOpen"></div>
-            <div class="width100 left180">
+            <div class="locker" @click="navOpen" v-bind:style="{ 'left': nav_open ? '160px' : '0px' }" :class="{ 'position_right'  : nav_open === false }"></div>
+            <div class="width100 left180" v-bind:style="{ 'left': nav_open ? '180px' : '0px' }">
                 <div style="height:100%;" class="">
                     <slot name="main">
                     </slot>
@@ -80,7 +95,8 @@ export default {
       collapsed: true,
       nav_open: true,
       nowIndex: -1,
-      navIndex: -1,
+      temaindex: 0,
+      navIndex: 0,
       pageIndex: -1,
       title: [
         { name: '我的球队' },
@@ -137,6 +153,12 @@ export default {
         else {
           lib.debugView && console.debug(`${this.name}.loadedPlayer.skip`)
         }
+        if (this.nav_open === true) {
+          this.collapsed = false
+        }
+        else {
+          this.collapsed = true
+        }
       }
       catch (e) {
         console.error(e)
@@ -146,10 +168,9 @@ export default {
     relationClick: function (index) {
       this.nowIndex = index
     },
-    openFrame: function (index) {
-      this.pageIndex = index
+    openFrame (index) {
       if (index === 0) {
-        this.$router.push({ path: '/team' })
+        this.$router.push({ path: '/' })
       }
       if (index === 1) {
         this.$router.push({ path: '/management' })
@@ -209,8 +230,14 @@ h1 {
 ul.home_index_player{
     display:none;
 }
-.tema_nav{
+.nav_home1  .ivu-btn .ivu-tooltip-inner{
+  background:none;
+}
+.nav_home1 .ivu-tooltip-inner{
     display: none;
+}
+.back00C1DE{
+  background:#00C1DE;
 }
 .tema_nav>li{
     height: 40px;
@@ -294,5 +321,8 @@ ul.home_index_player{
 .active_nav_player_bar{
     background: #00C1DE;
     color: #fff;
+}
+.nav_home1>.home_index{
+  
 }
 </style>

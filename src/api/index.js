@@ -10,8 +10,8 @@ import mock from './mock' // TODO: Remove this when build production release.
  * axios configurations.
  */
 axios.defaults.timeout = 10000 // timeout in 10 seconds.
-// axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? 'http://wx.golfgreenshow.com' : 'http://devwx.golfgreenshow.com'
-axios.defaults.baseURL = 'http://wx.gs.co'
+axios.defaults.baseURL = (process.env.NODE_ENV === 'production') ? 'http://wx.golfgreenshow.com' : 'http://devwx.golfgreenshow.com'
+// axios.defaults.baseURL = 'http://wx.gs.co'
 
 export default {
   /**

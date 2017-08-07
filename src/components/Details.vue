@@ -84,10 +84,10 @@
                                   </div>
                                   <!--分组-->
                                   <div v-show="!navGroupings">
-                                      <Row style="">
-                                          <Col span="9">
+                                      <Row style=" ">
+                                          <Col style="width:420px;float:left;">
                                               <Card :bordered="false">
-                                                  <div style="overflow-x:auto;">
+                                                  <div style="overflow-x: auto;"">
                                                     <div style="text-align:left;">
                                                          <Input  icon="ios-search" placeholder="请输入手机号码或姓名..."></Input>
                                                     </div>
@@ -117,15 +117,15 @@
                                                   </div>
                                               </Card>
                                           </Col>
-                                          <Col span="14" offset="1">
+                                          <Col style="float:left;">
                                               <Card shadow>
-                                                     <div style="width:100%;overflow-x: auto;">
+                                                     <div style="width:100%;overflow-x: auto;"">
                                                         <div style="text-align:left;">
                                                           <Checkbox-group v-model="disabledGroup">
                                                               <Checkbox label="显示真实姓名"></Checkbox>
                                                           </Checkbox-group>
                                                         </div>
-                                                        <table class="table1">
+                                                        <table class="table1 table1_1">
                                                             <thead>
                                                                 <tr class="">
                                                                     <th>组号</th>
@@ -267,7 +267,7 @@
                                                     <li class="col">后九</li>
                                                     <li class="col">积分卡</li>
                                                   </ul>
-                                                  <div v-for="(item,index) in optionsSles">
+                                                  <div>
                                                       <ul class="row activer" style="width:100%;text-align:center;padding:10px 0;" @click="openDelist(index)">
                                                         <li class="col">
                                                             <Select v-model="model3" style="widli:120px">
@@ -379,9 +379,125 @@
                                         </Col>
                                     </Row>
                                   </div>
-                                  <!--奖项-->
+                                  <!--奖项设置-->
                                   <div v-show="!navAwardss">
-                                        jiangxaing
+                                    <div style="border:1px solid #eee;">
+                                      <Button type="ghost" icon="ios-plus-empty" style="margin:20px 20px 20px 1%;" @click="addjx">添加</Button>
+                                      <table class="table table4">
+                                          <thead>
+                                              <tr class="">
+                                                  <th class="">奖项名称</th>
+                                                  <th class="">奖品</th>
+                                                  <th class="">获奖人</th>
+                                                  <th class="">操作</th>
+                                              </tr>
+                                          </thead>
+                                          <tbody id="list">
+                                              <tr class="">
+                                                  <td class="" prop="nickname">总冠</td>
+                                                  <td class=""  prop="name">1#木</td>
+                                                  <td class="">张三</td>
+                                                  <td class="">
+                                                      <Button type="ghost" icon="ios-plus-empty">选择获奖人</Button>
+                                                  </td>
+                                                  <td class="">
+                                                      <Button type="info">编辑</Button>
+                                                  </td>
+                                              </tr>
+                                          </tbody>
+                                      </table>
+                                    </div>
+                                    <!--添加-->
+                                    <div class="el-dialog__wrapper" v-show="!addJX">
+                                      <div class="center_top">
+                                          <div class="alert_header" id="widthAlert">
+                                            <div class="layui-layer-title">
+                                                添加页
+                                            </div>
+                                            <div class="layui-layer-setwin" @click="colseAddJx">
+                                                <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                                            </div>
+                                            <div style="">
+                                              <Form :model="formRight" label-position="right" :label-width="100">
+                                                  <Form-item label="奖项名称：">
+                                                      <Input v-model="formRight.input1" style="width:80%;"></Input>
+                                                  </Form-item>
+                                                  <Form-item label="奖品：">
+                                                      <Input v-model="formRight.input2" style="width:80%;"></Input>
+                                                  </Form-item>
+                                                  <Form-item label="获奖人：">
+                                                      <Input v-model="formRight.input3" style="width:80%;"></Input>
+                                                  </Form-item>
+                                                  <Form-item>
+                                                      <Button type="primary">提交</Button>
+                                                      <Button type="ghost" style="margin-left: 8px" @click="colseAddJx">取消</Button>
+                                                  </Form-item>
+                                              </Form>
+                                              <div style="width:100%;height:50px;"></div>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <!-- 选择获奖人-->
+                                    <div class="el-dialog__wrapper" v-show="!playM">
+                                      <div class="center_top">
+                                          <div class="alert_header" id="widthAlert">
+                                            <div class="layui-layer-title">
+                                                人员名单
+                                            </div>
+                                            <div class="layui-layer-setwin">
+                                                <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                                            </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <!--编辑-->
+                                    <div class="el-dialog__wrapper" v-show="!redact">
+                                      <div class="center_top">
+                                          <div class="alert_header" id="widthAlert">
+                                            <div class="layui-layer-title">
+                                                编辑页
+                                            </div>
+                                            <div class="layui-layer-setwin">
+                                                <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
+                                            </div>
+                                           
+                                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <!--活动新闻-->
+                                  <div v-show="!navEvents">
+                                      <div style="margin:20px;">
+                                      活动新闻
+                                          <!--<table class="table table">
+                                              <thead>
+                                                  <tr class="">
+                                                      <th class="">活动标题</th>
+                                                      <th class="">奖品</th>
+                                                      <th class="">获奖人</th>
+                                                      <th class="">操作</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody id="list">
+                                                  <tr class="">
+                                                      <td class="" prop="nickname">总冠</td>
+                                                      <td class=""  prop="name">1#木</td>
+                                                      <td class="">张三</td>
+                                                      <td class="">
+                                                          <Button type="ghost" icon="ios-plus-empty">选择获奖人</Button>
+                                                      </td>
+                                                      <td class="">
+                                                          <Button type="info">编辑</Button>
+                                                      </td>
+                                                  </tr>
+                                              </tbody>
+                                          </table>-->
+                                      </div>
+                                  </div>
+                                  <!--图片管理-->
+                                  <div v-show="!navImages">
+                                      图片管 
                                   </div>
                                 </div>
                             </Row>
@@ -406,10 +522,12 @@ export default {
       disabledGroup: false,
       loading: false,
       open: true,
-      nav_open: true,
       disabledSingle: true,
       disabledGroupss: true,
       navApplys: false,
+      playM: true,
+      redact: true,
+      addJX: true,
       navGroupings: true,
       disabledSingles: false,
       navLeads: true,
@@ -550,27 +668,51 @@ export default {
     },
     navApply () {
       this.navApplys = false
+      this.navAwardss = true
+      this.navEvents = true
       this.navLeads = true
-      this.navGroupings = true
+      this.navImages = true
+      this.navGroupings = true//  详情页的导航条
     },
     navGrouping () {
       this.navApplys = true
+      this.navAwardss = true
+      this.navEvents = true
       this.navLeads = true
+      this.navImages = true
       this.navGroupings = false
     },
     navLead () {
       this.navApplys = true
       this.navGroupings = true
+      this.navAwardss = true
+      this.navEvents = true
+      this.navImages = true
       this.navLeads = false
     },
     navAwards () {
       this.navApplys = true
       this.navGroupings = true
+      this.navEvents = true
       this.navLeads = true
+      this.navImages = true
+      this.navAwardss = false
     },
     navEvent () {
+      this.navApplys = true
+      this.navGroupings = true
+      this.navLeads = true
+      this.navAwardss = true
+      this.navImages = true
+      this.navEvents = false
     },
     navImage () {
+      this.navApplys = true
+      this.navGroupings = true
+      this.navLeads = true
+      this.navAwardss = true
+      this.navEvents = true
+      this.navImages = false
     },
     getMockData () {
       let mockData = []
@@ -608,17 +750,18 @@ export default {
       this.loading = true
     },
     openDelist (index) {
-      if (index === 0) {
-        if (this.open === true) {
-          this.open = false
-        }
-        else {
-          this.open = true
-        }
+      if (this.open === true) {
+        this.open = false
       }
       else {
         this.open = true
       }
+    },
+    addjx () {
+      this.addJX = false
+    },
+    colseAddJx () {
+      this.addJX = true
     }
   },
   mounted () {
@@ -628,6 +771,31 @@ export default {
 
 <style scoped>
 @import '../css/reset.css';
+.el-dialog__wrapper{
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  overflow: auto;
+  margin: 0;
+  background:rgba(0,0,0,0.5);
+}
+.alert_header{
+    top: 20%;
+    position: absolute;
+    left: 50%;
+    width: 30%;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    background: #fff;
+    border-radius: 2px;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin-bottom: 50px;
+}
 .ivu-menu-vertical .ivu-menu-item, .ivu-menu-vertical .ivu-menu-submenu-title{
   padding: 20px 10px;
 }
@@ -644,10 +812,9 @@ ul.activer:hover{
 .ivu-btn-small{
   padding:2px 10px;
 }
-/*.table{
-  border-left:1px solid #eee;
-  border-right: 1px solid #eee;
-}*/
+.table4{
+  border:1px solid #ddd;
+}
 tr.activer:hover{
   background:#ebf7ff;
 }
@@ -682,11 +849,18 @@ tr.activer:hover{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-
+.table1_1 th, .table1_1 td{
+    padding: 10px;
+    line-height: 30px;
+    border-left: 0;
+    text-align: center;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .table th, .table td{
     padding: 10px 20px;
     line-height: 30px;
-    border-bottom: 1px solid #ddd;
     border-left: 0;
     text-align: center;
     overflow: hidden;

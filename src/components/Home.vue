@@ -1,5 +1,5 @@
 <template>
-    <layout>
+    <layout :hasNav="false">
       <div slot="main">
         <h1>我管理的球队</h1>
         <div class="flex-container shorthand">
@@ -15,7 +15,7 @@
 <script>
 // import api from '../api'
 import * as lib from '../lib'
-import { team } from '../store'
+import { setting, team } from '../store'
 
 export default {
   name: 'Home',
@@ -33,12 +33,14 @@ export default {
 
   created () {
     lib.debugView && console.debug(`${this.name}.created`)
+    setting.isNavOpen = false
   },
 
   methods: {
     clickOpen (record) {
       lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
       this.$router.push(`/team/${record.id}`)
+      setting.isNavOpen = true // Show navbar by default.
     },
 
     openInput () {

@@ -18,7 +18,7 @@
             </div>
         </header>
         <!--nav-->
-        <div class="nav" v-if="collapsed">
+        <div class="nav" v-if="!setting.isNavOpen">
             <div class="nav_on_off" @click="collapse">
                 <p>
                     <b class=""></b>
@@ -27,7 +27,7 @@
             <div class="nav_home">
                 <ul class="home_index" v-for="(record,index) in team.list">
                     <li class="row">
-                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : collapsed === false }">
+                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : setting.isNavOpen }">
                             <ul class="nav_banner row">
                                 <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
                                 <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
@@ -60,19 +60,19 @@
             </div>
         </div>
         <!--球队的 nav-->
-        <section class="banner_nav_block" v-bind:style="{ 'left': collapsed ? '190px' : '60px' }">
-            <div class="banner_nav" v-bind:style="{ 'left': nav_open ? '0px' : '-190px' }">
+        <section class="banner_nav_block" v-bind:style="{ 'left': !setting.isNavOpen ? '190px' : '60px' }">
+            <div class="banner_nav" v-bind:style="{ 'left': hasNav && setting.isNavOpen ? '0px' : '-190px' }">
                 <ul class="hover_li_fff">
                     <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{ 'backfff' : index === navIndex}" v-on:click="openFrame(index)">
                         <a href="javascript:(0)">{{ itmeNav.name }}</a>
                     </li>
                 </ul>
             </div>
-            <div class="locker"
-            @click="navOpen" v-bind:style="{ 'left': nav_open ? '160px' : '0px' }"
-            :class="{ 'position_right'  : collapsed === true }">
+            <div v-show="hasNav" class="locker"
+            @click="navOpen" v-bind:style="{ 'left': setting.isNavOpen ? '160px' : '0px' }"
+            :class="{ 'position_right'  : !setting.isNavOpen }">
             </div>
-            <div class="width100 left180" v-bind:style="{ 'left': nav_open ? '180px' : '0px' }">
+            <div class="width100 left180" v-bind:style="{ 'left': hasNav && setting.isNavOpen ? '180px' : '0px' }">
                 <div style="height:100%;" class="">
                     <slot name="main">
                     </slot>
@@ -85,18 +85,24 @@
 
 <script>
 import api from '../api'
-import { account, layout, team } from '../store'
+import { account, setting, team } from '../store'
 import * as lib from '../lib'
 
 export default {
   name: 'Layout',
+  props: {
+    hasNav: {
+      Boolean,
+      default: true
+    }
+  },
+
   data () {
     return {
       name: 'LayoutV',
       account: account,
       team: team,
-      collapsed: true,
-      nav_open: layout.isNavOpen,
+      setting: setting,
       nowIndex: -1,
       temaindex: 0,
       navIndex: 0,
@@ -128,13 +134,7 @@ export default {
 
   methods: {
     clickOpen (record) {
-      if (this.collapsed === true) {
-        this.nav_open = true
-        this.collapsed = false
-      }
-      else {
-        this.nav_open = true
-      }
+      setting.isNavOpen = !setting.isNavOpen
       lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
       this.$router.push(`/team/${record.id}`)
     },
@@ -163,20 +163,13 @@ export default {
         else {
           lib.debugView && console.debug(`${this.name}.loadedPlayer.skip`)
         }
-        if (this.collapsed === true) {
-          this.nav_open = false
-        }
-        else {
-          this.nav_open = true
-        }
       }
       catch (e) {
         console.error(e)
       }
     },
+
     openFrame (index) {
-      this.collapsed = false
-      this.nav_open = true
       if (index === 0) {
         this.$router.push({ path: '/' })
       }
@@ -193,22 +186,18 @@ export default {
         this.$router.push({ path: '/page4' })
       }
     },
+
     collapse () {
-      if (this.collapsed === true) {
-        this.collapsed = false
-      }
-      else {
-        this.collapsed = true
-      }
+      setting.isNavOpen = !setting.isNavOpen
     },
+
     navOpen () {
-      lib.debugView && console.debug(`${this.name}.navOpen: ${this.nav_open}`)
-      layout.isNavOpen = !layout.isNavOpen
-      this.collapsed = !layout.isNavOpen
+      lib.debugView && console.debug(`${this.name}.navOpen: ${setting.isNavOpen}`)
+      setting.isNavOpen = !setting.isNavOpen
     }
   },
   mounted () {
-    lib.debugView && console.debug(`${this.name}.mounted`)
+    lib.debugView && console.debug(`${this.name}.mounted, nav=${setting.isNavOpen}`)
   }
 }
 </script>

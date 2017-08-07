@@ -1,5 +1,8 @@
 import * as lib from '../lib'
 
+/**
+ * Account data.
+ */
 const account = {
   token: null,
   player: null,
@@ -19,18 +22,27 @@ const account = {
   }
 }
 
-const layout = {
-  isNavOpen: true
+/**
+ * View settings.
+ */
+const setting = {
+  isNavOpen: false
 }
 
+/**
+ * Team data.
+ */
 const team = {
   list: [],
   active: null
 }
 
+/**
+ * Player data.
+ */
 const player = {
   list: [],
   active: null
 }
 
-export { account, layout, team, player }
+export { account, setting, team, player }

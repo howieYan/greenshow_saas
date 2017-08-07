@@ -131,5 +131,9 @@ export default {
 
   getPlayer (id, option = '') {
     return this.send('get', `/api5/Player/${id}?option=${option}`)
+  },
+
+  saveTeam (id, data) {
+    return this.send('post', `/api5/Team/${id}`, data)
   }
 }

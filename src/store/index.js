@@ -19,6 +19,10 @@ const account = {
   }
 }
 
+const layout = {
+  isNavOpen: true
+}
+
 const team = {
   list: [],
   active: null
@@ -29,4 +33,4 @@ const player = {
   active: null
 }
 
-export { account, team, player }
+export { account, layout, team, player }

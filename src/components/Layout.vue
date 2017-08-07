@@ -82,7 +82,7 @@
 
 <script>
 import api from '../api'
-import { account, team } from '../store'
+import { account, layout, team } from '../store'
 import * as lib from '../lib'
 
 export default {
@@ -93,7 +93,7 @@ export default {
       account: account,
       team: team,
       collapsed: true,
-      nav_open: true,
+      nav_open: layout.isNavOpen,
       nowIndex: -1,
       temaindex: 0,
       navIndex: 0,
@@ -194,12 +194,8 @@ export default {
       }
     },
     navOpen () {
-      if (this.nav_open === true) {
-        this.nav_open = false
-      }
-      else {
-        this.nav_open = true
-      }
+      lib.debugView && console.debug(`${this.name}.navOpen: ${this.nav_open}`)
+      layout.isNavOpen = !layout.isNavOpen
     }
   },
   mounted () {
@@ -323,6 +319,6 @@ ul.home_index_player{
     color: #fff;
 }
 .nav_home1>.home_index{
-  
+
 }
 </style>

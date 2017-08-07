@@ -23,7 +23,8 @@ export default {
     return {
       name: 'HomeV',
       team: team,
-      open: true
+      open: true,
+      nav_open: true
     }
   },
 

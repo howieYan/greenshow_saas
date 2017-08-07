@@ -40,6 +40,7 @@ export default {
   data () {
     return {
       data: {
+        nav_open: true,
         user: lib.debug ? '13585562369' : '',
         password: lib.debug ? '11111111' : '',
         code: '1111'

@@ -447,6 +447,9 @@ section{
 
 
 
+.viewFramework-sidebar-mini,.viewFramework-sidebar-mini.width100{
+    left: 180px;
+}
 .viewFramework-sidebar-full,.viewFramework-sidebar-full.width100{
     left:60px;
 }
@@ -467,6 +470,7 @@ section>.banner_nav>ul>li>a{
     line-height:40px;
     padding-left: 40px;
 }
+
 div.banner_nav2 + div.position_right + div.left180{
     left:0;
 }
@@ -483,6 +487,7 @@ section>.banner_nav>ul>li.banner_active{
     width: auto;
     top: 0px;
     bottom: 0px;
+    left: 180px;
     right: 0px;
     overflow-x: auto;
 }
@@ -511,7 +516,6 @@ section>.banner_nav>ul>li.banner_active{
     top: 50%;
     z-index: 3;
 }
-
 .viewFramework-sidebar-full .left180, .viewFramework-sidebar-mini .left180{
     left:180px;
 }

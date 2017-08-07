@@ -200,6 +200,7 @@ export default {
       formItem: {
         input: '',
         radio: 'male',
+        nav_open: true,
         position: '队员'
       },
       formValidate: {

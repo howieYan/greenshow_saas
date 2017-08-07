@@ -237,6 +237,7 @@ export default {
       copyreaders: true,
       addCopyreaders: true,
       particulars: true,
+      nav_open: true,
       formItem: {
         position: '队员'
       }

@@ -267,7 +267,7 @@
                                                     <li class="col">后九</li>
                                                     <li class="col">积分卡</li>
                                                   </ul>
-                                                  <div>
+                                                  <div v-for="(item,index) in optionsSles">
                                                       <ul class="row activer" style="width:100%;text-align:center;padding:10px 0;" @click="openDelist(index)">
                                                         <li class="col">
                                                             <Select v-model="model3" style="widli:120px">
@@ -406,6 +406,7 @@ export default {
       disabledGroup: false,
       loading: false,
       open: true,
+      nav_open: true,
       disabledSingle: true,
       disabledGroupss: true,
       navApplys: false,
@@ -607,8 +608,13 @@ export default {
       this.loading = true
     },
     openDelist (index) {
-      if (this.open === true) {
-        this.open = false
+      if (index === 0) {
+        if (this.open === true) {
+          this.open = false
+        }
+        else {
+          this.open = true
+        }
       }
       else {
         this.open = true

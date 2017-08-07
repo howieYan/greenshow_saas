@@ -27,7 +27,7 @@
             <div class="nav_home">
                 <ul class="home_index" v-for="(record,index) in team.list">
                     <li class="row">
-                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : index === temaindex }">
+                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : collapsed === false }">
                             <ul class="nav_banner row">
                                 <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
                                 <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
@@ -68,7 +68,10 @@
                     </li>
                 </ul>
             </div>
-            <div class="locker" @click="navOpen" v-bind:style="{ 'left': nav_open ? '160px' : '0px' }" :class="{ 'position_right'  : nav_open === false }"></div>
+            <div class="locker"
+            @click="navOpen" v-bind:style="{ 'left': nav_open ? '160px' : '0px' }"
+            :class="{ 'position_right'  : collapsed === true }">
+            </div>
             <div class="width100 left180" v-bind:style="{ 'left': nav_open ? '180px' : '0px' }">
                 <div style="height:100%;" class="">
                     <slot name="main">
@@ -125,6 +128,13 @@ export default {
 
   methods: {
     clickOpen (record) {
+      if (this.collapsed === true) {
+        this.nav_open = true
+        this.collapsed = false
+      }
+      else {
+        this.nav_open = true
+      }
       lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
       this.$router.push(`/team/${record.id}`)
     },
@@ -153,22 +163,20 @@ export default {
         else {
           lib.debugView && console.debug(`${this.name}.loadedPlayer.skip`)
         }
-        if (this.nav_open === true) {
-          this.collapsed = false
+        if (this.collapsed === true) {
+          this.nav_open = false
         }
         else {
-          this.collapsed = true
+          this.nav_open = true
         }
       }
       catch (e) {
         console.error(e)
       }
     },
-
-    relationClick: function (index) {
-      this.nowIndex = index
-    },
     openFrame (index) {
+      this.collapsed = false
+      this.nav_open = true
       if (index === 0) {
         this.$router.push({ path: '/' })
       }
@@ -196,6 +204,7 @@ export default {
     navOpen () {
       lib.debugView && console.debug(`${this.name}.navOpen: ${this.nav_open}`)
       layout.isNavOpen = !layout.isNavOpen
+      this.collapsed = !layout.isNavOpen
     }
   },
   mounted () {

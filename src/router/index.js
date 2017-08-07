@@ -24,6 +24,7 @@ let router = new Router({
     {
       path: '/',
       name: 'Home',
+      id: 0,
       component: Home
     },
     {

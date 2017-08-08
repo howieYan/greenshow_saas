@@ -3,7 +3,11 @@
         <div slot="main" style="position:relative;height:100%;overflow: hidden;">
           <div class="title_team">
               <h1>相册 </h1>
+<<<<<<< HEAD
               <Card style="width:220px；">
+=======
+              <Card style="width:220px">
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
                 <div class="row">
                     <div class="modulImage_img">
                         <Icon type="ios-paper-outline" size="60" color=""></Icon>

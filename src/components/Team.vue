@@ -9,6 +9,7 @@
                       <li class="textCenter textCenter0 col">
                           <img :src="team.active && team.active.logo ? team.active.logo : ''" alt="" with="200px" height="200px">
                           <p style="color:#fff;font-size:16px;cursor: pointer;" >
+<<<<<<< HEAD
                           口号:
                           </p>
                           <Input v-model="data.purpose" placeholder="请输入口号" style="width:200px;"></Input>
@@ -17,6 +18,32 @@
                                   <div v-if="opens">{{ team.active && team.active.averageScore ? team.active.averageScore : '无' }}</div>
                                   <Input v-else v-model="data.averageScore" placeholder="请输入平均成绩" style="width:200px;"></Input>
                                   <p style="color:#fff;font-size:20px;" @click="openInputs">平均成绩</p>
+=======
+                          口号{{ team.active && team.active.purpose ? team.active.purpose : '' }}
+                          <Button type="primary" @click="openInput">修改口号</Button>
+                          </p>
+                          <Form ref="formInline" inline  v-show="!open">
+                              <Form-item>
+                                  <Input v-model="data.purpose" placeholder="请输入口号"></Input>
+                              </Form-item>
+                              <Form-item>
+                                  <Button type="primary" @click="closeInput">确定</Button>
+                              </Form-item>
+                          </Form>
+                          <div class="row string padding_Top10" style="padding-top:0;">
+                              <div class="col">
+                                  <div>{{ team.active && team.active.averageScore ? team.active.averageScore : '无' }}</div>
+                                  <b>平均成绩</b>
+                                  <Button type="primary" @click="openInputs">修改平均成绩</Button>
+                                  <Form ref="formInline" inline  v-show="!opens">
+                                      <Form-item>
+                                          <Input v-model="data.averageScore" placeholder="请输入平均成绩"></Input>
+                                      </Form-item>
+                                      <Form-item>
+                                          <Button type="primary" @click="closeInputs">确定</Button>
+                                      </Form-item>
+                                  </Form>
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
                               </div>
                              
                               <div class="col">
@@ -36,10 +63,17 @@
                           <div class="row text_color">
                               <div class="col">
                                   <p >成立时间</p>
+<<<<<<< HEAD
                                   <b>{{ team.active && team.active.value3 ? team.active.value3 : '无' }}</b>
                                   <Date-picker v-model="data.value3"
                                       :open="opena"
                                       :value="value3"
+=======
+                                  <b>{{ team.active && team.active.time ? team.active.time : '无' }}</b>
+                                  <Date-picker v-model="data.time"
+                                      :open="opena"
+                                      format="yyyy年M月d日"
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
                                       confirm
                                       placement="top-start"
                                       @on-change="handleChange"
@@ -48,6 +82,10 @@
                                       <a href="javascript:void(0)" @click="handleClick">
                                           <Icon type="ios-calendar-outline"></Icon>
                                           <template v-if="value3 === ''" style="color:#000;">选择日期</template>
+<<<<<<< HEAD
+=======
+                                          <template v-else>{{ value3 }}</template>
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
                                       </a>
                                   </Date-picker>
                               </div>
@@ -157,6 +195,16 @@ export default {
     }
   },
 
+<<<<<<< HEAD
+=======
+  watch: {
+    id (newValue, oldValue) {
+      lib.debugView && console.debug(`${this.name}.id: ${oldValue} => ${newValue} `)
+      this.loadData()
+    }
+  },
+
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
   computed: {
     id () {
       return this.$route.params.id
@@ -169,6 +217,7 @@ export default {
 
   methods: {
     openInput () {
+<<<<<<< HEAD
       if (this.open === true) {
         this.open = false
       }
@@ -176,6 +225,13 @@ export default {
         this.open = true
         this.save({ purpose: this.data.averageScore })
       }
+=======
+      this.open = false
+    },
+    closeInput () {
+      this.open = true
+      this.save({ purpose: this.data.purpose })
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
     },
     temaopenInputs () {
       this.openss = false
@@ -185,6 +241,7 @@ export default {
       this.save({ purpose: this.data.memberCount })
     },
     openInputs () {
+<<<<<<< HEAD
       if (this.opens === true) {
         this.opens = false
       }
@@ -192,6 +249,13 @@ export default {
         this.opens = true
         this.save({ purpose: this.data.averageScore })
       }
+=======
+      this.opens = false
+    },
+    closeInputs () {
+      this.opens = true
+      this.save({ purpose: this.data.averageScore })
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
     },
     timeopen () {
       this.opentime = false
@@ -231,9 +295,12 @@ export default {
     handleClick () {
       this.opena = !this.opena
     },
+<<<<<<< HEAD
     handleChange (date) {
       this.value3 = date
     },
+=======
+>>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
     handleClear () {
       this.opena = false
     },

@@ -2,15 +2,16 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Team from '@/components/Team'
-import Management from '@/components/Management'
+import PlayManagement from '@/components/PlayManagement'
 import LeadingGroup from '@/components/LeadingGroup'
 import CompetitionEvent from '@/components/CompetitionEvent'
-import Page4 from '@/components/Page4'
-import Page5 from '@/components/Page5'
+import TemaNews from '@/components/TemaNews'
+import TemaHistory from '@/components/TemaHistory'
 import Login from '@/components/Login'
 import Details from '@/components/Details'
-import Page7 from '@/components/Page7'
-import Page8 from '@/components/Page8'
+import TemaList from '@/components/TemaList'
+import Honor from '@/components/Honor'
+import Photo from '@/components/Photo'
 
 // import HistoryForm from '@/components/HistoryForm'
 
@@ -24,7 +25,6 @@ let router = new Router({
     {
       path: '/',
       name: 'Home',
-      id: 0,
       component: Home
     },
     {
@@ -33,9 +33,9 @@ let router = new Router({
       component: Team
     },
     {
-      path: '/management',
-      name: 'Management',
-      component: Management
+      path: '/playmanagement',
+      name: 'PlayManagement',
+      component: PlayManagement
     },
     {
       path: '/leadinggroup',
@@ -48,14 +48,14 @@ let router = new Router({
       component: CompetitionEvent
     },
     {
-      path: '/page4',
-      name: 'Page4',
-      component: Page4
+      path: '/temanews',
+      name: 'TemaNews',
+      component: TemaNews
     },
     {
-      path: '/page5',
-      name: 'Page5',
-      component: Page5
+      path: '/temahistory',
+      name: 'TemaHistory',
+      component: TemaHistory
     },
     {
       path: '/login',
@@ -68,20 +68,20 @@ let router = new Router({
       component: Details
     },
     {
-      path: '/page7',
-      name: 'Page7',
-      component: Page7
+      path: '/TemaList',
+      name: 'TemaList',
+      component: TemaList
     },
     {
-      path: '/page8',
-      name: 'Page8',
-      component: Page8
+      path: '/honor',
+      name: 'Honor',
+      component: Honor
+    },
+    {
+      path: '/photo',
+      name: 'Photo',
+      component: Photo
     }
-    // {
-    //   path: '/HistoryForm',
-    //   name: 'HistoryForm',
-    //   component: HistoryForm
-    // }
   ]
 })
 

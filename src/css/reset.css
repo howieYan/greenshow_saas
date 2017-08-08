@@ -37,9 +37,9 @@ input, textarea, select, button {
 	font: 14px Verdana, Helvetica, Arial, sans-serif;
 	outline:none;
 }
-table {
+/*table {
 	border-collapse: collapse;
-}
+}*/
 html {
 	overflow-y: scroll;
 }

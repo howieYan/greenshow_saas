@@ -174,16 +174,28 @@ export default {
         this.$router.push({ path: '/' })
       }
       if (index === 1) {
-        this.$router.push({ path: '/management' })
+        this.$router.push({ path: '/playmanagement' })
       }
       if (index === 2) {
         this.$router.push({ path: '/leadinggroup' })
       }
       if (index === 3) {
-        this.$router.push({ path: '/CompetitionEvent' })
+        this.$router.push({ path: '/competitionevent' })
       }
       if (index === 4) {
-        this.$router.push({ path: '/page4' })
+        this.$router.push({ path: '/temanews' })
+      }
+      if (index === 5) {
+        this.$router.push({ path: '/temahistory' })
+      }
+      if (index === 6) {
+        this.$router.push({ path: '/temalist' })
+      }
+      if (index === 7) {
+        this.$router.push({ path: '/honor' })
+      }
+      if (index === 8) {
+        this.$router.push({ path: '/Photo' })
       }
     },
 

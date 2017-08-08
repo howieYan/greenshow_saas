@@ -79,6 +79,13 @@ export default {
     }
   },
 
+  watch: {
+    id (newValue, oldValue) {
+      lib.debugView && console.debug(`${this.name}.id: ${oldValue} => ${newValue} `)
+      this.loadData()
+    }
+  },
+
   computed: {
     id () {
       return this.$route.params.id

@@ -1,37 +1,28 @@
 <template>
     <layout>
-        <div slot="main" style="position:relative;height:100%;overflow: hidden;">
+        <div slot="main" style="position:relative;height:100%;">
           <div class="title_team">
-              <h1>赛事活动</h1>
               <div style="float:right;height:40px;line-height:40px;margin-right:20px;">
-                   <Button type="ghost" @click="addCopyreader">添加</Button>
+                   <Button type="ghost" @click="clickShow">添加</Button>
               </div>
               <div style="width:100%;overflow-x:auto;">
                 <table class="table">
                     <thead>
                         <tr class="">
-                            <th class="">
-                                赛制
-                            </th>
-                            <th class="" >赛事类型</th>
-                            <th class="" >赛事名称</th>
-                            <th class="" >赛事时间</th>
-                            <th class="" >球场</th>
-                            <th class="" >报名人数</th>
-                            <th class="" >操作</th>
+                            <th class="" v-for="item in tableText">{{ item }}</th>
                         </tr>
                     </thead>
-                    <tbody id="list" v-for="n in 10">
-                        <tr class="">
-                            <td class="" >比杆赛</td>
-                            <td class="">球队赛</td>
-                            <td class="">8月例赛</td>
-                            <td class="">2017-7-12-2017-8-12</td>
-                            <td class="">上海美兰湖高尔夫球场</td>
-                            <td class="">20</td>
+                    <tbody id="list">
+                        <tr class="active" v-for="item in list">
+                            <td class="" >{{ item.matchTem }}</td>
+                            <td class="">{{ item.temaMatch }}</td>
+                            <td class="">{{ item.matchName }}</td>
+                            <td class="">{{ item.matchTime }}</td>
+                            <td class="">{{ item.matchSite }}</td>
+                            <td class="">{{ item.number }}</td>
                             <td class="" >
                                 <Button type="primary">发布</Button>
-                                <Button type="ghost" @click="copyreader">编辑</Button>
+                                <Button type="ghost" @click="clickShow(item)">编辑</Button>
                                 <Poptip placement ="top-end"
                                     confirm
                                     trigger="hover"
@@ -49,34 +40,34 @@
               
           </div>
           <!--编辑页-->          
-          <div class="el-dialog__wrapper" v-show="!copyreaders">
+          <div class="el-dialog__wrapper" v-show="isShowAdd">
             <div class="center_top">
                 <div class="alert_header" id="widthAlert">
                   <div class="layui-layer-title">
-                      编辑页
+                      活动
                   </div>
-                  <div class="layui-layer-setwin" @click="closecopyreader">
+                  <div class="layui-layer-setwin" @click="isShowAdd=!isShowAdd">
                       <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                   </div>
-                  <Form  :label-width="80" style="margin-top:24px;">
+                  <Form  :label-width="80" style="margin-top:24px;" :model="formItem">
                     <Form-item label="赛事时间：">
                         <Row>
                           <Col>
-                              <Date-picker type="daterange" confirm placement="right" placeholder="请选择日期" style="width:90%;"></Date-picker>
+                              <Date-picker type="daterange" confirm placement="right" placeholder="请选择日期" style="width:90%;" v-model="formItem.matchTime"></Date-picker>
                           </Col>
                         </Row>
                     </Form-item>
                     <Form-item label="球场：" >
-                        <Input  placeholder="请输入球场..." style="width:90%;"></Input>
+                        <Input v-model="formItem.matchSite" placeholder="请输入球场..." style="width:90%;"></Input>
                     </Form-item>
                     <Form-item label="赛制：" >
-                        <Input  placeholder="请输入赛制..." style="width:90%;"></Input>
+                        <Input v-model="formItem.matchTem"  placeholder="请输入赛制..." style="width:90%;"></Input>
                     </Form-item>
                     <Form-item label="赛事名称：" >
-                        <Input  placeholder="请输入赛事名称..." style="width:90%;"></Input>
+                        <Input v-model="formItem.matchName"  placeholder="请输入赛事名称..." style="width:90%;"></Input>
                     </Form-item>
                      <Form-item label="参赛名额：" >
-                        <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
+                        <Input-number v-model="formItem.number" size="small" style="width:90%;"></Input-number>
                     </Form-item>
                     <Form-item label="简述：">
                        <Input  type="textarea" placeholder="请输入..." style="width:90%;"></Input>
@@ -88,7 +79,7 @@
                               <b></b>
                           报名范围
                           </div>
-                          <Checkbox-group v-model="fruit">
+                          <Checkbox-group>
                               <Checkbox label="球队队员"></Checkbox><br>
                               <Checkbox label="嘉宾"></Checkbox><br>
                           </Checkbox-group>
@@ -98,7 +89,7 @@
                               <b></b>
                           分享范围
                           </div>
-                          <Checkbox-group v-model="fruit">
+                          <Checkbox-group>
                               <Checkbox label="球队队员"></Checkbox><br>
                               <Checkbox label="嘉宾"></Checkbox><br>
                               <Checkbox label="粉丝"></Checkbox>
@@ -108,94 +99,40 @@
                     </Form-item>
                     <Form-item>
                         <Button type="primary">提交</Button>
-                        <Button type="ghost" style="margin-left: 8px" @click="closecopyreader">取消</Button>
+                        <Button type="ghost" style="margin-left: 8px" @click="isShowAdd=!isShowAdd">取消</Button>
                     </Form-item>
                   </Form>
                 </div>
             </div>
           </div>
-          <!--添加页-->
-          <div class="el-dialog__wrapper" v-show="!addCopyreaders">
-            <div class="center_top">
-                <div class="alert_header" id="widthAlert">
-                  <div class="layui-layer-title">
-                      添加页
-                  </div>
-                  <div class="layui-layer-setwin" @click="closeaddCopyreader">
-                      <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
-                  </div>
-                  <Form  :label-width="80" style="margin-top:24px;">
-                    <Form-item label="赛事时间：">
-                        <Row>
-                          <Col>
-                              <Date-picker type="daterange" confirm placement="right" placeholder="请选择日期" style="width:90%;"></Date-picker>
-                          </Col>
-                        </Row>
-                    </Form-item>
-                    <Form-item label="球场：" >
-                        <Input  placeholder="请输入球场..." style="width:90%;"></Input>
-                    </Form-item>
-                    <Form-item label="赛制：" >
-                        <Input  placeholder="请输入赛制..." style="width:90%;"></Input>
-                    </Form-item>
-                    <Form-item label="赛事名称：" >
-                        <Input  placeholder="请输入赛事名称..." style="width:90%;"></Input>
-                    </Form-item>
-                     <Form-item label="参赛名额：" >
-                        <Input-number v-model="value3" size="small" style="width:90%;"></Input-number>
-                    </Form-item>
-                    <Form-item label="简述：">
-                       <Input type="textarea" placeholder="请输入..." style="width:90%;"></Input>
-                    </Form-item>
-                    <Form-item>
-                      <div class="row">
-                        <div class="col">
-                          <div class="title_card">
-                              <b></b>
-                          报名范围
-                          </div>
-                          <Checkbox-group v-model="fruit">
-                              <Checkbox label="球队队员"></Checkbox><br>
-                              <Checkbox label="嘉宾"></Checkbox><br>
-                          </Checkbox-group>
-                        </div>
-                        <div class="col">
-                          <div class="title_card">
-                              <b></b>
-                          分享范围
-                          </div>
-                          <Checkbox-group v-model="fruit">
-                              <Checkbox label="球队队员"></Checkbox><br>
-                              <Checkbox label="嘉宾"></Checkbox><br>
-                              <Checkbox label="粉丝"></Checkbox>
-                          </Checkbox-group>
-                        </div>
-                      </div>
-                    </Form-item>
-                    <Form-item>
-                        <Button type="primary">提交</Button>
-                        <Button type="ghost" style="margin-left: 8px" @click="closecopyreader">取消</Button>
-                    </Form-item>
-                  </Form>
-                </div>
-            </div>
-          </div>
-          <!--详情-->
         </div>
     </layout>
 </template>
 
 <script>
+import axios from 'axios'
+import * as lib from '../lib'
+import { account } from '../store'
+
 export default {
-  name: 'Page2',
-  value3: 2,
+  name: 'CompetitionEvent',
   data () {
     return {
-      copyreaders: true,
-      addCopyreaders: true,
+      name: 'CompetitionEventV',
+      account: account,
+      url: axios.defaults.baseURL + '/api5/Upload/Player',
+      isShowAdd: false,
       formItem: {
         position: '队员'
-      }
+      },
+      tableText: ['赛制', '赛事类型', '赛事名称', '赛事时间', '球场', '报名人数', '操作'],
+      list: [
+        { matchTem: '比杆赛', temaMatch: '球队赛', matchName: '8月例赛', matchTime: '2017-7-12-2017-8-12', matchSite: '上海美兰湖高尔夫球场', number: '20' },
+        { matchTem: '比杆赛', temaMatch: '球队赛', matchName: '8月例赛', matchTime: '2017-7-12-2017-8-12', matchSite: '上海美兰湖高尔夫球场', number: '20' },
+        { matchTem: '比杆赛', temaMatch: '球队赛', matchName: '8月例赛', matchTime: '2017-7-12-2017-8-12', matchSite: '上海美兰湖高尔夫球场', number: '20' },
+        { matchTem: '比杆赛', temaMatch: '球队赛', matchName: '8月例赛', matchTime: '2017-7-12-2017-8-12', matchSite: '上海美兰湖高尔夫球场', number: '20' },
+        { matchTem: '比杆赛', temaMatch: '球队赛', matchName: '8月例赛', matchTime: '2017-7-12-2017-8-12', matchSite: '上海美兰湖高尔夫球场', number: '20' }
+      ]
     }
   },
   computed: {
@@ -209,17 +146,11 @@ export default {
     cancel () {
       this.$Message.info('点击了取消')
     },
-    copyreader () {
-      this.copyreaders = false
-    },
-    closecopyreader () {
-      this.copyreaders = true
-    },
-    addCopyreader () {
-      this.addCopyreaders = false
-    },
-    closeaddCopyreader () {
-      this.addCopyreaders = true
+    clickShow (record) {
+      this.isShowAdd = true
+      lib.debugView && console.debug(`${this.name}.clickEdit: %o`, record)
+      this.formItem = record
+      this.formItem.teamId = this.id
     }
   },
   mounted () {
@@ -256,6 +187,9 @@ export default {
   border-left:1px solid  #dddee1;
   border-bottom:1px solid  #dddee1;
 }
+ tr.active:hover{
+    background: #ebf7ff;
+}
 .title_card >b{
     position: absolute;
     left:-1px;
@@ -270,10 +204,9 @@ export default {
   width:100%;
 }
 .table th, .table td{
-    padding: 10px 8px;
+    padding: 10px 0px;
     line-height: 30px;
     border-bottom: 1px solid #ddd;
-    border-right: 1px solid #ddd;
     border-left: 0;
     text-align: center;
     overflow: hidden;

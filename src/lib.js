@@ -26,8 +26,11 @@ export const version = `${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_REVISION}.${
  * @param  String  ts     "2017-06-17T00:00:00"
  */
 export function formatTime (str, format = 'YYYY-MM-DD HH:mm') {
-  let time = moment(str)
-  let retVal = time.format(format)
+  let retVal = ''
+  if (str) {
+    let time = moment(str)
+    retVal = time.format(format)
+  }
   // debug && console.debug(`${str} => ${retVal}(${time.format()})`)
   return retVal
 }
@@ -39,9 +42,12 @@ export function formatTime (str, format = 'YYYY-MM-DD HH:mm') {
  * @return {[type]}         [description]
  */
 export function formatTs (ts, format = 'YYYY-MM-DD HH:mm') {
-  let time = moment.unix(ts)
-  let retVal = time.format(format)
-  // debug && console.debug(`${ts} => ${retVal}(${time.format()})`)
+  let retVal = ''
+  if (ts) {
+    let time = moment.unix(ts)
+    retVal = time.format(format)
+    // debug && console.debug(`${ts} => ${retVal}(${time.format()})`)
+  }
   return retVal
 }
 

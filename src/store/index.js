@@ -5,7 +5,7 @@ import * as lib from '../lib'
  */
 const account = {
   token: null,
-  player: null,
+  member: null,
 
   getToken () {
     if (this.token === null) {
@@ -19,6 +19,11 @@ const account = {
     lib.debugVuex && console.debug(`Account.setToken: ${token}`)
     this.token = token
     localStorage.setItem('token', this.token)
+  },
+
+  reset () {
+    this.setToken(null)
+    this.member = null
   }
 }
 
@@ -26,7 +31,12 @@ const account = {
  * View settings.
  */
 const setting = {
-  isNavOpen: false
+  isNavOpen: false,
+  navIndex: 0,
+
+  reset () {
+    this.isNavOpen = false
+  }
 }
 
 /**
@@ -34,15 +44,33 @@ const setting = {
  */
 const team = {
   list: [],
-  active: null
+  active: null,
+
+  reset () {
+    this.list = []
+    this.active = null
+  }
 }
 
 /**
  * Player data.
  */
-const player = {
+const member = {
   list: [],
-  active: null
+  active: null,
+
+  reset () {
+    this.list = []
+    this.active = null
+  }
 }
 
-export { account, setting, team, player }
+function reset () {
+  lib.debugVuex && console.debug(`Store.reset all`)
+  account.reset()
+  setting.reset()
+  team.reset()
+  member.reset()
+}
+
+export { account, setting, team, member, reset }

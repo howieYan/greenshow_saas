@@ -442,7 +442,6 @@ section{
     bottom: 0px;
     left:0;
     background-color: #EAEDF1;
-    z-index: 100000;
     overflow-y: auto;
 }
 
@@ -505,7 +504,6 @@ section>.banner_nav>ul>li.banner_active{
     width: 20px;
     position: absolute;
     top: 50%;
-    z-index: 100000;
 }
 .position_right{
     left:0;

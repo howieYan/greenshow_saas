@@ -9,7 +9,7 @@
                 <div class="title float_left hover">高领秀管理后台</div>
             </div>
             <div class="width70 float_left">
-                <div class="float_right user_id hover">
+                <div class="float_right user_id hover" style="padding-right:10px;">
                     <div style="color:white;line-height:50px;">
                       <span>{{ account && account.player ? account.player.name : '欢迎' }}，</span>
                       <span @click="clickLogout">退出登录</span>
@@ -19,18 +19,18 @@
         </header>
         <!--nav-->
         <div class="nav" v-if="!setting.isNavOpen">
-            <div class="nav_on_off" @click="collapse">
+            <div class="nav_on_off">
                 <p>
                     <b class=""></b>
                 </p>
             </div>
             <div class="nav_home">
                 <ul class="home_index" v-for="(record,index) in team.list">
-                    <li class="row">
-                        <a class="col" @click="clickOpen(record)"  v-bind:class="{ 'back00C1DE' : setting.isNavOpen }">
+                    <li class="row" @click="clickOpen(record,index)">
+                        <a class="col" v-bind:class="{ 'back00C1DE' : setting.isNavOpen === true || temaindex === index }">
                             <ul class="nav_banner row">
                                 <li class="bg_banner_icon" style=""><img :src="'/static/favicon.ico'"></li>
-                                <li class="nav_banner_text col" style="padding-left:10px;">{{ record.name }}</li>
+                                <li class="nav_banner_text col" style="padding-left:10px;" v-bind:name="index">{{ record.name }}</li>
                             </ul>
                         </a>
                     </li>
@@ -45,13 +45,14 @@
                     <b class=""></b>
                 </p>
             </div>
-            <div class="nav_home1" >
+            <div class="nav_home1">
                 <ul class="home_index" v-for="(record,index) in team.list">
                     <li class="row">
-                        <a class="col" @click="clickOpen(record)" v-bind:class="{ 'back00C1DE' : index === temaindex }">
+                        <a class="col" v-bind:class="{ 'back00C1DE' : setting.isNavOpen === false || temaindex === index }">
                           <div class="center-right">
                               <Tooltip v-bind:content="record.name" placement="right">
-                                  <li class="bg_banner_icon" style="margin-left:11px;"><img :src="'/static/favicon.ico'"></li>
+                                  <li class="bg_banner_icon" style="margin-left:11px;">
+                                  <img :src="'/static/favicon.ico'"></li>
                               </Tooltip><br><br>
                           </div>
                         </a>
@@ -61,9 +62,9 @@
         </div>
         <!--球队的 nav-->
         <section class="banner_nav_block" v-bind:style="{ 'left': !setting.isNavOpen ? '190px' : '60px' }">
-            <div class="banner_nav" v-bind:style="{ 'left': hasNav && setting.isNavOpen ? '0px' : '-190px' }">
-                <ul class="hover_li_fff">
-                    <li class="banner_active_ff tema "  v-for="(itmeNav,index) in navName" v-bind:class="{ 'backfff' : index === navIndex}" v-on:click="openFrame(index)">
+            <div class="banner_nav" v-bind:style="{ 'left': hasNav && setting.isNavOpen ? '0px' : '-190px' }" >
+                <ul class="hover_li_fff"  v-for="(itmeNav,index) in navName" v-on:click="openFrame(index)" >
+                    <li class="banner_active_ff tema "  v-bind:class="{ 'backfff' : setting.navIndex === index }">
                         <a href="javascript:(0)">{{ itmeNav.name }}</a>
                     </li>
                 </ul>
@@ -74,8 +75,13 @@
             </div>
             <div class="width100 left180" v-bind:style="{ 'left': hasNav && setting.isNavOpen ? '180px' : '0px' }">
                 <div style="height:100%;" class="">
-                    <slot name="main">
-                    </slot>
+                    <h1>
+                      <Breadcrumb>
+                          <Breadcrumb-item style="font-size:20px;">1</Breadcrumb-item>
+                          <Breadcrumb-item style="font-size:20px;font-weight:0;">2</Breadcrumb-item>
+                      </Breadcrumb>
+                    </h1>
+                    <slot name="main"></slot>
                 </div>
             </div>
 
@@ -85,14 +91,13 @@
 
 <script>
 import api from '../api'
-import { account, setting, team } from '../store'
+import { account, setting, team, reset } from '../store'
 import * as lib from '../lib'
 
 export default {
   name: 'Layout',
   props: {
     hasNav: {
-      Boolean,
       default: true
     }
   },
@@ -103,20 +108,16 @@ export default {
       account: account,
       team: team,
       setting: setting,
+      isNav: false,
       nowIndex: -1,
       temaindex: 0,
-      navIndex: 0,
       pageIndex: -1,
-      title: [
-        { name: '我的球队' },
-        { name: '我的门户' }
-      ],
       navName: [
         { name: '球队首页' },
         { name: '队员管理' },
         { name: '领导班子' },
         { name: '赛事活动' },
-        { name: '球队新闻' },
+        { name: '球队公告' },
         { name: '球队历史' },
         { name: '榜单' },
         { name: '荣誉' },
@@ -133,14 +134,15 @@ export default {
   },
 
   methods: {
-    clickOpen (record) {
-      setting.isNavOpen = !setting.isNavOpen
+    clickOpen (record, index) {
+      this.temaindex = index
+      setting.isNavOpen = true
       lib.debugView && console.debug(`${this.name}.clickOpen: %o`, record)
       this.$router.push(`/team/${record.id}`)
     },
 
     clickLogout () {
-      account.setToken('')
+      reset()
       this.$router.push(`/login`)
     },
 
@@ -170,11 +172,12 @@ export default {
     },
 
     openFrame (index) {
+      setting.navIndex = index
       if (index === 0) {
-        this.$router.push({ path: '/' })
+        this.$router.push({ path: `/team/${team.active.id}` })
       }
       if (index === 1) {
-        this.$router.push({ path: '/playmanagement' })
+        this.$router.push({ path: `/playmanagement/${team.active.id}` })
       }
       if (index === 2) {
         this.$router.push({ path: '/leadinggroup' })
@@ -183,13 +186,13 @@ export default {
         this.$router.push({ path: '/competitionevent' })
       }
       if (index === 4) {
-        this.$router.push({ path: '/temanews' })
+        this.$router.push({ path: '/teamnews' })
       }
       if (index === 5) {
-        this.$router.push({ path: '/temahistory' })
+        this.$router.push({ path: '/teamhistory' })
       }
       if (index === 6) {
-        this.$router.push({ path: '/temalist' })
+        this.$router.push({ path: '/teamlist' })
       }
       if (index === 7) {
         this.$router.push({ path: '/honor' })

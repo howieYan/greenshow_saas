@@ -2,26 +2,13 @@
     <layout>
         <div slot="main" style="position:relative;">
           <div class="title_team">
-              <h1 style>
-                <Breadcrumb-item href="/competitionevent">赛事活动</Breadcrumb-item>/
-                <Dropdown trigger="click" placement="bottom-start" style="width:130px;text-align:center;">
-                    <a href="javascript:void(0)">
-                        8月例赛 
-                        <Icon type="arrow-down-b"></Icon>
-                    </a>
-                    <Dropdown-menu slot="list">
-                        <Dropdown-item v-for="n in 10">8月例赛</Dropdown-item>
-                    </Dropdown-menu>
-                </Dropdown>/
-                <Breadcrumb-item href="/details">详情</Breadcrumb-item>
-              </h1>
-               <div class="">
+            <div class="">
               <div class="center_top">
                   <div class="" id="widthAlert">
                     <Form  :label-width="80" style="margin-top:24px;">
                       <div class="event_name row">
                           <div class="col border_event">
-                              <b>8月例赛</b>
+                              <b v-model="nameSelect">{{ nameSelect }}</b>
                           </div>
                           <div class="col">
                               <b>2017-3-25</b>
@@ -37,7 +24,7 @@
                     <div class="">
                           <div class="layout">
                             <Row type="flex" class="row">
-                                <i-col :span="spanLeft" class="layout-menu-left">
+                                <i-col class="layout-menu-left">
                                     <Menu active-name="1" width="auto">
                                         <div class="layout-logo-left"></div>
                                         <Menu-item name="1">
@@ -57,11 +44,7 @@
                                             <span class="layout-text" @click="navAwards">奖项设置</span>
                                         </Menu-item>
                                         <Menu-item name="5">
-                                            <Icon type="social-designernews-outline"></Icon>
-                                            <span class="layout-text"  @click="navEvent">活动新闻</span>
-                                        </Menu-item>
-                                        <Menu-item name="6">
-                                            <Icon type="images"></Icon>                                            
+                                            <Icon type="images"></Icon>
                                             <span class="layout-text" @click="navImage">图片管理</span>
                                         </Menu-item>
                                     </Menu>
@@ -78,18 +61,18 @@
                                           filterable
                                           @on-change="handleChange3">
                                           <div :style="{float: 'right', margin: '5px'}">
-                                              <i-button type="ghost" size="small" @click="reloadMockData">提交</i-button>
+                                              <i-button type="ghost" size="small">提交</i-button>
                                           </div>
-                                      </Transfer>        
+                                      </Transfer>
                                   </div>
                                   <!--分组-->
                                   <div v-show="!navGroupings">
                                       <Row style=" ">
-                                          <Col style="width:420px;float:left;">
+                                          <Col span="11">
                                               <Card :bordered="false">
                                                   <div style="overflow-x: auto;"">
                                                     <div style="text-align:left;">
-                                                         <Input  icon="ios-search" placeholder="请输入手机号码或姓名..."></Input>
+                                                         <Input  icon="ios-search" placeholder="请输入手机号码或姓名..."style="width:200px;"></Input>
                                                     </div>
                                                     <table class="table1">
                                                         <thead>
@@ -117,114 +100,65 @@
                                                   </div>
                                               </Card>
                                           </Col>
-                                          <Col style="float:left;">
-                                              <Card shadow>
-                                                     <div style="width:100%;overflow-x: auto;"">
-                                                        <div style="text-align:left;">
-                                                          <Checkbox-group v-model="disabledGroup">
-                                                              <Checkbox label="显示真实姓名"></Checkbox>
-                                                          </Checkbox-group>
-                                                        </div>
-                                                        <table class="table1 table1_1">
-                                                            <thead>
-                                                                <tr class="">
-                                                                    <th>组号</th>
-                                                                    <th class="">开球洞数</th>
-                                                                    <th class="" >开球时间</th>
-                                                                    <th class="" >球员1</th>
-                                                                    <th class="" >球员2</th>
-                                                                    <th class="" >球员3</th>
-                                                                    <th class="" >球员4</th>
-                                                                    <th class="" >记分员</th>
-                                                                    <th class="" >操作</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody id="list">
-                                                                <tr class="" v-for="(item,index) in checkDatas">
-                                                                    <td class="">{{ index + 1 }}</td>
-                                                                    <td class="">1#</td>
-                                                                    <td class="">10:00</td>
-                                                                    <td class="">
-                                                                        <strong v-show="disabledGroup">张林峰</strong>
-                                                                        <strong v-show="!disabledGroup">***</strong>
-                                                                        <Icon type="trash-a" style="display: block;"></Icon>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <strong v-show="disabledGroup">张林峰</strong>
-                                                                        <strong v-show="!disabledGroup">***</strong>
-                                                                        <Icon type="trash-a" style="display: block;"></Icon>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <strong v-show="disabledGroup">张林峰</strong>
-                                                                        <strong v-show="!disabledGroup">***</strong>
-                                                                        <Icon type="trash-a" style="display: block;"></Icon>
-                                                                    </td>
-                                                                    <td class="">
-                                                                        <strong v-show="disabledGroup">张林峰</strong>
-                                                                        <strong v-show="!disabledGroup">***</strong>
-                                                                        <Icon type="trash-a" style="display: block;"></Icon>
-                                                                    </td>
-                                                                    <td class="">
-                                                                      <Select v-model="model1" style="width:80px;">
-                                                                          <Option v-for="item in optionsSle">{{ item.label }}</Option>
-                                                                      </Select>
-                                                                    </td>
-                                                                    <td class="" >
-                                                                        <Poptip placement ="top-end"
-                                                                            confirm
-                                                                            trigger="hover"
-                                                                            title="您确认删除这条内容吗？"
-                                                                            @on-ok="ok"
-                                                                            @on-cancel="cancel">
-
-                                                                            <Button type="error">删除</Button>
-
-                                                                        </Poptip>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                          <Col span="11" offset="1">
+                                              <Card :bordered="false">
+                                                  <div style="width:100%;overflow-x: auto;">
+                                                      <div style="text-align:left;">
+                                                        <Checkbox-group v-model="disabledGroup">
+                                                            <Checkbox label="显示真实姓名"></Checkbox>
+                                                        </Checkbox-group>
                                                       </div>
-                                                  <!--<div style="text-align:center;">
-                                                     
+                                                      <table class="table1 table1_1">
+                                                          <thead>
+                                                              <tr class="">
+                                                                  <th>组号</th>
+                                                                  <th class="">开球洞数</th>
+                                                                  <th class="" >开球时间</th>
+                                                                  <th class="" >球员1</th>
+                                                                  <th class="" >球员2</th>
+                                                                  <th class="" >球员3</th>
+                                                                  <th class="" >球员4</th>
+                                                                  <th class="" >记分员</th>
+                                                                  <th class="" >操作</th>
+                                                              </tr>
+                                                          </thead>
+                                                          <tbody id="list">
+                                                              <tr class="" v-for="(item,index) in checkDatas">
+                                                                  <td class="">{{ index + 1 }}</td>
+                                                                  <td class="">1#</td>
+                                                                  <td class="">10:00</td>
+                                                                  <td class="">
+                                                                      <strong v-show="disabledGroup">张林峰</strong>
+                                                                      <strong v-show="!disabledGroup">***</strong>
+                                                                      <Icon type="trash-a" style="display: block;"></Icon>
+                                                                  </td>
+                                                                  <td class="">
+                                                                      <strong v-show="disabledGroup">张林峰</strong>
+                                                                      <strong v-show="!disabledGroup">***</strong>
+                                                                      <Icon type="trash-a" style="display: block;"></Icon>
+                                                                  </td>
+                                                                  <td class="">
+                                                                      <strong v-show="disabledGroup">张林峰</strong>
+                                                                      <strong v-show="!disabledGroup">***</strong>
+                                                                      <Icon type="trash-a" style="display: block;"></Icon>
+                                                                  </td>
+                                                                  <td class="">
+                                                                      <strong v-show="disabledGroup">张林峰</strong>
+                                                                      <strong v-show="!disabledGroup">***</strong>
+                                                                      <Icon type="trash-a" style="display: block;"></Icon>
+                                                                  </td>
+                                                                  <td class="">
+                                                                    <Select v-model="model1" style="width:80px;">
+                                                                        <Option v-for="item in optionsSle" :key="item.label">{{ item.label }}</Option>
+                                                                    </Select>
+                                                                  </td>
+                                                                  <td class="" >
+                                                                      <Button type="error">删除</Button>
+                                                                  </td>
+                                                              </tr>
+                                                          </tbody>
+                                                      </table>
                                                   </div>
-                                                  <div style="text-align:center;">
-                                                      <ul class="row height_li">
-                                                          <li class="col">
-                                                            1
-                                                          </li>
-                                                          <li class="col">
-                                                            1#
-                                                          </li>
-                                                          <li class="col">
-                                                            10:00
-                                                          </li>
-                                                          <li class="col">
-                                                            <strong v-show="disabledGroup">张林峰</strong>
-                                                            <strong v-show="!disabledGroup">***</strong>
-                                                          </li>
-                                                          <li class="col">
-                                                            <strong v-show="disabledGroup">张林峰</strong>
-                                                            <strong v-show="!disabledGroup">***</strong>
-                                                          </li>
-                                                          <li class="col">
-                                                            <strong v-show="disabledGroup">张林峰</strong>
-                                                            <strong v-show="!disabledGroup">***</strong>
-                                                          </li>
-                                                          <li class="col">
-                                                            <strong v-show="disabledGroup">张林峰</strong>
-                                                            <strong v-show="!disabledGroup">***</strong>
-                                                          </li>
-                                                          <li class="col">
-                                                            <Select v-model="model2" style=";">
-                                                                <Option v-for="item in optionsSle">{{ item.label }}</Option>
-                                                            </Select>
-                                                          </li>
-                                                          <li class="col">
-                                                            操作
-                                                          </li>
-                                                      </ul>
-                                                  </div>-->
                                               </Card>
                                           </Col>
                                       </Row>
@@ -234,7 +168,7 @@
                                     <Row>
                                         <Col span="23">
                                             <Card>
-                                               <div style="overflow-x:auto;">
+                                              <div style="overflow-x:auto;">
                                                 <div class="row">
                                                     <div class="col">
                                                         <div style="text-align:left;">
@@ -271,7 +205,7 @@
                                                       <ul class="row activer" style="width:100%;text-align:center;padding:10px 0;" @click="openDelist(index)">
                                                         <li class="col">
                                                             <Select v-model="model3" style="widli:120px">
-                                                                <Option v-for="item in optionsSles" :value="item.value" :key="item.value">{{ item.label }}</Option>
+                                                                <Option v-for="item in optionsSles" :key="item.label">{{ item.label }}</Option>
                                                             </Select>
                                                         </li>
                                                         <li class="col">1</li>
@@ -319,13 +253,13 @@
                                                                   </Form>
                                                             </div>
                                                             <div class="col">
-                                                                  <Form :model="formItem" :label-width="80">
+                                                                  <Form :label-width="80">
                                                                     <Form-item>
                                                                         <Button type="primary">提交</Button>
                                                                     </Form-item>
                                                                   </Form>
                                                             </div>
-                                                             
+
                                                           </div>
                                                           <div style="float:left;margin-top:30px;width: 100%;">
                                                             <ul class="row" style="text-align:center;width:95%;float:right;">
@@ -369,11 +303,11 @@
                                                              录入成绩：<Input  type="textarea" placeholder="请输入成绩"></Input>
                                                              <p style="opacity:0.4;">成绩后面要有空格间隔或"-"间隔</p>
                                                           </div>
-                                                          
+
                                                         </div>
-                                                      </div>  
-                                                  </div>       
-                                                </div>      
+                                                      </div>
+                                                  </div>
+                                                </div>
                                               </div>
                                             </Card>
                                         </Col>
@@ -382,8 +316,8 @@
                                   <!--奖项设置-->
                                   <div v-show="!navAwardss">
                                     <div style="border:1px solid #eee;">
-                                      <Button type="ghost" icon="ios-plus-empty" style="margin:20px 20px 20px 1%;" @click="addjx">添加</Button>
-                                      <table class="table table4">
+                                      <Button type="ghost" icon="ios-plus-empty" style="margin:20px 20px 20px 1%;" @click="clickShow">添加</Button>
+                                      <table class="table">
                                           <thead>
                                               <tr class="">
                                                   <th class="">奖项名称</th>
@@ -401,20 +335,20 @@
                                                       <Button type="ghost" icon="ios-plus-empty">选择获奖人</Button>
                                                   </td>
                                                   <td class="">
-                                                      <Button type="info">编辑</Button>
+                                                      <Button type="info" @click="clickShow">编辑</Button>
                                                   </td>
                                               </tr>
                                           </tbody>
                                       </table>
                                     </div>
                                     <!--添加-->
-                                    <div class="el-dialog__wrapper" v-show="!addJX">
+                                    <div class="el-dialog__wrapper" v-show="isShowAdd">
                                       <div class="center_top">
                                           <div class="alert_header" id="widthAlert">
                                             <div class="layui-layer-title">
                                                 添加页
                                             </div>
-                                            <div class="layui-layer-setwin" @click="colseAddJx">
+                                            <div class="layui-layer-setwin" @click="isShowAdd=!isShowAdd">
                                                 <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
                                             </div>
                                             <div style="">
@@ -430,7 +364,7 @@
                                                   </Form-item>
                                                   <Form-item>
                                                       <Button type="primary">提交</Button>
-                                                      <Button type="ghost" style="margin-left: 8px" @click="colseAddJx">取消</Button>
+                                                      <Button type="ghost" style="margin-left: 8px" @click="isShowAdd=!isShowAdd">取消</Button>
                                                   </Form-item>
                                               </Form>
                                               <div style="width:100%;height:50px;"></div>
@@ -451,53 +385,10 @@
                                           </div>
                                       </div>
                                     </div>
-                                    <!--编辑-->
-                                    <div class="el-dialog__wrapper" v-show="!redact">
-                                      <div class="center_top">
-                                          <div class="alert_header" id="widthAlert">
-                                            <div class="layui-layer-title">
-                                                编辑页
-                                            </div>
-                                            <div class="layui-layer-setwin">
-                                                <a href="javascript:(0)" class="layui-layer-ico layui-layer-close layui-layer-close1"></a>
-                                            </div>
-                                           
-                                          </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <!--活动新闻-->
-                                  <div v-show="!navEvents">
-                                      <div style="margin:20px;">
-                                      活动新闻
-                                          <!--<table class="table table">
-                                              <thead>
-                                                  <tr class="">
-                                                      <th class="">活动标题</th>
-                                                      <th class="">奖品</th>
-                                                      <th class="">获奖人</th>
-                                                      <th class="">操作</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody id="list">
-                                                  <tr class="">
-                                                      <td class="" prop="nickname">总冠</td>
-                                                      <td class=""  prop="name">1#木</td>
-                                                      <td class="">张三</td>
-                                                      <td class="">
-                                                          <Button type="ghost" icon="ios-plus-empty">选择获奖人</Button>
-                                                      </td>
-                                                      <td class="">
-                                                          <Button type="info">编辑</Button>
-                                                      </td>
-                                                  </tr>
-                                              </tbody>
-                                          </table>-->
-                                      </div>
                                   </div>
                                   <!--图片管理-->
                                   <div v-show="!navImages">
-                                      图片管 
+                                     图片管理
                                   </div>
                                 </div>
                             </Row>
@@ -508,7 +399,7 @@
             </div>
           </div>
           <!--详情-->
-         
+
         </div>
     </layout>
 </template>
@@ -518,6 +409,33 @@ export default {
   name: 'details',
   data () {
     return {
+      nameSelect: '',
+      dataList: [
+        {
+          value: '8月例赛',
+          matchName: '8月例赛'
+        },
+        {
+          value: '9月例赛',
+          matchName: '9月例赛'
+        },
+        {
+          value: '10月例赛',
+          matchName: '10月例赛'
+        },
+        {
+          value: '11月例赛',
+          matchName: '11月例赛'
+        },
+        {
+          value: '12月例赛',
+          matchName: '12月例赛'
+        },
+        {
+          value: '13月例赛',
+          matchName: '13月例赛'
+        }
+      ],
       theme1: 'light',
       disabledGroup: false,
       loading: false,
@@ -527,7 +445,7 @@ export default {
       navApplys: false,
       playM: true,
       redact: true,
-      addJX: true,
+      isShowAdd: false,
       navGroupings: true,
       disabledSingles: false,
       navLeads: true,
@@ -539,7 +457,7 @@ export default {
       data3: this.getMockData(),
       targetKeys3: this.getTargetKeys(),
       listStyle: {
-        width: '480px',
+        width: '40%',
         height: '400px'
       },
       model1: '0',
@@ -553,41 +471,32 @@ export default {
       tableText: ['昵称', '姓名', '差点', '身份'],
       optionsSle: [
         {
-          value: '0',
           label: '张三'
         },
         {
-          value: '1',
           label: '李四'
         },
         {
-          value: '2',
           label: '老王'
         },
         {
-          value: '3',
           label: '曾维坚'
         },
         {
-          value: '4',
           label: '球童'
         }
       ],
       optionsSles: [
         {
-          value: '0',
           label: '正常(Field)'
         },
         {
-          value: '1',
           label: '未晋级(Misscut)'
         },
         {
-          value: '2',
           label: '弃权(WD)'
         },
         {
-          value: '3',
           label: '取消资格(DQ)'
         }
       ],
@@ -719,11 +628,11 @@ export default {
       for (let i = 1; i <= 20; i++) {
         mockData.push({
           key: i.toString(),
-          label: '姓名：张林峰' + i,
-          name: '昵称：张三' + i,
-          nubmer: '差点：9' + i,
-          sex: '性别：男' + i,
-          city: '城市：上海' + i
+          label: '张林峰' + i,
+          name: '张三' + i,
+          nubmer: '9' + i,
+          sex: '男' + i,
+          city: '上海' + i
         })
       }
       return mockData
@@ -737,15 +646,6 @@ export default {
     render3 (item) {
       return item.label + ' - ' + item.name + ' - ' + item.nubmer + ' - ' + item.sex + ' -' + item.city
     },
-    reloadMockData () {
-      this.targetKeys3 = this.getTargetKeys()
-    },
-    ok () {
-      this.$Message.info('点击了确定')
-    },
-    cancel () {
-      this.$Message.info('点击了取消')
-    },
     toLoading () {
       this.loading = true
     },
@@ -757,11 +657,8 @@ export default {
         this.open = true
       }
     },
-    addjx () {
-      this.addJX = false
-    },
-    colseAddJx () {
-      this.addJX = true
+    clickShow () {
+      this.isShowAdd = true
     }
   },
   mounted () {
@@ -969,7 +866,7 @@ tr.activer:hover{
     top:0!important;
 }
 .ivu-card-body{
-  padding: 0px!important;  
+  padding: 0px!important;
 }
 .ivu-form-item{
   margin:0;

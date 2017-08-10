@@ -72,6 +72,10 @@ export default {
     return Object.keys(data).map((i) => i + '=' + data[i]).join('&')
   },
 
+  deleteTeamPlayer (id) {
+    return this.send('delete', `/api5/TeamPlayer/${id}`)
+  },
+
   /**
    * 查询活动列表
    * curl  -X GET 'http://devwx.golfgreenshow.com/api/Event?id=172701a1-8457-4df1-891c-4fa1c78ef883' --header 'AccessCode:ccfb8baa-40ce-4989-b7b0-2abcab956405'
@@ -94,6 +98,10 @@ export default {
    */
   listPlayer (option, page = 0, size = 10) {
     return this.send('get', `/api5/Player?option=${option}&page=${page}&size=${size}`)
+  },
+
+  listTeamPlayer (id, option, page = 0, size = 10) {
+    return this.send('get', `/api5/TeamPlayer?id=${id}&option=${option}&page=${page}&size=${size}`)
   },
 
   /**
@@ -134,6 +142,11 @@ export default {
   },
 
   saveTeam (id, data) {
-    return this.send('post', `/api5/Team/${id}`, data)
+    return this.send('put', `/api5/Team/${id}`, data)
+  },
+
+  saveTeamPlayer (id, data) {
+    return this.send('put', `/api5/TeamPlayer/${id}`, data)
   }
+
 }

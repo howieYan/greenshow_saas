@@ -2,22 +2,31 @@
     <layout>
         <div slot="main" style="position:relative;height:100%;overflow: hidden;">
           <div class="title_team">
-              <h1>相册 </h1>
-<<<<<<< HEAD
-              <Card style="width:220px；">
-=======
-              <Card style="width:220px">
->>>>>>> b15a2622042fbed5c3bc25c63c4f37264aebfb7c
+              <Card style="width:220px;margin:20px;">
                 <div class="row">
                     <div class="modulImage_img">
                         <Icon type="ios-paper-outline" size="60" color=""></Icon>
                     </div>
-                    <div class="col">
-                      <p>优仕队9周年庆典</p>
+                    <div class="col" @click="$router.push({ path: '/photodetails' })">
+                      <p >优仕队9周年庆典</p>
                       <p>文件夹</p>
                     </div>
                 </div>
               </Card>
+              <div class="row">
+                  <div class="col">
+                      <Button type="ghost" icon="android-add" style="margin:20px;" @click="newFolder">新建文件夹</Button>
+                  </div>
+                  <div class="col">
+                      <Upload  style="margin:20px;"
+                          multiple
+                          action="//jsonplaceholder.typicode.com/posts/">
+                          <Button type="ghost" icon="ios-cloud-upload-outline">上传图片</Button>
+                      </Upload>
+                  </div>
+              </div>
+             
+              
           </div>
         </div>
     </layout>
@@ -36,6 +45,8 @@ export default {
   created () {
   },
   methods: {
+    newFolder () {
+    }
   },
   mounted () {
   }

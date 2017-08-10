@@ -5,14 +5,14 @@ import Team from '@/components/Team'
 import PlayManagement from '@/components/PlayManagement'
 import LeadingGroup from '@/components/LeadingGroup'
 import CompetitionEvent from '@/components/CompetitionEvent'
-import TemaNews from '@/components/TemaNews'
-import TemaHistory from '@/components/TemaHistory'
+import TeamNews from '@/components/TeamNews'
+import TeamHistory from '@/components/TeamHistory'
 import Login from '@/components/Login'
 import Details from '@/components/Details'
-import TemaList from '@/components/TemaList'
+import TeamList from '@/components/teamList'
 import Honor from '@/components/Honor'
 import Photo from '@/components/Photo'
-
+import Photodetails from '@/components/Photodetails'
 // import HistoryForm from '@/components/HistoryForm'
 
 import * as lib from '../lib'
@@ -33,7 +33,7 @@ let router = new Router({
       component: Team
     },
     {
-      path: '/playmanagement',
+      path: '/playmanagement/:id',
       name: 'PlayManagement',
       component: PlayManagement
     },
@@ -48,14 +48,14 @@ let router = new Router({
       component: CompetitionEvent
     },
     {
-      path: '/temanews',
-      name: 'TemaNews',
-      component: TemaNews
+      path: '/teamnews',
+      name: 'TeamNews',
+      component: TeamNews
     },
     {
-      path: '/temahistory',
-      name: 'TemaHistory',
-      component: TemaHistory
+      path: '/teamhistory',
+      name: 'TeamHistory',
+      component: TeamHistory
     },
     {
       path: '/login',
@@ -68,9 +68,9 @@ let router = new Router({
       component: Details
     },
     {
-      path: '/TemaList',
-      name: 'TemaList',
-      component: TemaList
+      path: '/teamList',
+      name: 'TeamList',
+      component: TeamList
     },
     {
       path: '/honor',
@@ -81,11 +81,17 @@ let router = new Router({
       path: '/photo',
       name: 'Photo',
       component: Photo
+    },
+    {
+      path: '/photodetails',
+      name: '/Photodetails',
+      component: Photodetails
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
+  console.time('route')
   lib.debug && console.debug(`OPEN (${account.getToken()}): ${from.name}(${from.path}) -> ${to.name}(${to.path}) %o`, to)
   if (to.path === '/login' || account.getToken()) {
     next()
@@ -93,6 +99,11 @@ router.beforeEach((to, from, next) => {
   else {
     next({ path: '/login', query: { redirect: to.path } })
   }
+})
+
+router.afterEach(route => {
+  console.timeEnd('route')
+  lib.debug && console.debug('OPENED: %o', route)
 })
 
 export default router
